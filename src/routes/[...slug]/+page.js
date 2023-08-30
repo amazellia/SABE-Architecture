@@ -6,7 +6,6 @@ export async function load({ params }) {
 
 	let storyblokApi = await useStoryblokApi();
   let slug = params.slug;
-    console.log(slug)
   let path = 'cdn/stories/';
   if (slug) {
     path += slug;
@@ -14,9 +13,10 @@ export async function load({ params }) {
     path += 'home';
   }
     // const resolveRelations = ['event-highlights.events']
+    const resolveRelations = ['event.stream', 'event.guests', 'guest.year']
     const dataStory = await storyblokApi.get(path, {
       version: 'draft',
-      // resolve_relations: resolveRelations,
+      resolve_relations: resolveRelations,
     });
 
     // const dataConfig = await storyblokApi.get('cdn/stories/config/', {

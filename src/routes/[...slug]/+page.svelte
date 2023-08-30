@@ -5,19 +5,15 @@
 	import Footer from '$lib/components/Footer.svelte';
 	
 	export let data;
-	// onMount(() => {
-	// 	if (data.story) {
-	// 		const resolveRelations = ['project-highlights.projects'];
-	// 		useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory), {
-	// 			resolveRelations: resolveRelations
-	// 		});
-	// 	}
-	// });
 	onMount(() => {
-		if (data.story) {
-			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory));
+		if (data.story) {    
+			const resolveRelations = ['event.stream', 'event.guests', 'guest.year']
+			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory), {
+	 			resolveRelations: resolveRelations
+			});
 		}
 	});
+
 </script>
  
 <svelte:head>

@@ -15,9 +15,6 @@
 		{#if blok.headline2}
 			<HeadlineColorful headline={blok.headline2} />
 		{/if}
-		<p class="text-base-content/90 font-title relative z-[2] py-4 font-light md:text-3xl">
-			{blok.headline}
-		</p>
 		<div class="h-10" />
 	</div>
 </div>

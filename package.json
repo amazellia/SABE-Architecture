@@ -11,6 +11,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-static": "^2.0.2",
+		"@sveltejs/adapter-vercel": "^3.0.3",
 		"@sveltejs/kit": "^1.20.4",
 		"@vitejs/plugin-basic-ssl": "^1.0.1",
 		"autoprefixer": "^10.4.14",
@@ -25,6 +26,7 @@
 	"dependencies": {
 		"@storyblok/svelte": "^3.0.11",
 		"clone-deep": "^4.0.1",
+		"svelte-preprocess": "^5.0.4",
 		"typescript": "^5.1.6",
 		"vercel": "^32.5.0"
 	}

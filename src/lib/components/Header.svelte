@@ -14,21 +14,23 @@
         <div class="flex-1">
             {#if logo}
                 <a href="/">
-                    <img
+                    <!-- <img
                     src={logo.filename}
                     alt={logo?.alt}
                     class="w-auto h-20 lg:h-28 flex justify-center items-center text-center"
                     class:close={navIsOpen}
-                    />
+                    /> -->
+                    home
                 </a> 
             {/if}
         </div>
+
         {#if header}
         <div class="flex-none hidden lg:block" class:open={navIsOpen}>
             <ul class="flex space-x-4 lg:space-x-8 text-lg font-bold">
                 {#each header as blok}
-                    <li class="hover:text-[#ff0085] p-3">
-                        <a href={blok.link.url}> {blok.name}</a>
+                    <li class="hover:text-[#808080] p-3">
+                        <a href="/{blok.link.story.url}"> {blok.name}</a>
                     </li> 
                 {/each}
             </ul>
@@ -51,7 +53,7 @@
             <ul class="flex flex-col items-center justify-center space-y-4 text-lg font-bold">
                 {#each header as blok}
                     <li class="hover:text-[#ff0085]">
-                        <a href={blok.link.url}> {blok.name}</a>
+                        <a href="/{blok.link.story.url}"> {blok.name}</a>
                     </li>
                 {/each}
             </ul>

@@ -29,6 +29,9 @@ export async function useStoryblok(accessToken = '') {
             stream: (await import('$lib/components/Stream.svelte')).default,
             eventList: (await import('$lib/components/EventList.svelte')).default,
             eventFeatured: (await import('$lib/components/EventFeatured.svelte')).default,
+            guestList: (await import('$lib/components/GuestList.svelte')).default,
+            guestFeatured: (await import('$lib/components/GuestFeatured.svelte')).default,
+			streamList:(await import('$lib/components/StreamList.svelte')).default,
             'rich-text': (await import('$lib/components/Rich-Text.svelte')).default,
             grid_item_report: (await import('$lib/components/GridReportItem.svelte')).default,
 		},
@@ -45,6 +48,7 @@ export async function useStoryblok(accessToken = '') {
 			resolver: (component, blok) => {
 			  switch (component) {
 				case "gallery":
+					// https://www.storyblok.com/tp/build-your-own-showcase-gallery-with-storyblok-sveltekit-and-edgio
 					if (blok.type == "carousel" || blok.type == undefined) {
 						const images = blok.images.map((item, index) => {
 							return `

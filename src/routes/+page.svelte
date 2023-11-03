@@ -17,7 +17,7 @@
 	<title>architecture</title>
 </svelte:head>
 <div>
-	<!-- <Header header={data.header} logo={data.logo} /> -->
+	<Header header={data.header} logo={data.logo} />
 	<StoryblokComponent blok={data.story.content} />
-	<!-- <Footer footer={data.footer} logo={data.logo} /> -->
+	<Footer footer={data.footer} logo={data.logo} />
 </div>

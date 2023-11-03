@@ -13,22 +13,22 @@ export async function load({ params }) {
     path += 'home';
   }
     // const resolveRelations = ['event-highlights.events']
-    const resolveRelations = ['event.stream', 'event.guests', 'guest.year']
+    const resolveRelations = ['event.stream', 'event.guests', 'guests.year']
     const dataStory = await storyblokApi.get(path, {
       version: 'draft',
       resolve_relations: resolveRelations,
     });
 
-    // const dataConfig = await storyblokApi.get('cdn/stories/config/', {
-    //   version: 'draft',
-    //   resolve_links: 'url'
-    // });
+    const dataConfig = await storyblokApi.get('cdn/stories/config/', {
+      version: 'draft',
+      resolve_links: 'url'
+    });
 
     return {
       story: dataStory.data.story,
-      // header: dataConfig.data.story.content.header_menu,
-		  // logo: dataConfig.data.story.content.logo,
-		  // footer: dataConfig.data.story.content
+      header: dataConfig.data.story.content.header_menu,
+		  logo: dataConfig.data.story.content.logo,
+		  footer: dataConfig.data.story.content
     };
    
   }

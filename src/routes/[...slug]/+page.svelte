@@ -21,10 +21,10 @@
 </svelte:head>
 {#key data}
 	<div>
-	<!-- <Header header={data.header} logo={data.logo} /> -->
+	<Header header={data.header} logo={data.logo} />
 		{#if data.story}
 			<StoryblokComponent blok={data.story.content} />
 		{/if}
-	<!-- <Footer footer={data.footer} logo={data.logo} /> -->
+	<Footer footer={data.footer} logo={data.logo} />
 	</div>
 {/key}

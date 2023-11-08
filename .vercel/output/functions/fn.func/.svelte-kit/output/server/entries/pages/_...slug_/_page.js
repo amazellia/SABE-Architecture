@@ -1,5 +1,8 @@
 import { u as useStoryblok } from "../../../chunks/sblib.js";
 import { u as useStoryblokApi } from "../../../chunks/index.js";
+const config = {
+  runtime: "nodejs18.x"
+};
 async function load({ params }) {
   await useStoryblok();
   let storyblokApi = await useStoryblokApi();
@@ -27,5 +30,6 @@ async function load({ params }) {
   };
 }
 export {
+  config,
   load
 };

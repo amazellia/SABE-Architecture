@@ -1,9 +1,6 @@
 import { useStoryblok } from '$lib/sblib';
 import { useStoryblokApi } from '@storyblok/svelte';
-/** @type {import('@sveltejs/adapter-vercel').Config} */
-export const config = {
-	runtime: 'nodejs18.x'
-};
+
 export async function load({ params }) {
   await useStoryblok();
 

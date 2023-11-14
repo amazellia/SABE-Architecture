@@ -1,7 +1,6 @@
 <script>
 	export let header;
     export let logo;
-    export let title;
 
     let navIsOpen = false;
 
@@ -10,9 +9,6 @@
     }
 </script>
 
-<title>
-    {title}
-</title>
 <header class="w-full h-full sticky z-20 top-0 md:relative lg:relative">
     <div class="navbar top-0 md:bg-base-100">
         <div class="flex-1">

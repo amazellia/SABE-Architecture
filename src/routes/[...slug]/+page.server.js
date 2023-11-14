@@ -20,9 +20,9 @@ function sleep(value, ms) {
 }
 
 /** @type {import('./$types').PageServerLoad} */
+
 export async function load({ params }) {
-  await useStoryblok();
-	let storyblokApi = await useStoryblokApi();
+  await useStoryblok()
   let slug = params.slug;
   let path = 'cdn/stories/';
   if (slug) {
@@ -32,21 +32,20 @@ export async function load({ params }) {
   }
     // const resolveRelations = ['event-highlights.events']
     const resolveRelations = ['event.stream', 'event.guests', 'guests.year']
-    const dataStory = await storyblokApi.get(path, {
+    const dataStory = await useStoryblokApi().get(path, {
       version: 'draft',
       resolve_relations: resolveRelations,
     });
 
-    const dataConfig = await storyblokApi.get('cdn/stories/config/', {
+    const dataConfig = await useStoryblokApi().get('cdn/stories/config/', {
       version: 'draft',
       resolve_links: 'url'
     });
 
     return {
-      story: dataStory.data.story,
-      header: dataConfig.data.story.content.header_menu,
-		  logo: dataConfig.data.story.content.logo,
-		  footer: dataConfig.data.story.content
+      story: sleep(dataStory.data.story, 1000),
+      header: sleep(dataConfig.data.story.content.header_menu, 1),
+		  logo: sleep(dataConfig.data.story.content.logo, 1),
+		  footer: sleep(dataConfig.data.story.content, 1)
     };
-   
   }

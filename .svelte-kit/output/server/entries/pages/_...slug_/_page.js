@@ -1,11 +1,11 @@
 import { u as useStoryblok } from "../../../chunks/sblib.js";
 import { u as useStoryblokApi } from "../../../chunks/index.js";
 const config = {
-  runtime: "nodejs18.x"
+  // Use 'nodejs18.x' for Serverless
+  runtime: "edge"
 };
 async function load({ params }) {
   await useStoryblok();
-  let storyblokApi = await useStoryblokApi();
   let slug = params.slug;
   let path = "cdn/stories/";
   if (slug) {
@@ -14,11 +14,11 @@ async function load({ params }) {
     path += "home";
   }
   const resolveRelations = ["event.stream", "event.guests", "guests.year"];
-  const dataStory = await storyblokApi.get(path, {
+  const dataStory = await useStoryblokApi().get(path, {
     version: "draft",
     resolve_relations: resolveRelations
   });
-  const dataConfig = await storyblokApi.get("cdn/stories/config/", {
+  const dataConfig = await useStoryblokApi().get("cdn/stories/config/", {
     version: "draft",
     resolve_links: "url"
   });

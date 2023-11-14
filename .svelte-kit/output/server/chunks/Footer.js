@@ -1,4 +1,4 @@
-import { c as create_ssr_component, d as each, e as escape, f as add_attribute } from "./ssr.js";
+import { c as create_ssr_component, e as escape, d as each, f as add_attribute } from "./ssr.js";
 const Header_svelte_svelte_type_style_lang = "";
 const css = {
   code: ".open.svelte-jr4mtv{display:block}.mobile-nav.svelte-jr4mtv{display:none}.mobile-nav.open.svelte-jr4mtv{display:block}",
@@ -7,12 +7,15 @@ const css = {
 const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { header } = $$props;
   let { logo } = $$props;
+  let { title } = $$props;
   if ($$props.header === void 0 && $$bindings.header && header !== void 0)
     $$bindings.header(header);
   if ($$props.logo === void 0 && $$bindings.logo && logo !== void 0)
     $$bindings.logo(logo);
+  if ($$props.title === void 0 && $$bindings.title && title !== void 0)
+    $$bindings.title(title);
   $$result.css.add(css);
-  return `<header class="w-full h-full sticky z-20 top-0 md:relative lg:relative"><div class="navbar top-0 md:bg-base-100"><div class="flex-1">${logo ? `<a href="/" data-svelte-h="svelte-162y2r8">
+  return `<head>${escape(title)}</head> <header class="w-full h-full sticky z-20 top-0 md:relative lg:relative"><div class="navbar top-0 md:bg-base-100"><div class="flex-1">${logo ? `<a href="/" data-svelte-h="svelte-162y2r8">
                     home</a>` : ``}</div> ${header ? `<div class="${["flex-none hidden lg:block svelte-jr4mtv", ""].join(" ").trim()}"><ul class="flex space-x-4 lg:space-x-8 text-lg font-bold">${each(header, (blok) => {
     return `<li class="hover:text-[#808080] p-3"><a href="${"/" + escape(blok.link.story.url, true)}">${escape(blok.name)}</a> </li>`;
   })}</ul></div>` : ``} <div class="${[

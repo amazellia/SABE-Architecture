@@ -1,0 +1,15 @@
+{
+    "version": 32,
+    "builds": [
+      {
+        "src": "/",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/"
+      }
+    ]
+  }

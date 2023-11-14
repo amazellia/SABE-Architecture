@@ -12,16 +12,17 @@
 			});
 		}
 	});
-
 </script>
 
-{#await data}
-<h2>streaming delayed data from the server...</h2>
-{:then data}
-	{#key data}
+{#await data.story}
+<div>
+	<h2>streaming delayed data from the server...</h2>
+</div>
+{:then story}
+	{#key story}
 		<div>
-			<Header header={data.header} logo={data.logo} title={data.story.name}/>
-				<StoryblokComponent blok={data.story.content} />
+			<Header header={data.header} logo={data.logo} title={story.name}/>
+				<StoryblokComponent blok={story.content} />
 			<Footer footer={data.footer} logo={data.logo} />
 		</div>
 	{/key}

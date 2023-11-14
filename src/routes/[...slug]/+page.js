@@ -19,8 +19,6 @@ function sleep(value, ms) {
   });
 }
 
-/** @type {import('./$types').PageServerLoad} */
-
 export async function load({ params }) {
   await useStoryblok()
   let slug = params.slug;
@@ -43,9 +41,9 @@ export async function load({ params }) {
     });
 
     return {
-      story: sleep(dataStory.data.story, 5000),
-      header: sleep(dataConfig.data.story.content.header_menu, 1),
-		  logo: sleep(dataConfig.data.story.content.logo, 1),
-		  footer: sleep(dataConfig.data.story.content, 1)
+      story: dataStory.data.story,
+      header: dataConfig.data.story.content.header_menu,
+		  logo: dataConfig.data.story.content.logo,
+		  footer: dataConfig.data.story.content,
     };
   }

@@ -40,6 +40,7 @@
 const nextPage = () => {
     currentPage += 1;
     loadPage();
+    scrollToTop();
 };
 
 // Function to navigate to the previous page
@@ -47,8 +48,13 @@ const prevPage = () => {
     if (currentPage > 1) {
         currentPage -= 1;
         loadPage();
+        scrollToTop();
     }
 };
+
+const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
 // Function to handle year selection from the drop-down menu
 const handleYearSelection = (event) => {

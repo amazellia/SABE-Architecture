@@ -31,10 +31,11 @@
         };
         onMount(loadPage);
 
-        // Function to navigate to the next page
+    // Function to navigate to the next page
     const nextPage = () => {
         currentPage += 1;
         loadPage();
+        scrollToTop();
     };
 
     // Function to navigate to the previous page
@@ -42,7 +43,12 @@
         if (currentPage > 1) {
             currentPage -= 1;
             loadPage();
+            scrollToTop();
         }
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
         
     </script>

@@ -43,7 +43,7 @@ export async function load({ params }) {
     });
 
     return {
-      story: sleep(dataStory.data.story, 1000),
+      story: sleep(dataStory.data.story, 5000),
       header: sleep(dataConfig.data.story.content.header_menu, 1),
 		  logo: sleep(dataConfig.data.story.content.logo, 1),
 		  footer: sleep(dataConfig.data.story.content, 1)

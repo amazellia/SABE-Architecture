@@ -4,7 +4,7 @@
         import { useStoryblokApi } from '@storyblok/svelte';
         let currentPage = 1;
         let hasMorePages = true; // Flag to check if there are more pages
-        const perPage = 24; 
+        const perPage = 12; 
         let events = [];
         const loadPage = async () => {
             const storyblokApi = useStoryblokApi();

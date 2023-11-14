@@ -5,7 +5,7 @@
 
     let currentPage = 1;
     let hasMorePages = true; // Flag to check if there are more pages
-    const perPage = 24; 
+    const perPage = 12; 
     let guests = [];
     let selectedYear = "2023,2022,2021,2020,2019"; // Default to show all guests
     let years = ["All" , "2023", "2022", "2021", "2020", "2019"]; // Add more years as needed

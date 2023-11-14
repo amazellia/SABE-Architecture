@@ -5,20 +5,6 @@ export const config = {
   runtime: 'edge',
 };
 
-/**
- * @param {any} value
- * @param {number} ms
- */
-function sleep(value, ms) {
-  // Use this sleep function to simulate
-  // a delayed API response.
-  return new Promise((fulfill) => {
-    setTimeout(() => {
-      fulfill(value);
-    }, ms);
-  });
-}
-
 export async function load({ params }) {
   await useStoryblok()
   let slug = params.slug;

@@ -15,15 +15,14 @@
 
 </script>
 
-<svelte:head>
-	<title>{data.story.name}</title>
-</svelte:head>
+
 {#await data}
 <p>streaming delayed data from the server...</p>
 {:then data}
+
 	{#key data}
 		<div>
-			<Header header={data.header} logo={data.logo} />
+			<Header header={data.header} logo={data.logo} title={data.story.name}/>
 				<StoryblokComponent blok={data.story.content} />
 			<Footer footer={data.footer} logo={data.logo} />
 		</div>

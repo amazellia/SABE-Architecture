@@ -21,8 +21,7 @@ function sleep(value, ms) {
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
-  sleep(await useStoryblok(), 10000);
-
+  await useStoryblok();
 	let storyblokApi = await useStoryblokApi();
   let slug = params.slug;
   let path = 'cdn/stories/';

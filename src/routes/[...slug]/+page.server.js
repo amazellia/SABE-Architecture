@@ -1,8 +1,27 @@
 import { useStoryblok } from '$lib/sblib';
 import { useStoryblokApi } from '@storyblok/svelte';
+export const config = {
+  // Use 'nodejs18.x' for Serverless
+  runtime: 'edge',
+};
 
+/**
+ * @param {any} value
+ * @param {number} ms
+ */
+function sleep(value, ms) {
+  // Use this sleep function to simulate
+  // a delayed API response.
+  return new Promise((fulfill) => {
+    setTimeout(() => {
+      fulfill(value);
+    }, ms);
+  });
+}
+
+/** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
-  await useStoryblok();
+  sleep(await useStoryblok(), 5000);
 
 	let storyblokApi = await useStoryblokApi();
   let slug = params.slug;

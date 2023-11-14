@@ -3,7 +3,6 @@ import { useStoryblokApi } from '@storyblok/svelte';
 import { useStoryblok } from '$lib/sblib';
 export const prerender = true;
 
-/** @type {import('./$types').PageLoad} */
 export async function load() {
 	await useStoryblok();
 

@@ -1,6 +1,4 @@
 {
-	"runtime": "nodejs18.x",
-	"handler": "..\\..\\..\\..\\..\\..\\Users\\apv371\\Documents\\Websites\\architecture\\.svelte-kit\\vercel-tmp\\index.js",
-	"launcherType": "Nodejs",
-	"experimentalResponseStreaming": true
+	"runtime": "edge",
+	"entrypoint": "index.js"
 }

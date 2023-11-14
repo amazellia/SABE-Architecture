@@ -9,26 +9,26 @@
 		"gh-pages": "npm run build && npx gh-pages -d build"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-auto": "^2.1.1",
 		"@sveltejs/adapter-vercel": "^3.0.3",
 		"@sveltejs/kit": "^1.20.4",
 		"@vitejs/plugin-basic-ssl": "^1.0.1",
 		"autoprefixer": "^10.4.14",
-		"daisyui": "^3.2.1",
+		"daisyui": "^3.9.4",
 		"gh-pages": "^5.0.0",
 		"postcss": "^8.4.25",
 		"svelte": "^4.2.3",
-		"tailwindcss": "^3.3.2",
-		"vite": "^4.4.2"
+		"tailwindcss": "^3.3.5",
+		"vite": "^4.5.0"
 	},
 	"type": "module",
 	"dependencies": {
 		"@storyblok/svelte": "^3.0.11",
 		"clone-deep": "^4.0.1",
 		"html-minifier": "^4.0.0",
-		"svelte-preprocess": "^5.0.4",
+		"svelte-preprocess": "^5.1.0",
 		"typescript": "^5.1.6",
 		"vercel": "^32.5.3",
-		"vite-imagetools": "^6.2.3"
+		"vite-imagetools": "^6.2.4"
 	}
 }

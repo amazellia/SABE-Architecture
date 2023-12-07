@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config}*/
-const config = {
+export default {
   content: ["./src/**/*.{html,js,svelte,ts}"],
 
   theme: {
     extend: {},
   },
 
-  plugins: [require("daisyui")],
-};
-
-module.exports = config;
+  plugins: [
+    require("daisyui"),
+  ],
+}

@@ -15,7 +15,9 @@
 </script>
 
 <svelte:head>
-	{data.story.name}
+	<title>
+		{data.story.name}
+	</title>
 </svelte:head>
 
 {#await data.story}

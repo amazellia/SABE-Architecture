@@ -1,6 +1,6 @@
 {
-	"name": "sveltekit-storyblok-workshop",
-	"version": "0.0.1",
+	"name": "sabe-architecture",
+	"version": "1.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -11,11 +11,10 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.1.1",
 		"@sveltejs/adapter-vercel": "^3.0.3",
-		"@sveltejs/kit": "^1.20.4",
+		"@sveltejs/kit": "^1.27.6",
 		"@vitejs/plugin-basic-ssl": "^1.0.1",
-		"autoprefixer": "^10.4.14",
+		"autoprefixer": "^10.4.16",
 		"daisyui": "^3.9.4",
-		"gh-pages": "^5.0.0",
 		"postcss": "^8.4.25",
 		"svelte": "^4.2.3",
 		"tailwindcss": "^3.3.5",
@@ -27,7 +26,7 @@
 		"clone-deep": "^4.0.1",
 		"html-minifier": "^4.0.0",
 		"svelte-preprocess": "^5.1.0",
-		"typescript": "^5.1.6",
+		"typescript": "^5.2.2",
 		"vercel": "^32.5.3",
 		"vite-imagetools": "^6.2.4"
 	}

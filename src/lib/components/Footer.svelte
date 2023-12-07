@@ -1,6 +1,8 @@
 <script>
     export let footer;
     export let logo;
+    const d = new Date();
+    let year = d.getFullYear();
 </script>
 
 <footer class="p-12">
@@ -30,6 +32,6 @@
         {/if}
     </div>
     <div  class="flex items-center justify-center text-xl lg:text-2xl font-bold text-center p-8">
-        {footer.copyright}
+        {`${year} ${footer.copyright}`}
     </div>
 </footer>

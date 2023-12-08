@@ -17,6 +17,10 @@ export async function useStoryblok(accessToken = '') {
 		accessToken: accessToken,
 		// 005 using the apiPlugin (for connecting with Stroyblok API)
 		use: [apiPlugin],
+		cache: {
+			clear: "auto",
+			type: "memory",
+		  },
 		// 006 listing the needed components
 		components: {
 			feature: (await import('$lib/components/Feature.svelte')).default,

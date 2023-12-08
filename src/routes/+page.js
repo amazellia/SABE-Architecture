@@ -1,12 +1,13 @@
 
 import { useStoryblokApi } from '@storyblok/svelte';
-import { useStoryblok } from '$lib/sblib';
+import { useStoryblok } from '../routes/sblib'
+/** @type {import('./$types').PageLoad} */
 export const prerender = true;
 
 export async function load() {
 	await useStoryblok();
 
-	let storyblokApi = await useStoryblokApi();
+	let storyblokApi = useStoryblokApi();
 	const resolveRelations = ['event-highlights.events']
 	const dataStory = await storyblokApi.get('cdn/stories/home', {
 		version: 'draft',

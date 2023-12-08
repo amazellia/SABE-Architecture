@@ -67,11 +67,11 @@
     selectYear  = event.target.value;
         if (selectYear  == "all") {
             // If "all" is selected, add all years to the array
-            selectYear = [...yearList];
+            selectYear = [...yearList.filter((x) => x !== "all")].toString();
         }
-    console.log(selectYear);
     currentPage = 1; // Reset to the first page when changing the filter
     };
+
 </script>
 
 <div class="py-24"> 

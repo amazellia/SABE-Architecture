@@ -30,7 +30,7 @@
             <ul class="flex space-x-4 lg:space-x-8 text-lg font-bold">
                 {#each header as blok}
                     <li class="hover:text-[#808080] p-3">
-                        <a href="/{blok.link.story.url}"> {blok.name}</a>
+                        <a href="/{blok.link.story.url}" data-sveltekit-preload-data="tap"> {blok.name}</a>
                     </li> 
                 {/each}
             </ul>

@@ -1,5 +1,4 @@
- 
-<script>
+ <script>
     import { storyblokEditable } from '@storyblok/svelte';
     export let guest;
     export let slug;

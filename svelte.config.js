@@ -2,11 +2,11 @@ import preprocess from "svelte-preprocess";
 import vercel from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/kit/vite';
  
-/** @type {import('@sveltejs/kit').Config} */
+// /** @type {import('@sveltejs/kit').Config} */
 const config = {
   kit: {
     adapter: vercel({
-      runtime: 'nodejs18.x',
+      runtime: 'nodejs20.x',
     }),
     alias: {
       '@storyblok/svelte': './node_modules/@storyblok/svelte',

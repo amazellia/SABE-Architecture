@@ -1,4 +1,3 @@
- 
 <script>
     import { storyblokEditable, renderRichText } from '@storyblok/svelte';
     export let blok;

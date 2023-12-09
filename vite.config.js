@@ -15,7 +15,8 @@ const __dirname = path.dirname(__filename);
 export default defineConfig({
   plugins: [sveltekit(), basicSsl(), imagetools()],
   server: {
-    https: true,
+    //https: true,
+    port: 3000
   },
   resolve: {
     alias: {

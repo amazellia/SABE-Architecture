@@ -1,6 +1,8 @@
 <script>
 	export let header;
     export let logo;
+    
+	import Headline from './micro/Headline.svelte';
 
     let navIsOpen = false;
 
@@ -9,9 +11,9 @@
     }
 </script>
 
-<header class="w-full h-full sticky z-20 top-0 md:relative lg:relative">
+<header class="w-full h-full sticky z-20 top-0 md:relative lg:relative flex justify-center">
     <div class="navbar top-0 md:bg-base-100">
-        <div class="flex-1">
+        <div class=" mx-4 flex-1">
             {#if logo}
                 <a href="/">
                     <!-- <img
@@ -20,7 +22,7 @@
                     class="w-auto h-20 lg:h-28 flex justify-center items-center text-center"
                     class:close={navIsOpen}
                     /> -->
-                    home
+                    <Headline headline={"SABE"}/>
                 </a> 
             {/if}
         </div>

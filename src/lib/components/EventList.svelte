@@ -48,7 +48,7 @@
     };
 
     const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: '50vh', behavior: 'smooth' });
     };
         
     </script>

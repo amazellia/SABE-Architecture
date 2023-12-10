@@ -3,6 +3,8 @@
 	import { useStoryblokBridge, StoryblokComponent } from '@storyblok/svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+
+	import MouseCursor from '$lib/components/Pointer.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 	onMount(() => {
@@ -16,11 +18,9 @@
 </script>
 
 <svelte:head>
-	<title>
-		{data.story.name}
-	</title>
+	<title>{data.story.name}</title>
 </svelte:head>
-
+<MouseCursor/>
 {#await data.story}
 <div>
 	<h2>streaming delayed data from the server...</h2>

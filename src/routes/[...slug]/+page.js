@@ -7,7 +7,7 @@ export const config = {
   runtime: 'edge',
 };
 
-export async function load({ fetch, params }) {
+export async function load({ params }) {
   await useStoryblok()
   let slug = params.slug;
   let path = 'cdn/stories/';
@@ -34,5 +34,6 @@ export async function load({ fetch, params }) {
       header: dataConfig.data.story.content.header_menu,
 		  logo: dataConfig.data.story.content.logo,
 		  footer: dataConfig.data.story.content,
+      name: slug,
     };
   }

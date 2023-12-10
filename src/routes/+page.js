@@ -1,6 +1,6 @@
 
 import { useStoryblokApi } from '@storyblok/svelte';
-import { useStoryblok } from '../routes/sblib'
+import { useStoryblok } from './sblib'
 /** @type {import('./$types').PageLoad} */
 export const prerender = true;
 

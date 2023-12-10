@@ -1,40 +1,33 @@
 <script>
-    import GuestCard from './GuestCard.svelte';
+    import EventCard from './EventCard.svelte';
     import { onMount } from 'svelte';
     import { useStoryblokApi } from '@storyblok/svelte';
-
-    const storyblokApi = useStoryblokApi();
+    import Subheadline from './micro/Subheadline.svelte';
     let currentPage = 1;
     let hasMorePages = true; // Flag to check if there are more pages
-    const perPage = 12; 
-    let guests = [];
-    let yearList = [];
-    let selectYear = [];
-    
+    const perPage = 6; 
+    let d = new Date();
+    let events = [];
     const loadPage = async () => {
-        const {year} = storyblokApi.get('cdn/stories/config/', {})
-        .then(response => {
-            yearList = response.data.story.content.year;
-            return yearList;
-        }).catch(error => {
-            console.log(error);
-    });       
-
+        const storyblokApi = useStoryblokApi();
+        const resolveRelations = ['event.stream', 'event.guests']
         const { data } = await storyblokApi.get('cdn/stories', {
             version: 'published',
-            starts_with: 'guests',
+            starts_with: 'events',
             is_startpage: false,
-            sort_by: 'content.year:desc',
+            sort_by: 'content.startDate:asc',
             per_page: perPage,
             page: currentPage,
+            resolve_relations: resolveRelations,
             filter_query: {
-                year: {any_in_array: selectYear}}
-            });
-        guests = data.stories;    
+                startDate: {gt_date : `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`}
+            }
+        });
+        events = data.stories;
 
         const { length } = await storyblokApi.getAll('cdn/stories', {
             version: 'published',
-            starts_with: 'guests',
+            starts_with: 'events',
             is_startpage: false
         });
 
@@ -43,51 +36,42 @@
     };
     onMount(loadPage);
 
-    // Function to navigate to the next page
-    const nextPage = () => {
-        currentPage += 1;
+// Function to navigate to the next page
+const nextPage = () => {
+    currentPage += 1;
+    loadPage();
+    scrollToTop();
+};
+
+// Function to navigate to the previous page
+const prevPage = () => {
+    if (currentPage > 1) {
+        currentPage -= 1;
         loadPage();
         scrollToTop();
-    };
+    }
+};
 
-    // Function to navigate to the previous page
-    const prevPage = () => {
-        if (currentPage > 1) {
-            currentPage -= 1;
-            loadPage();
-            scrollToTop();
-        }
-    };
-
-    const scrollToTop = () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-
-    const handleYearSelection = (event) => {
-    selectYear  = event.target.value;
-        if (selectYear  == "all") {
-            // If "all" is selected, add all years to the array
-            selectYear = [...yearList.filter((x) => x !== "all")].toString();
-        }
-    currentPage = 1; // Reset to the first page when changing the filter
-    };
-
+const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+    
 </script>
 
-<div class="py-24"> 
-    <div class="mt-4 text-center">
-        <label for="yearSelector" class="block text-gray-700">Select Year:</label>
-        <select id="yearSelector" class="mt-1 p-2 border rounded" on:change={handleYearSelection}>
-            {#each yearList as year}
-                <option value={year}>{year}</option>
-            {/each}
-        </select>
-        <input type="submit" value="Submit" on:click={loadPage}>
-    </div>
 
+<div class="justify-center flex mx-10">
+    <Subheadline Subheadline={"Upcoming Events"} />
+</div>
+
+{#if events == 0}
+    <div class="justify-center flex mx-10 text-[clamp(2rem,5vw,1rem)]">
+       <p>no upcoming events</p>
+    </div>
+{:else}
+<div class="py-24">
     <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start">
-        {#each guests as guest}
-            <GuestCard guest={guest.content} slug={guest.full_slug} />
+        {#each events as event}
+            <EventCard event={event.content} slug={event.full_slug} />
         {/each}
     </div>
     <div class="flex justify-center mt-4">
@@ -136,3 +120,5 @@
         </button>
     </div>
 </div>
+
+{/if}

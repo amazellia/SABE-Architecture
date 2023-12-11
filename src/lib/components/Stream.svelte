@@ -10,11 +10,11 @@
         alt={blok.image.alt}
         class="w-full h-[360px] lg:h-[450px] object-cover"
     /> -->
-    <div class="grid justify-items-center mx-auto mb-12">
+    <div class="grid justify-items-center mx-auto mb-12 ">
         <h1 class="text-2xl lg:text-6xl font-bold mt-12 mb-4 text-center">{blok.name}</h1>
         <!-- <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold mb-4">
             {blok.subtitle}
         </h2> -->
-        <div class="w-2/3 prose">{@html resolvedRichText}</div>
+        <div class="w-2/3 prose text-lightgray">{@html resolvedRichText}</div>
     </div>
 </div>

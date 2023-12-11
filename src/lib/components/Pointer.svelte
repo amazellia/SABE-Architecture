@@ -1,6 +1,13 @@
 <script>
 	import { spring } from 'svelte/motion';
+  import Device from 'svelte-device-info'
+  import { onMount } from 'svelte'; 
+  let isMobile;
 
+	onMount(async () => {
+		isMobile = Device.isMobile;
+	});
+  
 	let coords1 = spring(
 		{ x: 0, y: 0 },
 		{
@@ -17,15 +24,16 @@
 		}
 	);
 
-	let size = spring(10);
+	let size = spring(15);
   let X = 0;
   let Y = 0;
   let scrollY = 0;
 
   function updateCursor () {
-    coords1.set({ x: X, y: Y+ scrollY })
-    coords2.set({ x: X, y: Y+ scrollY })
+    coords1.set({ x: X, y: Math.max(0, Y + scrollY) })
+    coords2.set({ x: X, y: Math.max(0, Y + scrollY) })
   }
+
   function handleLinkHover(event) {
     // You can customize this logic based on your requirements
     // For example, extract the link information from the event target and update the icon accordingly
@@ -34,7 +42,13 @@
     // You might want to have a mapping of links to icons
     // For simplicity, let's assume it's a direct SVG path for demonstration purposes
     // Replace this with your logic for updating the cursor icon
-    updateCursorIcon();
+    //updateCursorIcon();
+    console.log("clicked")
+  }
+
+  function handleFocus(event) {
+    hoveredLink = event.target.href || null;
+    console.log("clicked")
   }
 
   function updateCursorIcon() {
@@ -53,21 +67,44 @@
   on:mousemove={(e) => {
     X = e.clientX;
     Y = e.clientY;
-    updateCursor()
-  }}
+    updateCursor();
+;  }}
   on:mousedown={(e) => {
-  size.set(30);
+    size.set(30);
   }}
   on:mouseup={(e) => {
-  size.set(15);
+    size.set(15);
   }}
-/>
+  
+  on:touchmove={(e) => {
+    const touch = e.touches[0];
+    X = touch.clientX;
+    Y = touch.clientY;
+    size.set(100);
+    updateCursor()
+  }}
+  on:touchstart={(e) => {
+    size.set(100);
+    const touch = e.touches[0];
+    X = touch.clientX;
+    Y = touch.clientY
+    updateCursor();
+  }}
+  on:touchend={(e) => {
+    size.set(0);
+  }}
+  />
 
-<svg
-	class ="w-full h-full" on:mouseover={handleLinkHover}
->
-	<circle cx={$coords1.x} cy={$coords1.y} r={$size} stroke="lightgray" stroke-width="1" fill-opacity="0"/>
-	<circle cx={$coords2.x} cy={$coords2.y} r={$size/4} fill="darkgray"/>
+
+<svg 
+  role="none" 
+  style="pointer-events: {isMobile ? 'none' : 'none'};" 
+  class="w-full h-full"  
+  on:mouseover={handleLinkHover} 
+  on:focus={handleFocus}
+  > 
+  <circle cx={$coords1.x} cy={$coords1.y} r={$size} stroke="lightgray" stroke-width="1" fill-opacity="0" />
+  <circle cx={$coords2.x} cy={$coords2.y} r={$size / 4} fill="darkgray" />
 </svg>
 
 <style>
@@ -86,6 +123,5 @@
 	svg {
     z-index: 100;
     position: fixed;
-		pointer-events: none;
 	}
 </style>

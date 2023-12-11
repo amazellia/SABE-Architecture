@@ -3,7 +3,7 @@
 	"version": "1.0",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev", 
+		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"gh-pages": "npm run build && npx gh-pages -d build"
@@ -26,6 +26,7 @@
 	"dependencies": {
 		"clone-deep": "^4.0.1",
 		"html-minifier": "^4.0.0",
+		"svelte-device-info": "^1.0.0",
 		"typescript": "^5.2.2",
 		"vercel": "^32.6.1",
 		"vite-imagetools": "^6.2.4"

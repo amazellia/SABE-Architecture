@@ -15,11 +15,11 @@
     />
     <div class="p-4">
         <h3 class="text-xl font-bold mb-3">
-            {peri.name}
+            {peri.projectName}
         </h3>
-        {#if peri.teaser}
+        {#if peri.CreatorsName}
         <div class="line-clamp-4">
-            {peri?.teaser}
+            {peri?.CreatorsName}
         </div>
         {/if}
     </div>

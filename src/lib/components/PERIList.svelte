@@ -86,8 +86,8 @@
     </div>
 
     <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start">
-        {#each peri as guest}
-            <PERICard peri={guest.content} slug={guest.full_slug} />
+        {#each peri as p}
+            <PERICard peri={p.content} slug={p.full_slug} />
         {/each}
     </div>
     <div class="flex justify-center mt-4">

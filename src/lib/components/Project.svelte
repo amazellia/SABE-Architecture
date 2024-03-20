@@ -12,14 +12,18 @@
     />
     <div class="grid justify-items-center mx-auto mb-12">
         <h1 class="text-2xl lg:text-6xl  font-bold mt-12 mb-4 text-center">{blok.projectName}</h1>
-        <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold mb-4">
-            {blok.date}
-        </h2>
-        {#each blok.guests as guest}
-        <a href="/{guest.full_slug}">
-            {guest.name}
-        </a>
-        {/each}
+        {#if blok.date}
+            <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold mb-4">
+                {blok.date}
+            </h2>
+        {/if}
+        {#if blok.guests}
+            {#each blok.guests as guest}
+            <a href="/{guest.full_slug}">
+                {guest.name}
+            </a>
+            {/each}
+        {/if}
         <div class="w-2/3 prose">{@html resolvedRichText}</div>
     </div>
 </div>

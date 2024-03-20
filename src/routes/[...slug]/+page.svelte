@@ -9,7 +9,7 @@
 	export let data;
 	onMount(() => {
 		if (data.story) {    
-			const resolveRelations = ['event.stream', 'event.guests', 'guest.year']
+			const resolveRelations = ['event.stream', 'event.guests', 'guests.year']
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory), {
 	 			resolveRelations: resolveRelations
 			});

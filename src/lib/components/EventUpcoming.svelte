@@ -6,6 +6,9 @@
     let currentPage = 1;
     let hasMorePages = true; // Flag to check if there are more pages
     const perPage = 3; 
+    let year = new Date().getFullYear();
+    let month = new Date().getMonth(); + 1;
+    let day = new Date().getDate();
     let events = [];
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
@@ -19,7 +22,7 @@
             page: currentPage,
             resolve_relations: resolveRelations,
             filter_query: {
-                startDate: { gt_date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}` }
+                startDate: { gt_date: `${year}-${month}-${day}` }
             }
         });
         events = data.stories;
@@ -54,6 +57,7 @@
 
 <div class="justify-center flex mx-10">
     <Subheadline Subheadline={"Upcoming Events"} />
+    <p>{year}-{month}-{day}</p>
 </div>
 
 <!-- {#if events == 0}

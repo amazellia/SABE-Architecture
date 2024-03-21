@@ -10,7 +10,7 @@
 	use:storyblokEditable={blok}
 	class=" w-full"
 >
-	<div class="text-center bg-darkgrey bg-opacity-70 px-2 pt-40 lg:px-10">
+	<div class="text-center bg-darkgrey bg-opacity-70 px-2 m-8 lg:px-10">
 		<HeadlineColorful headline={blok.headline} />
 		{#if blok.headline2}
 			<Headline headline={blok.headline2} />

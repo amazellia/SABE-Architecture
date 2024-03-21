@@ -20,8 +20,8 @@
             page: currentPage,
             resolve_relations: resolveRelations,
             filter_query: {
-                startDate: {gt_date: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
-            }}
+                startDate: {gt_date: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`}
+            }
         });
         events = data.stories;
 

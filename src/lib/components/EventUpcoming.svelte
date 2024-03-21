@@ -19,9 +19,10 @@
             per_page: perPage,
             page: currentPage,
             resolve_relations: resolveRelations,
-            // filter_query: {
-            //     startDate: {gt_date : `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`}
-            // }
+            filter_query: {
+                startDate: {gt_date : "2024-03-21"
+                    // `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`}
+            }
         });
         events = data.stories;
 
@@ -40,7 +41,6 @@
     const nextPage = () => {
         currentPage += 1;
         loadPage();
-        scrollToTop();
     };
 
     // Function to navigate to the previous page
@@ -48,12 +48,7 @@
         if (currentPage > 1) {
             currentPage -= 1;
             loadPage();
-            scrollToTop();
         }
-    };
-
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
     
 </script>

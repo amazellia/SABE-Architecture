@@ -3,13 +3,20 @@
     import { onMount } from 'svelte';
     import { useStoryblokApi } from '@storyblok/svelte';
     import Subheadline from './micro/Subheadline.svelte';
+
+    // Pagination
     let currentPage = 1;
     let hasMorePages = true; // Flag to check if there are more pages
     const perPage = 3; 
-    let year = new Date().getFullYear();
-    let month = (new Date().getMonth() + 1) < 10 ? `0${new Date().getMonth() + 1}`: (new Date().getMonth() + 1);
-    let day = new Date().getDate();
+
+    // Current Date Formatting for Filtering Events 
+    let d = new Date();
+    let year = d.getFullYear();
+    let month = (d.getMonth() + 1) < 10 ? `0${d.getMonth() + 1}`: (d.getMonth() + 1);
+    let day = d.getDate();
+
     let events = [];
+    
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
         const resolveRelations = ['event.stream', 'event.guests']
@@ -57,7 +64,6 @@
 
 <div class="justify-center flex mx-10">
     <Subheadline Subheadline={"Upcoming Events"} />
-    <p>{year}-{month}-{day}</p>
 </div>
 
 <!-- {#if events == 0}

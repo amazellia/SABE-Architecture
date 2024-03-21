@@ -24,8 +24,6 @@
             <a class="underline underline-offset-8" href={footer.youtube.url} target="_blank">YouTube</a><br>
             <a class="underline underline-offset-8" href={footer.facebook.url} target="_blank">Facebook</a><br>
             <a class="underline underline-offset-8" href={footer.linkedin.url} target="_blank">LinkedIn</a> -->
-            Would you like to know our monthly updates, events on working bees, and different ways to get involved?
-            Sign up here: 
             <br><br>
             {footer.acknowledgement}<br>
         </div>

@@ -1,5 +1,7 @@
 <script>
 	import { storyblokEditable } from '@storyblok/svelte';
+	import HeadlineColorful from './micro/HeadlineColorful.svelte';
+
 	export let blok;
 	let heroClasses = blok.layout === 'constrained' ? 'container mx-auto' : '';
 </script>
@@ -10,10 +12,10 @@
 		`${heroClasses}`}
 >
 	<div class="relative z-10 text-center">
-		<h2 class="text-3xl lg:text-6xl text-white font-bold mb-3">
-			{blok.headline}
+		<h2 class="text-3xl lg:text-6xl text-darkgrey font-bold mb-3">
+			<HeadlineColorful headline={blok.headline} />
 		</h2>
-		<h3 class="text-4xl text-white font-light">
+		<h3 class="text-4xl text-darkgrey font-light">
 			{blok.subheadline}
 		</h3>
 	</div>

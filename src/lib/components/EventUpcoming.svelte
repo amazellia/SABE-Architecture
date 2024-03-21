@@ -22,7 +22,7 @@
             filter_query: {
                 startDate: {gt_date : "2024-03-21"
                     // `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`}
-            }
+            }}
         });
         events = data.stories;
 

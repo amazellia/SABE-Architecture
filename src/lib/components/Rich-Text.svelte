@@ -3,7 +3,7 @@
 
     export let blok;
 
-    $: resolvedRichText = renderRichText(blok.body);
+    $: resolvedRichText = renderRichText(blok.description);
 </script>
 
 <div use:storyblokEditable={blok} 

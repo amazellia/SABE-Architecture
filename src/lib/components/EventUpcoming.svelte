@@ -68,7 +68,7 @@ const scrollToTop = () => {
        <p>no upcoming events</p>
     </div>
 {:else}
-<div class="py-24">
+<div class="py-24 w-full"> 
     <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start">
         {#each events as event}
             <EventCard event={event.content} slug={event.full_slug} />

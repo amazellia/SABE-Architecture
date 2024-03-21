@@ -7,7 +7,7 @@
     let hasMorePages = true; // Flag to check if there are more pages
     const perPage = 3; 
     let year = new Date().getFullYear();
-    let month = new Date().getMonth(); + 1;
+    let month = (new Date().getMonth() + 1) < 10 ? `0${new Date().getMonth() + 1}`: (new Date().getMonth() + 1);
     let day = new Date().getDate();
     let events = [];
     const loadPage = async () => {

@@ -22,7 +22,7 @@
 
         const { data } = await storyblokApi.get('cdn/stories', {
             version: 'published',
-            starts_with: 'peri',
+            starts_with: 'projects/peri',
             is_startpage: false,
             sort_by: 'content.year:desc',
             per_page: perPage,

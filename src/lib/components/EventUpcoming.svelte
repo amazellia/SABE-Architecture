@@ -5,7 +5,7 @@
     import Subheadline from './micro/Subheadline.svelte';
     let currentPage = 1;
     let hasMorePages = true; // Flag to check if there are more pages
-    const perPage = 6; 
+    const perPage = 3; 
     let d = new Date();
     let events = [];
     const loadPage = async () => {
@@ -36,25 +36,25 @@
     };
     onMount(loadPage);
 
-// Function to navigate to the next page
-const nextPage = () => {
-    currentPage += 1;
-    loadPage();
-    scrollToTop();
-};
-
-// Function to navigate to the previous page
-const prevPage = () => {
-    if (currentPage > 1) {
-        currentPage -= 1;
+    // Function to navigate to the next page
+    const nextPage = () => {
+        currentPage += 1;
         loadPage();
         scrollToTop();
-    }
-};
+    };
 
-const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+    // Function to navigate to the previous page
+    const prevPage = () => {
+        if (currentPage > 1) {
+            currentPage -= 1;
+            loadPage();
+            scrollToTop();
+        }
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
     
 </script>
 
@@ -63,11 +63,11 @@ const scrollToTop = () => {
     <Subheadline Subheadline={"Upcoming Events"} />
 </div>
 
-{#if events == 0}
+<!-- {#if events == 0}
     <div class="justify-center flex mx-10 text-[clamp(2rem,5vw,1rem)]">
        <p>no upcoming events</p>
     </div>
-{:else}
+{:else} -->
 <div class="py-24 w-full"> 
     <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start">
         {#each events as event}
@@ -121,4 +121,4 @@ const scrollToTop = () => {
     </div>
 </div>
 
-{/if}
+<!-- {/if} -->

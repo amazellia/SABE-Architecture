@@ -6,7 +6,6 @@
     let currentPage = 1;
     let hasMorePages = true; // Flag to check if there are more pages
     const perPage = 3; 
-    let d = new Date();
     let events = [];
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
@@ -20,7 +19,7 @@
             page: currentPage,
             resolve_relations: resolveRelations,
             filter_query: {
-                startDate: {gt_date: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`}
+                startDate: { gt_date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}` }
             }
         });
         events = data.stories;

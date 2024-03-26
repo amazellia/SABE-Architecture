@@ -3,6 +3,8 @@
     import { onMount } from 'svelte';
     import { useStoryblokApi } from '@storyblok/svelte';
 
+    export let blok;
+
     const storyblokApi = useStoryblokApi();
     let currentPage = 1;
     let hasMorePages = true; // Flag to check if there are more pages
@@ -10,6 +12,7 @@
     let project = [];
     let yearList = [];
     let selectYear = [];
+    let tag = blok.tags || '';
     
     const loadPage = async () => {
         const {year} = storyblokApi.get('cdn/stories/config/', {})
@@ -23,7 +26,7 @@
         const { data } = await storyblokApi.get('cdn/stories', {
             version: 'published',
             starts_with: 'peri',
-            with_tag: 'PERI - Speaker',
+            with_tag: tag,
             is_startpage: false,
             sort_by: 'content.year:desc',
             per_page: perPage,

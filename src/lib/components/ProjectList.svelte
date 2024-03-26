@@ -12,7 +12,7 @@
     let project = [];
     let yearList = [];
     let selectYear = [];
-    let tag = blok.tags || '';
+    let customTag = blok.tags || '';
     
     const loadPage = async () => {
         const {year} = storyblokApi.get('cdn/stories/config/', {})
@@ -26,7 +26,7 @@
         const { data } = await storyblokApi.get('cdn/stories', {
             version: 'published',
             starts_with: 'peri',
-            with_tag: tag,
+            with_tag: customTag,
             is_startpage: false,
             sort_by: 'content.year:desc',
             per_page: perPage,
@@ -78,7 +78,8 @@
 
 </script>
 
-<div class="py-24"> 
+<div class="py-24 justify-center"> 
+    {#if blok.addYear = true}
     <div class="mt-4 text-center">
         <label for="yearSelector" class="block text-gray-700">Select Year:</label>
         <select id="yearSelector" class="mt-1 p-2 border rounded" on:change={handleYearSelection}>
@@ -88,12 +89,15 @@
         </select>
         <input type="submit" value="Submit" on:click={loadPage}>
     </div>
+    {/if}
 
-    <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start">
+    <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start col-span-full={(length/perPage) === 1} ">
         {#each project as p}
             <ProjectCard peri={p.content} slug={p.full_slug} />
         {/each}
     </div>
+
+    {#if blok.addYear = true}
     <div class="flex justify-center mt-4">
         <button 
             class="mr-2" 
@@ -139,4 +143,5 @@
             Next
         </button>
     </div>
+    {/if}
 </div>

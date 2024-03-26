@@ -4,7 +4,7 @@
     export let blok;
     $: resolvedRichText = renderRichText(blok.description);
 </script>
-<div use:storyblokEditable={blok}>
+<div use:storyblokEditable={blok} class="flex justify-center">
     <!-- <img
         src="{blok.image.filename}/m/1600x0"
         alt={blok.image.alt}

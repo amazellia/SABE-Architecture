@@ -6,6 +6,7 @@
 </script>
 
 <footer class="p-12">
+    <hr>
     <div class="flex flex-col lg:flex-row justify-stretch">
         {#if footer}
         <div class="basis-auto lg:basis-1/2">

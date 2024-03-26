@@ -8,7 +8,7 @@
     <img
         src="{blok.mainImage.filename}/m/1600x0"
         alt={blok.mainImage.alt}
-        class="w-full h-[360px] lg:h-[450px] object-cover"
+        class="w-3/5 h-full object-cover"
     />
     <div class="grid justify-items-center mx-auto mb-12">
         <h1 class="text-2xl lg:text-6xl  font-bold mt-12 mb-4 text-center">{blok.projectName}</h1>

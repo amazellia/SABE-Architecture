@@ -87,7 +87,7 @@
     </div>
 
     <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start">
-        {#each peri as p}
+        {#each project as p}
             <ProjectCard peri={p.content} slug={p.full_slug} />
         {/each}
     </div>

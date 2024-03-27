@@ -92,9 +92,11 @@
     </div>
     {/if}
 
-    <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start col-span-full={length === 1}">
+    <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start">
         {#each project as p}
+        <div class="col-span-full={length === 1}">
             <ProjectCard peri={p.content} slug={p.full_slug} />
+        </div>
         {/each}
     </div>
 

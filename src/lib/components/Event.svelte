@@ -6,8 +6,8 @@
 </script>
 <div use:storyblokEditable={blok}>
     <img
-        src="{blok.image.filename}/m/1600x0"
-        alt={blok.image.alt}
+        src="{blok.mainImage.filename}/m/1600x0"
+        alt={blok.mainImage.alt}
         class="w-3/5 h-full object-contain mx-auto"
     />
     <div class="grid justify-items-center mx-auto mb-12">

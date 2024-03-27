@@ -13,6 +13,7 @@
     let yearList = [];
     let selectYear = [];
     let customTag = blok.tags || '';
+    let ifYear = blok.addYear
     
     const loadPage = async () => {
         const {year} = storyblokApi.get('cdn/stories/config/', {})
@@ -79,7 +80,7 @@
 </script>
 
 <div class="py-24 justify-center"> 
-    {#if blok.addYear}
+    {#if ifYear}
     <div class="mt-4 text-center">
         <label for="yearSelector" class="block text-gray-700">Select Year:</label>
         <select id="yearSelector" class="mt-1 p-2 border rounded" on:change={handleYearSelection}>
@@ -97,7 +98,7 @@
         {/each}
     </div>
 
-    {#if blok.addYear}
+    {#if ifYear}
     <div class="flex justify-center mt-4">
         <button 
             class="mr-2" 

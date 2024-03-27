@@ -26,8 +26,7 @@
             </a>
             {/each}
         {/if}
-    </div>
-    <div class="justify-items-center mx-auto mb-12">
+        
         <div class="w-2/3 prose">{@html resolvedRichText}</div>
-    </div>
+    </div>]
 </div>

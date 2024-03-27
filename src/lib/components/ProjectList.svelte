@@ -79,7 +79,7 @@
 
 </script>
 
-<div class="py-24"> 
+<div class="py-24 justify-center "> 
     {#if ifYear}
     <div class="mt-4 text-center">
         <label for="yearSelector" class="block text-gray-700">Select Year:</label>
@@ -92,9 +92,9 @@
     </div>
     {/if}
 
-    <div class="container justify-center mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start ">
+    <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start col-span-full={length === 1}">
         {#each project as p}
-            <ProjectCard peri={p.content} slug={p.full_slug} class="col-span-full={length === 1}"/>
+            <ProjectCard peri={p.content} slug={p.full_slug} />
         {/each}
     </div>
 

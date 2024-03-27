@@ -4,7 +4,7 @@
     export let blok;
     $: resolvedRichText = renderRichText(blok.description);
 </script>
-<div use:storyblokEditable={blok} class="grid place-items-center">
+<div use:storyblokEditable={blok} >
 
     <img
     src="{blok.mainImage.filename}/m/1600x0"

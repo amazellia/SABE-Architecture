@@ -5,13 +5,11 @@
     export let pageLength;
 </script>
 <div class= "col-span-full={pageLength === 1}" >
-
-</div>
-<a
+    <a
     href="/{slug}"
     use:storyblokEditable={peri}
     class="w-full h-full bg-[#f7f6fd] rounded-[5px] text-center overflow-hidden"
->
+    >
     <img
         src="{peri.mainImage?.filename}/m/600x0"
         alt={peri.mainImage?.alt}
@@ -27,4 +25,5 @@
         </div>
         {/if}
     </div>
-</a>
+    </a>
+</div>

@@ -94,7 +94,7 @@
 
     <div class="container mx-auto grid @apply md:grid-cols-3 gap-12 my-12 place-items-center place-content-center">
         {#each project as p}
-        <div class="h-48 xl:h-72 col-span-full={length === 1}" >
+        <div class="col-span-full={length === 1}" >
             <ProjectCard peri={p.content} slug={p.full_slug}/>
         </div>
         {/each}

@@ -79,7 +79,7 @@
 </script>
 
 <div class="py-24 justify-center"> 
-    {#if blok.addYear = true}
+    {#if blok.addYear}
     <div class="mt-4 text-center">
         <label for="yearSelector" class="block text-gray-700">Select Year:</label>
         <select id="yearSelector" class="mt-1 p-2 border rounded" on:change={handleYearSelection}>
@@ -97,7 +97,7 @@
         {/each}
     </div>
 
-    {#if blok.addYear = true}
+    {#if blok.addYear}
     <div class="flex justify-center mt-4">
         <button 
             class="mr-2" 

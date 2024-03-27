@@ -9,7 +9,7 @@
     <img
     src="{blok.mainImage.filename}/m/1600x0"
     alt={blok.mainImage.alt}
-    class="w-full h-screen object-cover"
+    class="w-full h-screen object-contain"
     />
     
     <div class="justify-items-center mx-auto mb-12">
@@ -28,5 +28,5 @@
         {/if}
         
         <div class="w-2/3 prose">{@html resolvedRichText}</div>
-    </div>]
+    </div>
 </div>

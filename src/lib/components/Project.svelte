@@ -12,7 +12,7 @@
     class="w-full h-screen object-contain"
     />
     
-    <div class="justify-items-center mx-auto mb-12">
+    <div class="grid justify-items-center mx-auto mb-12">
         <h1 class="text-2xl lg:text-6xl  font-bold mt-12 mb-4 text-center">{blok.projectName}</h1>
         {#if blok.date}
             <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold mb-4">
@@ -26,7 +26,6 @@
             </a>
             {/each}
         {/if}
-        
         <div class="w-2/3 prose">{@html resolvedRichText}</div>
     </div>
 </div>

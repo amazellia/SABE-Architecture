@@ -15,6 +15,6 @@
         <!-- <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold mb-4">
             {blok.subtitle}
         </h2> -->
-        <div class="w-2/3 prose text-lightgray">{@html resolvedRichText}</div>
+        <div class="w-2/3 prose">{@html resolvedRichText}</div>
     </div>
 </div>

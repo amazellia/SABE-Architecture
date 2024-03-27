@@ -2,18 +2,28 @@
 <script>
     import { storyblokEditable, renderRichText } from '@storyblok/svelte';
     export let blok;
+    import HeadlineColorful from './micro/HeadlineColorful.svelte';
+
     $: resolvedRichText = renderRichText(blok.description);
 </script>
 <div use:storyblokEditable={blok} >
-
-    <img
-    src="{blok.mainImage.filename}/m/1600x0"
-    alt={blok.mainImage.alt}
-    class="w-full h-screen object-contain"
-    />
     
-    <div class="grid justify-items-center mx-auto mb-12">
-        <h1 class="text-2xl lg:text-6xl  font-bold mt-12 mb-4 text-center">{blok.projectName}</h1>
+    <div class="p-2 w-full text-center grid col-span-1">
+        <h1 class="text-sm"><HeadlineColorful headline={blok.projectName}/></h1>
+        <h2 class="text-xl lg:text-3xl  font-bold mt-12 mb-4 text-center">by {blok.CreatorsName}</h2>
+        <hr>
+    </div>
+    
+    <div class="grid grid-col md:grid-row md:grid-cols-2 w-dvw">
+        <div class="w-full m-4">
+            <img
+            src="{blok.mainImage.filename}/m/1600x0"
+            alt={blok.mainImage.alt}
+            class="w-full h-3/4 object-contain"
+            />
+        </div>
+
+        <div class="m-1">
         {#if blok.date}
             <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold mb-4">
                 {blok.date}
@@ -26,6 +36,8 @@
             </a>
             {/each}
         {/if}
-        <div class="w-2/3 prose">{@html resolvedRichText}</div>
+        <div class="m-3 prose">{@html resolvedRichText}</div>
+        </div>
     </div>
+    
 </div>

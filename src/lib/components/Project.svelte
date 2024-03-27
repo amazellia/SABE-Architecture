@@ -4,14 +4,13 @@
     export let blok;
     $: resolvedRichText = renderRichText(blok.description);
 </script>
-<div use:storyblokEditable={blok} class="flex justify-center">
-    <div class="w-dvw">
-        <img
-        src="{blok.mainImage.filename}/m/1600x0"
-        alt={blok.mainImage.alt}
-        class="w-3/5 h-full object-cover mx-auto"
-        />
-    </div>
+<div use:storyblokEditable={blok} class="grid place-items-center">
+
+    <img
+    src="{blok.mainImage.filename}/m/1600x0"
+    alt={blok.mainImage.alt}
+    class="w-3/5 h-full object-cover mx-auto"
+    />
     
     <div class="justify-items-center mx-auto mb-12">
         <h1 class="text-2xl lg:text-6xl  font-bold mt-12 mb-4 text-center">{blok.projectName}</h1>

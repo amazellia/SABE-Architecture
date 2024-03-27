@@ -9,7 +9,7 @@
     <img
     src="{blok.mainImage.filename}/m/1600x0"
     alt={blok.mainImage.alt}
-    class="w-full h-full object-cover"
+    class="w-full h-screen object-cover"
     />
     
     <div class="justify-items-center mx-auto mb-12">

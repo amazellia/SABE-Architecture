@@ -2,10 +2,9 @@
     import { storyblokEditable } from '@storyblok/svelte';
     export let peri;
     export let slug;
-    export let length;
 </script>
 
-<div class="col-span-full={length === 1}" use:storyblokEditable={peri}>
+<div use:storyblokEditable={peri}>
     <a
     href="/{slug}"
     class="w-full h-full bg-[#f7f6fd] rounded-[5px] text-center overflow-hidden"

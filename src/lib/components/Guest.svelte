@@ -4,7 +4,7 @@
     $: resolvedRichText = renderRichText(blok.description);
 </script>
 
-<div class="flex flex-row" use:storyblokEditable={blok}>
+<div use:storyblokEditable={blok}>
     <img
       src="{blok.image.filename}/m/1600x0"
       alt="{blok.image.alt}"

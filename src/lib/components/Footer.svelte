@@ -7,9 +7,9 @@
 
 <footer class="p-12">
     <hr>
-    <div class="flex flex-col lg:flex-row justify-stretch">
+    <div class="flex flex-col lg:flex-row justify-stretch p-3  gap-3">
         {#if footer}
-        <div class="basis-auto lg:basis-1/2">
+        <div class=" basis-auto lg:basis-1/2 ">
             <img
             src={logo.filename}
             alt={logo.alt}
@@ -25,12 +25,11 @@
             <a class="underline underline-offset-8" href={footer.youtube.url} target="_blank">YouTube</a><br>
             <a class="underline underline-offset-8" href={footer.facebook.url} target="_blank">Facebook</a><br>
             <a class="underline underline-offset-8" href={footer.linkedin.url} target="_blank">LinkedIn</a> -->
-            <br><br>
             {footer.acknowledgement}<br>
         </div>
         {/if}
     </div>
-    <div  class="flex items-center justify-center text-xl lg:text-2xl font-bold text-center p-8">
+    <div  class="flex items-center justify-center text-xl lg:text-2xl font-bold text-center">
         {`${year} ${footer.copyright}`}
     </div>
 </footer>

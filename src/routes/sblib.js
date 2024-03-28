@@ -38,6 +38,7 @@ export async function useStoryblok(accessToken = '') {
             grid_item_report: (await import('$lib/components/GridReportItem.svelte')).default,
 			project:(await import('$lib/components/Project.svelte')).default,
 			list:(await import('$lib/components/List.svelte')).default,
+			// gallery: (await import('$lib/components/Gallery.svelte')).default,
 			// projectList:(await import('$lib/components/ProjectList.svelte')).default,
             // guestList: (await import('$lib/components/GuestList.svelte')).default,
 			// streamList:(await import('$lib/components/StreamList.svelte')).default,

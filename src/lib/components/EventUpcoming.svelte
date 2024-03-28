@@ -1,5 +1,5 @@
 <script>
-    import EventCard from './EventCard.svelte';
+	import ListCard from './ListCard.svelte';
     import { onMount } from 'svelte';
     import { useStoryblokApi } from '@storyblok/svelte';
     import Subheadline from './micro/Subheadline.svelte';
@@ -74,7 +74,7 @@
 <div class="w-full"> 
     <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start">
         {#each events as event}
-            <EventCard event={event.content} slug={event.full_slug} />
+            <ListCard item={event.content} slug={event.full_slug} />
         {/each}
     </div>
     <div class="flex justify-center mt-4">

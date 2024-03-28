@@ -24,6 +24,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"bigger-picture": "^1.1.16",
 		"clone-deep": "^4.0.1",
 		"html-minifier": "^4.0.0",
 		"svelte-device-info": "^1.0.0",

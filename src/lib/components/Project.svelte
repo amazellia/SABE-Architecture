@@ -3,6 +3,7 @@
     import { storyblokEditable, renderRichText } from '@storyblok/svelte';
     export let blok;
     import HeadlineColorful from './micro/HeadlineColorful.svelte';
+  import Gallery from './Gallery.svelte';
 
     $: resolvedRichText = renderRichText(blok.description);
 </script>
@@ -39,5 +40,9 @@
         <div class="m-3 prose">{@html resolvedRichText}</div>
         </div>
     </div>
+
+    {#if blok?.assets}
+    <Gallery blok={blok}/>
+    {/if}
     
 </div>

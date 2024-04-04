@@ -14,8 +14,8 @@
     let items = []; // these are all the stories/content
     let yearList = [];
     let selectYear = [];
-    let afterDate = selectYear == "" ?  "": `${selectYear}-01-01 00:00`;
-    let beforeDate = selectYear == "" ? "" :`${selectYear}-12-31 23:59`;
+    let afterDate = [];
+    let beforeDate = [];
     let ifFilter = blok?.addFilter || false; // Handle potential undefined 'blok'
     let totalPages;
     let links = [];
@@ -47,10 +47,9 @@
         page: currentPage,
         filter_query: {
           year: { any_in_array: selectYear },
-          //startDate: { gt_date: afterDate},
-          //startDate: { lt_date: beforeDate},
+          startDate: {gt_date: afterDate,lt_date: beforeDate},
         },
-        resolve_relations: resolveRelations,
+        resolve_relations: resolveRelations, 
         search_term: searchbar,
       });
       items = data.stories;
@@ -61,8 +60,7 @@
         with_tag: blok?.tags || selectTag, // Handle potential undefined 'blok',
         filter_query: {
           year: { any_in_array: selectYear },
-          // startDate: { gt_date: afterDate},
-          // startDate: { lt_date: beforeDate},
+          startDate: { gt_date:afterDate, lt_date: beforeDate},
         },
         search_term: searchbar,
       });
@@ -121,8 +119,13 @@
         };
 
     const handleYearSelection = (event) => {
-    selectYear  = event.target.value == "" ? [] : event.target.value;
-    currentPage = 1; // Reset to the first page when changing the filter
+    if (blok.starts_with == "events") {
+      afterDate = event.target.value == "" ? [] : `${event.target.value}-01-01`;
+      beforeDate = event.target.value == "" ? [] : `${event.target.value}-12-31`;
+    } else {
+      selectYear  = event.target.value == "" ? [] : event.target.value;
+    }
+      currentPage = 1; // Reset to the first page when changing the filter
     };
 
     const handleSearchTerm = (event) => {
@@ -140,7 +143,6 @@
     <div class="text-center mx-0.5">
     <HeadlineColorful headline={blok?.listName}/>
     </div>
-    <p>{afterDate}</p>
     {#if ifFilter}
     <div class=" flex md:flex-row flex-col w-10/12 container mx-auto place-items-center place-content-center ">
       <select id="yearSelector" class="m-2 p-2 border rounded w-full " on:change={handleYearSelection} >
@@ -160,11 +162,12 @@
         <input type="search" class="m-2 p-2 border rounded w-full" placeholder="Search.." on:change={handleSearchTerm}>
 
     <input type="submit" value="🔎" class="p-2 border rounded hover:bg-violet-600 w-fit " on:click={loadPage}>
-
-    {#if itemNo === 0}
-    <b class="text-center flex-wrap">Nothing found with that filter.</b>
-    {/if}
     </div>
+    {/if}
+    
+    {#if items.length === 0}
+    <div class="text-center mx-auto">
+      <b>Nothing found with that filter. </b></div>
     {/if}
 
   <div class="container mx-auto grid @apply md:grid-cols-3 gap-12 ">

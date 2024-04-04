@@ -5,6 +5,7 @@
     export let slug;
   
     // Function to format the date as DD MMMM YYYY
+
     function formatDate(dateString) {
     // Create a Date object from the string
     const date = new Date(dateString);
@@ -18,21 +19,20 @@
 
     // Format the date string
     return `${days[day]}, ${dd} ${mm} ${yyyy}`;
-  }
+    }
 
-  let startDate = formatDate(item?.startDate)
   </script>
   
-        <a
-        href="/{slug}"
-        use:storyblokEditable={item}
-        class="w-full h-full bg-[#f7f6fd] rounded-[5px] text-center overflow-hidden"
-      >
-        <img
-          src="{item.mainImage?.filename || item.profile?.filename || item.image?.filename}/m/600x0"
-          alt={item.mainImage?.alt || item.profile?.alt || item.image?.alt}
-          class="w-full h-48 xl:h-72 object-cover pointer-events-none"
-        />
+    <a
+    href="/{slug}"
+    use:storyblokEditable={item}
+    class="w-full h-full bg-[#f7f6fd] rounded-[5px] text-center overflow-hidden"
+    >
+      <img
+        src="{item.mainImage?.filename || item.profile?.filename || item.image?.filename}/m/600x0"
+        alt={item.mainImage?.alt || item.profile?.alt || item.image?.alt}
+        class="w-full h-48 xl:h-72 object-cover pointer-events-none"
+      />
         <div class="p-4">
           <h3 class="text-xl font-bold mb-3">
             {item.projectName || item.name}
@@ -42,9 +42,9 @@
               {item.teaser || item.CreatorsName}
             </div>
           {/if}
-          {#if item.startDate}
+          {#if item?.startDate}
             <div class="line-clamp-4">
-              {startDate}
+              {formatDate(item.startDate)}
             </div>
           {/if}
           {#if item.guests}
@@ -65,5 +65,3 @@
           {/if}
         </div>
       </a>
-      
-  

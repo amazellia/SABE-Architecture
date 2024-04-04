@@ -138,7 +138,7 @@
       currentPage = 1
     }
   </script>
-  
+
   <div class="py-24 justify-center mx-2">
     <div class="text-center mx-0.5">
     <HeadlineColorful headline={blok?.listName}/>
@@ -167,7 +167,12 @@
     
     {#if items.length === 0}
     <div class="text-center mx-auto">
-      <b>Nothing found with that filter. </b></div>
+      <b>No records found.</b></div>
+    {/if}
+
+    {#if !blok}
+    <div class="text-center mx-auto">
+      <b>Loading...</b></div>
     {/if}
 
   <div class="container mx-auto grid @apply md:grid-cols-3 gap-12 ">
@@ -222,7 +227,4 @@
 
   </div>
   {/if}
-    
-    <!-- <a href="/events">See More</a> -->
-    
     </div>

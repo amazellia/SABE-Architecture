@@ -38,7 +38,7 @@ onMount(async() => {
 
 <div 
   use:storyblokEditable={blok}
-  class="grid grid-col md:grid-row md:grid-cols-3 w-dvw"
+  class="grid grid-col md:grid-row md:grid-cols-3 w-dvw background-color: rgb(255 255 255);"
   id="images">
     {#each blok?.assets as a}
     <a href="{a.filename}" on:click={openGallery}>      

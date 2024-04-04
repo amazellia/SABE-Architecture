@@ -77,7 +77,7 @@
             <ListCard item={event.content} slug={event.full_slug} />
         {/each}
     </div>
-    <div class="flex justify-center mt-4">
+    <!-- <div class="flex justify-center mt-4">
         <button 
             class="mr-2" 
             on:click={prevPage} 
@@ -121,7 +121,7 @@
         >
             Next
         </button>
-    </div>
+    </div> -->
 </div>
 
 <!-- {/if} -->

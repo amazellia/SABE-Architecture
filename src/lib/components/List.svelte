@@ -36,7 +36,7 @@
         return tagsList;
       }).catch(error => {console.log(error); });
 
-      const resolveRelations = ['event.stream', 'event.guests']
+      const resolveRelations = ['event.stream', 'event.guest']
       const { data } = await storyblokApi.get('cdn/stories', {
         version: 'published',
         starts_with: blok?.starts_with || 'events', // Use default if 'blok' is undefined
@@ -45,6 +45,8 @@
         sort_by: blok?.sort_by || 'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
+        is_periGuest: false,
+        is_currentSpeaker: false,
         filter_query: {
           year: { any_in_array: selectYear },
           startDate: {gt_date: afterDate,lt_date: beforeDate},
@@ -185,10 +187,10 @@
 
   {#if ifFilter}
     <div class="py-24 justify-center">
-    <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+    <div class="flex items-center justify-between border-t border-gray-200 px-4 py-3 sm:px-6">
       <div class="flex flex-1 justify-between sm:hidden">
-        <button on:click={prevPage} disabled={currentPage === 1} class="hover:bg-violet-600 disabled:opacity-75 relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</button>
-        <button on:click={nextPage} disabled={!hasMorePages} class="hover:bg-violet-600 disabled:opacity-75 relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</button>
+        <button on:click={prevPage} disabled={currentPage === 1} class="hover:bg-white disabled:opacity-75 relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</button>
+        <button on:click={nextPage} disabled={!hasMorePages} class="hover:bg-white disabled:opacity-75 relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</button>
       </div>
       <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>

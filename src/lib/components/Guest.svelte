@@ -2,6 +2,7 @@
     import { storyblokEditable, renderRichText } from '@storyblok/svelte';
     export let blok;
     $: resolvedRichText = renderRichText(blok.description);
+    import Gallery from './Gallery.svelte';
 </script>
 
 <div use:storyblokEditable={blok}>
@@ -28,5 +29,9 @@
     <h2 class="text-2xl mb-4 text-center">{y}</h2>
   {/each}
   <div class="w-full prose">{@html resolvedRichText}</div>
+
+  {#if blok?.assets}
+    <Gallery blok={blok}/>
+    {/if}
 </div>
 </div>

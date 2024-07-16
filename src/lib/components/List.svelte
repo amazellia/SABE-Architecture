@@ -22,6 +22,8 @@
     let searchbar = "";
     let tagsList = "";
     let selectTag = "";
+    let periGuest = blok?.is_periGuest || false;
+    let speaker = blok?.is_currentSpeaker || false;
   
     const loadPage = async () => {
       const { year } = storyblokApi.get('cdn/stories/config/', {})
@@ -45,11 +47,11 @@
         sort_by: blok?.sort_by || 'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
-        is_periGuest: false,
-        is_currentSpeaker: false,
         filter_query: {
           year: { any_in_array: selectYear },
           startDate: {gt_date: afterDate,lt_date: beforeDate},
+          is_periGuest: periGuest,
+          is_currentSpeaker: speaker,
         },
         resolve_relations: resolveRelations, 
         search_term: searchbar,

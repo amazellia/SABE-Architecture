@@ -50,8 +50,8 @@
         filter_query: {
           year: { any_in_array: selectYear },
           startDate: {gt_date: afterDate,lt_date: beforeDate},
-          is_periGuest: periGuest,
-          is_currentSpeaker: speaker,
+          is_periGuest: {is: periGuest},
+          is_currentSpeaker: {is: speaker},
         },
         resolve_relations: resolveRelations, 
         search_term: searchbar,

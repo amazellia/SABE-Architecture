@@ -17,7 +17,7 @@
             />
             <p>{footer.address}</p>
             <b class="no-underline bold">Contact Us</b><br>
-            <a class=" underline underline-offset-8" href=tel:{footer.phone}>Phone</a> <br>
+            <a class=" underline underline-offset-8" href="tel:{footer.phone}">Phone</a> <br>
             <a class=" underline underline-offset-8" href="mailto:{footer.email}">Email</a> <br><br>
         </div>
         <div class="basis-auto lg:basis-1/2">

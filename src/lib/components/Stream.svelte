@@ -54,6 +54,7 @@
           startDate: { gt_date:afterDate, lt_date: beforeDate},
           stream: {all_in_array: blok.name}
         },
+        resolve_relations: ['event.stream', 'event.guest'], 
         search_term: searchbar,
       });
 

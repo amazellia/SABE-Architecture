@@ -39,7 +39,7 @@
         filter_query: {
           year: { any_in_array: selectYear },
           startDate: {gt_date: afterDate,lt_date: beforeDate},
-          stream: {any_in_array: blok.name}
+          stream: {all_in_array: blok.name}
         },
         resolve_relations: ['event.stream', 'event.guest'], 
         search_term: searchbar,
@@ -52,7 +52,7 @@
         filter_query: {
           year: { any_in_array: selectYear },
           startDate: { gt_date:afterDate, lt_date: beforeDate},
-          stream: {any_in_array: blok.name}
+          stream: {all_in_array: blok.name}
         },
         search_term: searchbar,
       });
@@ -102,7 +102,7 @@
   </script>
 
 
-<div use:storyblokEditable={blok} class="flex justify-center">
+<div use:storyblokEditable={blok} class="justify-center">
     <div class="grid justify-items-center mx-auto mb-12 ">
         <h1 class="text-2xl lg:text-6xl font-bold mt-12 mb-4 text-center">{blok.name}</h1>
         <!-- <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold mb-4">

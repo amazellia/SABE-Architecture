@@ -66,62 +66,21 @@
     <Subheadline Subheadline={"Upcoming Events"} />
 </div>
 
-<!-- {#if events == 0}
-    <div class="justify-center flex mx-10 text-[clamp(2rem,5vw,1rem)]">
-       <p>no upcoming events</p>
-    </div>
-{:else} -->
+
 <div class="w-full"> 
+
     <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start">
         {#each events as event}
             <ListCard item={event.content} slug={event.full_slug} />
         {/each}
     </div>
-    <!-- <div class="flex justify-center mt-4">
-        <button 
-            class="mr-2" 
-            on:click={prevPage} 
-            disabled={currentPage === 1}
-        >
-            Previous
-        </button>
-        <div class="flex">
-            {#if currentPage > 2}
-                <button 
-                    class="mr-2 hidden md:block"
-                    on:click={prevPage}
-                >
-                    {currentPage - 2}
-                </button>
-            {/if}
-            {#if currentPage > 1}
-                <button 
-                    class="mr-2 hidden md:block"
-                    on:click={prevPage}
-                >
-                    {currentPage - 1}
-                </button>
-            {/if}
-            <button>
-                {currentPage}
-            </button>
-            {#if hasMorePages}
-                <button 
-                    class="ml-2 hidden md:block"
-                    on:click={nextPage}
-                >
-                    {currentPage + 1}
-                </button>
-            {/if}
-        </div>
-        <button 
-            class="ml-2" 
-            on:click={nextPage}
-            disabled={!hasMorePages}
-        >
-            Next
-        </button>
-    </div> -->
+    
+    {#if events === 0}
+    <div class="justify-center flex mx-10 text-[clamp(2rem,5vw,1rem)]">
+       <p>no upcoming events</p>
+    </div>
+    {/if}
+        
 </div>
 
 <!-- {/if} -->

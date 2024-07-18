@@ -74,8 +74,8 @@
             <ListCard item={event.content} slug={event.full_slug} />
         {/each}
     </div>
-    
-    {#if events === 0}
+
+    {#if events.length === 0}
     <div class="justify-center flex mx-10 text-[clamp(2rem,5vw,1rem)]">
        <p>no upcoming events</p>
     </div>

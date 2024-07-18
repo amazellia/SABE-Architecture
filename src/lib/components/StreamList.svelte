@@ -1,15 +1,14 @@
 <script>
     import StreamCard from './StreamCard.svelte';
     import { onMount } from 'svelte';
-    import { useStoryblokApi } from '@storyblok/svelte';
 
     let currentPage = 1;
     const perPage = 24; 
     let streams = [];
 
 
-    const loadPage = async () => {
-        const storyblokApi = useStoryblokApi();
+    const loadPage = async ( parent ) => {
+        const { storyblokApi } = await parent();
         const { data } = await storyblokApi.get('cdn/stories', {
             version: 'published',
             starts_with: 'streams',

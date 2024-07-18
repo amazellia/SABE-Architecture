@@ -1,12 +1,10 @@
 <script>
     import { onMount } from 'svelte';
-    import { useStoryblokApi } from '@storyblok/svelte';
     import ListCard from './ListCard.svelte';
     import HeadlineColorful from './micro/HeadlineColorful.svelte';
 
     export let blok;
   
-    const storyblokApi = useStoryblokApi();
     const perPage = blok?.perPage;
     let currentPage = 1;
     let itemNo = 1;
@@ -25,7 +23,8 @@
     let periGuest = blok?.is_periGuest || false;
     let speaker = blok?.is_currentSpeaker || false;
   
-    const loadPage = async () => {
+    const loadPage = async ( parent) => {
+      const { storyblokApi } = await parent();
       const { year } = storyblokApi.get('cdn/stories/config/', {})
       .then(response => {
         yearList = response.data.story.content.year;
@@ -38,7 +37,6 @@
         return tagsList;
       }).catch(error => {console.log(error); });
 
-      const resolveRelations = ['event.stream', 'event.guest']
       const { data } = await storyblokApi.get('cdn/stories', {
         version: 'published',
         starts_with: blok?.starts_with || 'events', // Use default if 'blok' is undefined
@@ -53,7 +51,7 @@
           is_periGuest: {is: periGuest},
           is_currentSpeaker: {is: speaker},
         },
-        resolve_relations: resolveRelations, 
+        resolve_relations: ['event.stream', 'event.guest'], 
         search_term: searchbar,
       });
       items = data.stories;

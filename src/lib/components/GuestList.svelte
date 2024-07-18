@@ -1,17 +1,18 @@
 <script>
     import GuestCard from './GuestCard.svelte';
     import { onMount } from 'svelte';
-    import { useStoryblokApi } from '@storyblok/svelte';
 
-    const storyblokApi = useStoryblokApi();
     let currentPage = 1;
     let hasMorePages = true; // Flag to check if there are more pages
     const perPage = 12; 
     let guests = [];
     let yearList = [];
     let selectYear = [];
+
     
-    const loadPage = async () => {
+    
+    const loadPage = async ( parent ) => {
+        const { storyblokApi } = await parent();
         const {year} = storyblokApi.get('cdn/stories/config/', {})
         .then(response => {
             yearList = response.data.story.content.year;

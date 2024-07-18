@@ -1,13 +1,12 @@
     <script>
         import EventCard from './EventCard.svelte';
         import { onMount } from 'svelte';
-        import { useStoryblokApi } from '@storyblok/svelte';
         let currentPage = 1;
         let hasMorePages = true; // Flag to check if there are more pages
         const perPage = 12; 
         let events = [];
-        const loadPage = async () => {
-            const storyblokApi = useStoryblokApi();
+        const loadPage = async ( parent ) => {
+            const { storyblokApi } = await parent();
             const resolveRelations = ['event.stream', 'event.guests']
             const { data } = await storyblokApi.get('cdn/stories', {
                 version: 'published',

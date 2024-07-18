@@ -11,6 +11,21 @@
     }
 </script>
 
+<head>
+    <style>
+        .open { display: block; }
+        .close { display: none; }
+
+        .mobile-nav {
+            display: none;
+        }
+        
+        .mobile-nav.open {
+            display: block;
+        }
+    </style>
+</head>
+
 <header class="w-full h-full sticky z-20 top-0 md:relative lg:relative flex justify-center">
     <div class="navbar top-0 md:bg-base-100">
         <div class=" mx-4 flex-1">
@@ -81,18 +96,4 @@
             </svg>
         </button>
     </div>
-   
 </header>
-
-<style>
-    .open { display: block; }
-    .close { display: none; }
-
-    .mobile-nav {
-        display: none;
-    }
-    
-    .mobile-nav.open {
-        display: block;
-    }
-</style>

@@ -1,7 +1,6 @@
 <script>
 	import ListCard from './ListCard.svelte';
     import { onMount } from 'svelte';
-    import { useStoryblokApi } from '@storyblok/svelte';
     import Subheadline from './micro/Subheadline.svelte';
 
     // Pagination
@@ -17,8 +16,8 @@
 
     let events = [];
 
-    const loadPage = async () => {
-        const storyblokApi = useStoryblokApi();
+    const loadPage = async ( parent ) => {
+        const { storyblokApi } = await parent();
         const resolveRelations = ['event.stream', 'event.guests']
         const { data } = await storyblokApi.get('cdn/stories', {
             version: 'published',

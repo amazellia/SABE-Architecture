@@ -181,12 +181,7 @@
 
   <div class="container mx-auto grid @apply md:grid-cols-3 gap-12 ">
     {#each items as item}
-        {#if items.length === 1}
-        <div class:md:col-start-2={itemNo === 1}>
-          <ListCard item={item.content} slug={item.full_slug}/>
-          </div>
-        {/if}
-      <div class="container mx-auto my-5 place-items-center place-content-center ">
+      <div class:md:col-start-2={items.length === 1} class="container mx-auto my-5 place-items-center place-content-center ">
       <ListCard item={item.content} slug={item.full_slug}/>
       </div>
     {/each}       

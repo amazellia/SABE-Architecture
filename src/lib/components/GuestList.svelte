@@ -13,10 +13,10 @@
     
     const loadPage = async ( parent ) => {
         const { storyblokApi } = await parent();
-        yearList = storyblokApi.get('cdn/stories/config/', {})
+        const {year} = storyblokApi.get('cdn/stories/config/', {})
         .then(response => {
-            years = response.data.story.content.year;
-            return years;
+            yearList = response.data.story.content.year;
+            return yearList;
         }).catch(error => {
             console.log(error);
     });       

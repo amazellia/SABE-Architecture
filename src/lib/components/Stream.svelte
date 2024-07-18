@@ -1,6 +1,7 @@
  
 <script>
     import { storyblokEditable, renderRichText } from '@storyblok/svelte';
+    import { useStoryblokApi } from '@storyblok/svelte';
     import { onMount } from 'svelte';
     import ListCard from './ListCard.svelte';
     export let blok;
@@ -19,8 +20,8 @@
     let links = [];
     let searchbar = "";
 
-    const loadPage = async ( parent) => {
-        const { storyblokApi } = await parent();
+    const loadPage = async () => {
+        const storyblokApi = useStoryblokApi();
       const { year } = storyblokApi.get('cdn/stories/config/', {})
       .then(response => {
         yearList = response.data.story.content.year;

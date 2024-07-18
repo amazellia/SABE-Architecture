@@ -17,7 +17,7 @@ export async function load({ params, parent }) {
       version: 'draft',
       resolve_relations: resolveRelations,
     });
-    
+
     return {
       story: dataStory.data.story,
       name: slug,

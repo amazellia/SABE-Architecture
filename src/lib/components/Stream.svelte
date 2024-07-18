@@ -39,6 +39,7 @@
         filter_query: {
           year: { any_in_array: selectYear },
           startDate: {gt_date: afterDate,lt_date: beforeDate},
+          stream: {any_in_array: blok.name}
         },
         resolve_relations: ['event.stream', 'event.guest'], 
         search_term: searchbar,
@@ -47,8 +48,7 @@
   
       const { length } = await storyblokApi.getAll('cdn/stories', {
         version: 'published',
-        starts_with: blok?.starts_with || 'events', // Use default if 'blok' is undefined
-        with_tag: blok?.tags || selectTag, // Handle potential undefined 'blok',
+        starts_with:  'events', // Use default if 'blok' is undefined
         filter_query: {
           year: { any_in_array: selectYear },
           startDate: { gt_date:afterDate, lt_date: beforeDate},
@@ -112,6 +112,7 @@
     </div>
 
     <!-- Filter Component -->
+    <div class="py-24 justify-center mx-2">
     <div class=" flex md:flex-row flex-col w-10/12 container mx-auto place-items-center place-content-center ">
       <select id="yearSelector" class="m-2 p-2 border rounded w-full " on:change={handleYearSelection} >
         <option value="">Year</option>
@@ -186,3 +187,4 @@
 
   </div>
   </div>
+</div>

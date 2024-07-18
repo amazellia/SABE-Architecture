@@ -1,56 +1,71 @@
-import { apiPlugin, storyblokInit, RichTextSchema } from '@storyblok/svelte';
 // 001 Import the environment variables
 import { PUBLIC_ACCESS_TOKEN } from '$env/static/public';
 import { PUBLIC_REGION } from '$env/static/public';
 
+// 002 Import all the components
+import Feature from "$lib/components/Feature.svelte";
+import Grid from "$lib/components/Grid.svelte";
+import Page from "$lib/components/Page.svelte";
+import Teaser from "$lib/components/Teaser.svelte";
+import Hero from "$lib/components/Hero.svelte";
+import Event from "$lib/components/Event.svelte";
+import EventFeatured from "$lib/components/EventFeatured.svelte";
+import EventUpcoming from "$lib/components/EventUpcoming.svelte";
+import Guest from "$lib/components/Guest.svelte";
+import GuestFeatured from "$lib/components/GuestFeatured.svelte";
+import Stream from "$lib/components/Stream.svelte";
+import RichText from "$lib/components/RichText.svelte";
+import GridItemReport from "$lib/components/GridReportItem.svelte";
+import Project from "$lib/components/Project.svelte";
+import List from "$lib/components/List.svelte";
+import Gallery from "$lib/components/Gallery.svelte";
+
+import { apiPlugin, storyblokInit, RichTextSchema, useStoryblokApi } from '@storyblok/svelte';
+
 import cloneDeep from "clone-deep";
+
 const mySchema = cloneDeep(RichTextSchema); // you can make a copy of the default RichTextSchema
 // ... and edit the nodes and marks, or add your own.
 // Check the base RichTextSchema source here https://github.com/storyblok/storyblok-js-client/blob/master/source/schema.js
 
-export async function useStoryblok(accessToken = '') {
-	// 002 setting the access token (from environment variable)
-	accessToken = accessToken === '' ? PUBLIC_ACCESS_TOKEN : accessToken;
-	// 003 call storyblok init
-	await storyblokInit({
-		// 004 using the access token
-		accessToken: accessToken,
+
+// 003 listing the needed components
+let callbackComponents = () => {
+	return {
+		feature: Feature,
+		grid: Grid,
+		page: Page,
+		teaser: Teaser,
+		hero: Hero,
+		event: Event,
+		eventFeatured: EventFeatured,
+		eventUpcoming: EventUpcoming,
+		guest: Guest,
+		guestFeatured: GuestFeatured,
+		stream: Stream,
+		"rich-text": RichText,
+		grid_item_report: GridItemReport,
+		project: Project,
+		list: List,
+		gallery: Gallery,
+	}
+}
+/** @type {import('./$types').LayoutLoad} */
+export async function load() {
+	// 004 call storyblok init
+	storyblokInit({
+		accessToken: PUBLIC_ACCESS_TOKEN,
 		// 005 using the apiPlugin (for connecting with Stroyblok API)
 		use: [apiPlugin],
-		cache: {
-			clear: "auto",
-			type: "memory",
-		  },
-		// 006 listing the needed components
-		components: {
-			feature: (await import('$lib/components/Feature.svelte')).default,
-			grid: (await import('$lib/components/Grid.svelte')).default,
-			page: (await import('$lib/components/Page.svelte')).default,
-			teaser: (await import('$lib/components/Teaser.svelte')).default,
-            hero: (await import('$lib/components/Hero.svelte')).default,
-            event: (await import('$lib/components/Event.svelte')).default,
-            eventFeatured: (await import('$lib/components/EventFeatured.svelte')).default,
-			eventUpcoming: (await import('$lib/components/EventUpcoming.svelte')).default,
-            guest: (await import('$lib/components/Guest.svelte')).default,
-            guestFeatured: (await import('$lib/components/GuestFeatured.svelte')).default,
-            stream: (await import('$lib/components/Stream.svelte')).default,
-            "rich-text": (await import('$lib/components/Rich-Text.svelte')).default,
-            grid_item_report: (await import('$lib/components/GridReportItem.svelte')).default,
-			project:(await import('$lib/components/Project.svelte')).default,
-			list:(await import('$lib/components/List.svelte')).default,
-			gallery: (await import('$lib/components/Gallery.svelte')).default,
-			// projectList:(await import('$lib/components/ProjectList.svelte')).default,
-            // guestList: (await import('$lib/components/GuestList.svelte')).default,
-			// streamList:(await import('$lib/components/StreamList.svelte')).default,
-			// eventList: (await import('$lib/components/EventList.svelte')).default,
-		},
+		components: callbackComponents,
+	
 		// 007 setting some api options like https, cache and region
 		apiOptions: {
 			https: true,
 			cache: {
-				type: 'memory'
+				type: "memory",
 			},
-			region: PUBLIC_REGION // "us" if your space is in US region
+			region: PUBLIC_REGION 
 		},
 		richText: {
 			schema: mySchema,
@@ -126,8 +141,21 @@ export async function useStoryblok(accessToken = '') {
 					return null
 				default:
 				  return "Resolver not defined";
-			  }
+				}
 			},
-		},
+		}
 	});
+
+	let storyblokApi = useStoryblokApi();
+	const dataConfig = await storyblokApi.get('cdn/stories/config/', {
+		version: 'draft',
+		resolve_links: 'url'
+	  });
+
+	return {
+		storyblokApi: storyblokApi,
+		header: dataConfig.data.story.content.header_menu,
+		logo: dataConfig.data.story.content.logo,
+		footer: dataConfig.data.story.content,
+	};
 }

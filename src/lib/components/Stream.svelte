@@ -35,7 +35,7 @@
         version: 'published',
         starts_with:  'events', // Use default if 'blok' is undefined
         is_startpage: false,
-        sort_by:  'content.startDate:desc', // Use default if 'blok' is undefined
+        //sort_by:  'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
         filter_query: {

@@ -38,7 +38,7 @@
         filterQuery.is_currentSpeaker = {is: speaker};
       }
       
-      if (blok?.is_currentSpeaker == true & blok?.is_periGuest == true) {
+      if (blok?.is_currentSpeaker == true && blok?.is_periGuest == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
         filterQuery.is_currentSpeaker = {is: speaker};
       }

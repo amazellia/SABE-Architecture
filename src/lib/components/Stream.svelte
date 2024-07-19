@@ -20,7 +20,6 @@
     let totalPages;
     let links = [];
     let searchbar = "";
-    let streamArray = [blok?.name];
 
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
@@ -38,11 +37,11 @@
         sort_by:  'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
-        // filter_query: {
-        //   year: { any_in_array: selectYear },
-        //   stream: {any_in_array: streamArray}
-        // },
-        resolve_relations: ['event.stream', 'event.guest'], 
+        filter_query: {
+          year: { any_in_array: selectYear },
+          stream: {all_in_array: `${blok?.name}`}
+        },
+        resolve_relations: ['event.stream', 'event.guests'], 
         search_term: searchbar,
       });
       items = data.stories;
@@ -51,10 +50,10 @@
         version: 'published',
         starts_with:  'events', // Use default if 'blok' is undefined
         filter_query: {
-          year: { any_in_array: selectYear },
-          stream: {any_in_array: streamArray}
+          year: { any_in_array: selectYear },          
+          stream: {all_in_array: `${blok?.name}`}
+
         },
-        resolve_relations: ['event.stream', 'event.guest'], 
         search_term: searchbar,
       });
 

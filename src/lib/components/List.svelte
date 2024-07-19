@@ -52,7 +52,7 @@
           is_periGuest: {is: periGuest},
           is_currentSpeaker: {is: speaker},
         },
-        resolve_relations: ['event.stream', 'event.guest'], 
+        resolve_relations: ['event.stream', 'event.guests'], 
         search_term: searchbar,
       });
       items = data.stories;

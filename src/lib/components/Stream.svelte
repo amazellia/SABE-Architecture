@@ -38,10 +38,10 @@
         sort_by:  'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
-        filter_query: {
-          year: { any_in_array: selectYear },
-          stream: {any_in_array: streamArray}
-        },
+        // filter_query: {
+        //   year: { any_in_array: selectYear },
+        //   stream: {any_in_array: streamArray}
+        // },
         resolve_relations: ['event.stream', 'event.guest'], 
         search_term: searchbar,
       });

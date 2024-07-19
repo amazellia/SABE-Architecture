@@ -39,7 +39,7 @@
         page: currentPage,
         filter_query: {
           year: { any_in_array: selectYear },
-          stream: {all_in_array: `${blok?.name}`}
+          stream: {all_in_array: `thinking-rooms`}
         },
         resolve_relations: ['event.stream', 'event.guests'], 
         search_term: searchbar,

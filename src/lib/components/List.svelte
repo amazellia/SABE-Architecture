@@ -26,6 +26,19 @@
   
     const loadPage = async () => {
       const storyblokApi = useStoryblokApi();
+
+      // Construct the filter_query object dynamically
+      let filterQuery = {
+        year: { any_in_array: selectYear },
+        startDate: {gt_date: afterDate, lt_date: beforeDate},
+        is_currentSpeaker: {is: speaker},
+      };
+
+      // Conditionally add the is_periGuest filter
+      if (periGuest === true) {
+        filterQuery.is_periGuest = {is: periGuest};
+      }
+
       const { year } = storyblokApi.get('cdn/stories/config/', {})
       .then(response => {
         yearList = response.data.story.content.year;
@@ -46,12 +59,7 @@
         sort_by: blok?.sort_by || 'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
-        filter_query: {
-          year: { any_in_array: selectYear },
-          startDate: {gt_date: afterDate,lt_date: beforeDate},
-          is_periGuest: {is: periGuest},
-          is_currentSpeaker: {is: speaker},
-        },
+        filter_query: filterQuery,
         resolve_relations: ['event.stream', 'event.guests'], 
         search_term: searchbar,
       });

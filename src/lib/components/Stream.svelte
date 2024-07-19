@@ -3,7 +3,7 @@
     import { storyblokEditable, renderRichText } from '@storyblok/svelte';
     import { useStoryblokApi } from '@storyblok/svelte';
     import { onMount } from 'svelte';
-    import ListCard from './ListCard.svelte';
+  import StreamCard from './StreamCard.svelte';
     export let blok;
     $: resolvedRichText = renderRichText(blok.description);
   
@@ -140,7 +140,7 @@
   <div class="container mx-auto grid @apply md:grid-cols-3 gap-12 ">
     {#each items as item}
       <div class:md:col-start-2={items.length === 1} class="container mx-auto my-5 place-items-center place-content-center ">
-      <ListCard item={item.content} slug={item.full_slug}/>
+      <StreamCard stream={item.content} slug={item.full_slug}/>
       </div>
     {/each}       
   </div>  

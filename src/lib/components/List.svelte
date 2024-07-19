@@ -29,6 +29,7 @@
       let filterQuery = {
         year: { any_in_array: selectYear },
         startDate: {gt_date: afterDate, lt_date: beforeDate},
+        is_currentSpeaker: {is: blok?.is_currentSpeaker},
       };
       if (blok?.is_periGuest == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};

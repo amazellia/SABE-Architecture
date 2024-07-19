@@ -35,12 +35,12 @@
       }
 
       if (blok?.is_currentSpeaker == true) {
-        filterQuery.is_currentSpeaker = {is: speaker};
+        filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
       
       if (blok?.is_currentSpeaker == true && blok?.is_periGuest == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
-        filterQuery.is_currentSpeaker = {is: speaker};
+        filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
       const { year } = storyblokApi.get('cdn/stories/config/', {})

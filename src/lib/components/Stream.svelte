@@ -40,9 +40,9 @@
         page: currentPage,
         filter_query: {
           year: { any_in_array: selectYear },
-          stream: {all_in_array: streamArray}
+          stream: {any_in_array: streamArray}
         },
-        resolve_relations: ['event.stream', 'event.guests'], 
+        resolve_relations: [ 'event.guests'], 
         search_term: searchbar,
       });
       items = data.stories;
@@ -52,7 +52,7 @@
         starts_with:  'events', // Use default if 'blok' is undefined
         filter_query: {
           year: { any_in_array: selectYear },          
-          stream: {all_in_array: streamArray}
+          stream: {any_in_array: streamArray}
 
         },
         search_term: searchbar,

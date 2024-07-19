@@ -21,7 +21,7 @@
     let totalPages;
     let links = [];
     let searchbar = "";
-    let streamArray = [uuid];
+    let streamArray = [];
 
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
@@ -43,10 +43,11 @@
           year: { any_in_array: selectYear },
           stream: {any_in_array: streamArray}
         },
-        resolve_relations: [ 'event.guests'], 
+        resolve_relations: [ 'event.stream', 'event.guests'], 
         search_term: searchbar,
       });
       items = data.stories;
+      streamArray = data.rel_uuids;
   
       const { length } = await storyblokApi.getAll('cdn/stories', {
         version: 'published',
@@ -107,7 +108,7 @@
 <div use:storyblokEditable={blok} class="justify-center">
     <div class="grid justify-items-center mx-auto mb-12 ">
         <h1 class="text-2xl lg:text-6xl font-bold mt-12 mb-4 text-center">{blok.name}</h1>
-        <p>{blok._uid}</p>
+        <p>{uuid}</p>
         <!-- <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold mb-4">
             {blok.subtitle}
         </h2> -->

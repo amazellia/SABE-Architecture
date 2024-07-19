@@ -20,7 +20,7 @@
     let totalPages;
     let links = [];
     let searchbar = "";
-    let streamArray = [blok?.uuid];
+    let streamArray = [blok?._uid];
 
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
@@ -106,7 +106,6 @@
 <div use:storyblokEditable={blok} class="justify-center">
     <div class="grid justify-items-center mx-auto mb-12 ">
         <h1 class="text-2xl lg:text-6xl font-bold mt-12 mb-4 text-center">{blok.name}</h1>
-        {console.log(blok)}
         <!-- <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold mb-4">
             {blok.subtitle}
         </h2> -->

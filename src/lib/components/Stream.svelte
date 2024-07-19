@@ -1,10 +1,11 @@
  
 <script>
-    import { storyblokEditable, renderRichText } from '@storyblok/svelte';
-    import { useStoryblokApi } from '@storyblok/svelte';
-    import { onMount } from 'svelte';
-  import StreamCard from './StreamCard.svelte';
-    export let blok;
+  import { storyblokEditable, renderRichText } from '@storyblok/svelte';
+  import { useStoryblokApi } from '@storyblok/svelte';
+  import { onMount } from 'svelte';
+  import ListCard from './ListCard.svelte';
+
+  export let blok;
     $: resolvedRichText = renderRichText(blok.description);
   
     const perPage = blok?.perPage;
@@ -19,6 +20,7 @@
     let totalPages;
     let links = [];
     let searchbar = "";
+    let streamArray = [blok?.name];
 
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
@@ -39,7 +41,7 @@
         filter_query: {
           year: { any_in_array: selectYear },
           startDate: {gt_date: afterDate,lt_date: beforeDate},
-          stream: {any_in_array: blok?.name}
+          stream: {any_in_array: streamArray}
         },
         resolve_relations: ['event.stream', 'event.guest'], 
         search_term: searchbar,
@@ -52,7 +54,7 @@
         filter_query: {
           year: { any_in_array: selectYear },
           startDate: { gt_date:afterDate, lt_date: beforeDate},
-          stream: {any_in_array: blok?.name}
+          stream: {any_in_array: streamArray}
         },
         resolve_relations: ['event.stream', 'event.guest'], 
         search_term: searchbar,
@@ -140,7 +142,7 @@
   <div class="container mx-auto grid @apply md:grid-cols-3 gap-12 ">
     {#each items as item}
       <div class:md:col-start-2={items.length === 1} class="container mx-auto my-5 place-items-center place-content-center ">
-      <StreamCard stream={item.content} slug={item.full_slug}/>
+      <ListCard item={item.content} slug={item.full_slug}/>
       </div>
     {/each}       
   </div>  

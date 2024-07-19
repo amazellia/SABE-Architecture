@@ -30,11 +30,16 @@
         year: { any_in_array: selectYear },
         startDate: {gt_date: afterDate, lt_date: beforeDate},
       };
-      if (blok?.is_periGuest === true) {
+      if (blok?.is_periGuest == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
       }
 
-      if (blok?.is_currentSpeaker === true) {
+      if (blok?.is_currentSpeaker == true) {
+        filterQuery.is_currentSpeaker = {is: speaker};
+      }
+      
+      if (blok?.is_currentSpeaker == true & blok?.is_periGuest == true) {
+        filterQuery.is_periGuest = {is: blok?.is_periGuest};
         filterQuery.is_currentSpeaker = {is: speaker};
       }
 

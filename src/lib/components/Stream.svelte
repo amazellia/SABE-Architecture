@@ -6,6 +6,7 @@
   import ListCard from './ListCard.svelte';
 
   export let blok;
+  export let uuid
     $: resolvedRichText = renderRichText(blok.description);
   
     const perPage = blok?.perPage;
@@ -20,7 +21,7 @@
     let totalPages;
     let links = [];
     let searchbar = "";
-    let streamArray = [blok._uid];
+    let streamArray = [uuid];
 
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();

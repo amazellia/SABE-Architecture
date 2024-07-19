@@ -21,7 +21,7 @@
 {#key data}
 	<div>
 		{#if data.story}
-			<StoryblokComponent blok={data.story.content} />
+			<StoryblokComponent blok={data.story.content} uuid={data.story.uuid} />
 		{/if}
 	</div> 
 {/key}

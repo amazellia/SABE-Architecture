@@ -20,7 +20,7 @@
     let totalPages;
     let links = [];
     let searchbar = "";
-    let streamArray = blok._uid;
+    let streamArray = [blok._uid];
 
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();

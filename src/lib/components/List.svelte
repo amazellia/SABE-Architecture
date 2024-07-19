@@ -21,8 +21,6 @@
     let searchbar = "";
     let tagsList = "";
     let selectTag = "";
-    let periGuest = blok?.is_periGuest || false;
-    let speaker = blok?.is_currentSpeaker || false;
   
     const loadPage = async () => {
       const storyblokApi = useStoryblokApi();
@@ -31,12 +29,13 @@
       let filterQuery = {
         year: { any_in_array: selectYear },
         startDate: {gt_date: afterDate, lt_date: beforeDate},
-        is_currentSpeaker: {is: speaker},
       };
+      if (blok?.is_periGuest === true) {
+        filterQuery.is_periGuest = {is: blok?.is_periGuest};
+      }
 
-      // Conditionally add the is_periGuest filter
-      if (periGuest === true) {
-        filterQuery.is_periGuest = {is: periGuest};
+      if (blok?.is_currentSpeaker === true) {
+        filterQuery.is_currentSpeaker = {is: speaker};
       }
 
       const { year } = storyblokApi.get('cdn/stories/config/', {})

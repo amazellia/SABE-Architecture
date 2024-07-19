@@ -40,7 +40,6 @@
         page: currentPage,
         filter_query: {
           year: { any_in_array: selectYear },
-          startDate: {gt_date: afterDate,lt_date: beforeDate},
           stream: {any_in_array: streamArray}
         },
         resolve_relations: ['event.stream', 'event.guest'], 
@@ -53,7 +52,6 @@
         starts_with:  'events', // Use default if 'blok' is undefined
         filter_query: {
           year: { any_in_array: selectYear },
-          startDate: { gt_date:afterDate, lt_date: beforeDate},
           stream: {any_in_array: streamArray}
         },
         resolve_relations: ['event.stream', 'event.guest'], 

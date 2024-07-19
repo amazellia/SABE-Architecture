@@ -1,14 +1,9 @@
-import { useStoryblok } from '../sblib.js';
-import { useStoryblokApi } from '@storyblok/svelte';
 /** @type {import('./$types').PageLoad} */
 
-export const config = {
-  // Use 'nodejs18.x' for Serverless
-  runtime: 'edge',
-};
+//export const prerender = true;
 
-export async function load({ params }) {
-  await useStoryblok()
+export async function load({ params, parent }) {
+  const { storyblokApi } = await parent();
   let slug = params.slug;
   let path = 'cdn/stories/';
   if (slug) {
@@ -17,23 +12,14 @@ export async function load({ params }) {
     path += 'home';
   }
 
-    // const resolveRelations = ['event-highlights.events']
-    const resolveRelations = ['event.stream', 'event.guests', 'guests.year']
-    const dataStory = await useStoryblokApi().get(path, {
+    const resolveRelations = ['event-highlights.events','event.stream', 'event.guests', 'guests.year']
+    const dataStory = await storyblokApi.get(path, {
       version: 'draft',
       resolve_relations: resolveRelations,
     });
 
-    const dataConfig = await useStoryblokApi().get('cdn/stories/config/', {
-      version: 'draft',
-      resolve_links: 'url'
-    });
-
     return {
       story: dataStory.data.story,
-      header: dataConfig.data.story.content.header_menu,
-		  logo: dataConfig.data.story.content.logo,
-		  footer: dataConfig.data.story.content,
       name: slug,
     };
   }

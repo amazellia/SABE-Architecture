@@ -1,12 +1,11 @@
 <script>
     import { onMount } from 'svelte';
-    import { useStoryblokApi } from '@storyblok/svelte';
     import ListCard from './ListCard.svelte';
     import HeadlineColorful from './micro/HeadlineColorful.svelte';
+    import { useStoryblokApi } from '@storyblok/svelte';
 
     export let blok;
   
-    const storyblokApi = useStoryblokApi();
     const perPage = blok?.perPage;
     let currentPage = 1;
     let itemNo = 1;
@@ -26,6 +25,7 @@
     let speaker = blok?.is_currentSpeaker || false;
   
     const loadPage = async () => {
+      const storyblokApi = useStoryblokApi();
       const { year } = storyblokApi.get('cdn/stories/config/', {})
       .then(response => {
         yearList = response.data.story.content.year;
@@ -38,7 +38,6 @@
         return tagsList;
       }).catch(error => {console.log(error); });
 
-      const resolveRelations = ['event.stream', 'event.guest']
       const { data } = await storyblokApi.get('cdn/stories', {
         version: 'published',
         starts_with: blok?.starts_with || 'events', // Use default if 'blok' is undefined
@@ -53,7 +52,7 @@
           is_periGuest: {is: periGuest},
           is_currentSpeaker: {is: speaker},
         },
-        resolve_relations: resolveRelations, 
+        resolve_relations: ['event.stream', 'event.guests'], 
         search_term: searchbar,
       });
       items = data.stories;
@@ -73,34 +72,8 @@
       hasMorePages = (length / perPage) >= currentPage;
       totalPages = Math.ceil(itemNo / items.length); // Calculate total pages
 
-    function generatePageLinks() {
-      for (let i = 1; i <= totalPages; i++) {
-        const link = createLink(i);
-        links.push(link);
-      }
-      return links;
-    };
-
-    function createLink(pageNum) {
-      const linkClasses = 'relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0';
-      const activeClasses = 'z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600';
-
-      return {
-        element: 'a',
-        props: {
-          onclick: jumpPage(pageNum), // Replace this with your actual page link logic
-          class: pageNum === currentPage ? linkClasses + ' ' + activeClasses : linkClasses,
-        },
-        text: pageNum.toString(),
-      };
-    }
     };
     onMount(loadPage);
-
-    function jumpPage(e) {
-      currentPage = e
-      loadPage();
-    }
 
     // Function to navigate to the next page
     const nextPage = () => {
@@ -181,7 +154,7 @@
 
   <div class="container mx-auto grid @apply md:grid-cols-3 gap-12 ">
     {#each items as item}
-      <div class:md:col-start-2={itemNo === 1} class="container mx-auto my-5 place-items-center place-content-center ">
+      <div class:md:col-start-2={items.length === 1} class="container mx-auto my-5 place-items-center place-content-center ">
       <ListCard item={item.content} slug={item.full_slug}/>
       </div>
     {/each}       

@@ -39,7 +39,7 @@
         page: currentPage,
         filter_query: {
           year: { any_in_array: selectYear },
-          stream: {all_in_array: `thinking-rooms`}
+          stream: {all_in_array: [blok?.uuid]}
         },
         resolve_relations: ['event.stream', 'event.guests'], 
         search_term: searchbar,
@@ -51,7 +51,7 @@
         starts_with:  'events', // Use default if 'blok' is undefined
         filter_query: {
           year: { any_in_array: selectYear },          
-          stream: {all_in_array: `${blok?.name}`}
+          stream: {all_in_array: [blok?.uuid]}
 
         },
         search_term: searchbar,

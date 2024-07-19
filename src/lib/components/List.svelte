@@ -21,11 +21,29 @@
     let searchbar = "";
     let tagsList = "";
     let selectTag = "";
-    let periGuest = blok?.is_periGuest || false;
-    let speaker = blok?.is_currentSpeaker || false;
   
     const loadPage = async () => {
       const storyblokApi = useStoryblokApi();
+
+      // Construct the filter_query object dynamically
+      let filterQuery = {
+        year: { any_in_array: selectYear },
+        startDate: {gt_date: afterDate, lt_date: beforeDate},
+        is_currentSpeaker: {is: blok?.is_currentSpeaker},
+      };
+      if (blok?.is_periGuest == true) {
+        filterQuery.is_periGuest = {is: blok?.is_periGuest};
+      }
+
+      if (blok?.is_currentSpeaker == true) {
+        filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
+      }
+      
+      if (blok?.is_currentSpeaker == true && blok?.is_periGuest == true) {
+        filterQuery.is_periGuest = {is: blok?.is_periGuest};
+        filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
+      }
+
       const { year } = storyblokApi.get('cdn/stories/config/', {})
       .then(response => {
         yearList = response.data.story.content.year;
@@ -46,12 +64,7 @@
         sort_by: blok?.sort_by || 'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
-        filter_query: {
-          year: { any_in_array: selectYear },
-          startDate: {gt_date: afterDate,lt_date: beforeDate},
-          is_periGuest: {is: periGuest},
-          is_currentSpeaker: {is: speaker},
-        },
+        filter_query: filterQuery,
         resolve_relations: ['event.stream', 'event.guests'], 
         search_term: searchbar,
       });

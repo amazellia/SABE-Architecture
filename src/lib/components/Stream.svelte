@@ -7,24 +7,26 @@
 
   export let blok;
   export let uuid
-    $: resolvedRichText = renderRichText(blok.description);
   
-    const perPage = blok?.perPage;
-    let currentPage = 1;
-    let itemNo = 1;
-    let hasMorePages = true; // Flag to check if there are more pages
-    let items = []; // these are all the stories/content
-    let yearList = [];
-    let selectYear = [];
-    let afterDate = [];
-    let beforeDate = [];
-    let totalPages;
-    let links = [];
-    let searchbar = "";
-    let streamArray = [];
+  $: resolvedRichText = renderRichText(blok.description);
+  
+  const perPage = blok?.perPage;
+  let currentPage = 1;
+  let itemNo = 1;
+  let hasMorePages = true; // Flag to check if there are more pages
+  let items = []; // these are all the stories/content
+  let yearList = [];
+  let selectYear = [];
+  let afterDate = [];
+  let beforeDate = [];
+  let totalPages;
+  let links = [];
+  let searchbar = "";
+  let streamArray = [];
 
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
+        streamArray = uuid;
       const { year } = storyblokApi.get('cdn/stories/config/', {})
       .then(response => {
         yearList = response.data.story.content.year;
@@ -47,7 +49,7 @@
         search_term: searchbar,
       });
       items = data.stories;
-      streamArray = data.rel_uuids;
+  
   
       const { length } = await storyblokApi.getAll('cdn/stories', {
         version: 'published',

@@ -20,6 +20,7 @@
     let totalPages;
     let links = [];
     let searchbar = "";
+    let streamArray = [blok?.uuid];
 
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
@@ -39,7 +40,7 @@
         page: currentPage,
         filter_query: {
           year: { any_in_array: selectYear },
-          stream: {all_in_array: [blok?.uuid]}
+          stream: {all_in_array: streamArray}
         },
         resolve_relations: ['event.stream', 'event.guests'], 
         search_term: searchbar,
@@ -51,7 +52,7 @@
         starts_with:  'events', // Use default if 'blok' is undefined
         filter_query: {
           year: { any_in_array: selectYear },          
-          stream: {all_in_array: [blok?.uuid]}
+          stream: {all_in_array: streamArray}
 
         },
         search_term: searchbar,
@@ -105,6 +106,7 @@
 <div use:storyblokEditable={blok} class="justify-center">
     <div class="grid justify-items-center mx-auto mb-12 ">
         <h1 class="text-2xl lg:text-6xl font-bold mt-12 mb-4 text-center">{blok.name}</h1>
+        <p>{blok.uuid}</p>
         <!-- <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold mb-4">
             {blok.subtitle}
         </h2> -->

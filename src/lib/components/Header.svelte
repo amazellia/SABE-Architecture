@@ -69,8 +69,8 @@
         </div>
             <ul class="flex flex-col items-center justify-center space-y-4 text-lg font-bold">
                 {#each header as blok}
-                    <li class="hover:text-[#ff0085]">
-                        <a href="/{blok.link.story.url}"> {blok.name}</a>
+                    <li class="hover:text-[#ff0085]" >
+                        <a href="/{blok.link.story.url}" on:click={toggleNav}> {blok.name}</a>
                     </li>
                 {/each}
             </ul>

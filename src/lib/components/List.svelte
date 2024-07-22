@@ -60,7 +60,7 @@
         starts_with: blok?.starts_with || 'events', // Use default if 'blok' is undefined
         with_tag: blok?.tags || selectTag, // Handle potential undefined 'blok',
         is_startpage: false,
-        sort_by: 'content.startDate:desc', // Use default if 'blok' is undefined
+        sort_by: blok?.sort_by || 'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
         filter_query: filterQuery,

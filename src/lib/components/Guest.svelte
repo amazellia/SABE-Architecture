@@ -41,7 +41,7 @@
         page: currentPage,
         filter_query: {
           year: { any_in_array: selectYear },
-          guest: {any_in_array: guestArray}
+          guests: {any_in_array: guestArray}
         },
         resolve_relations: [ 'event.stream', 'event.guests'], 
         search_term: searchbar,
@@ -54,7 +54,7 @@
         starts_with:  'events', // Use default if 'blok' is undefined
         filter_query: {
           year: { any_in_array: selectYear },          
-          guest: {any_in_array: guestArray}
+          guests: {any_in_array: guestArray}
 
         },
         search_term: searchbar,

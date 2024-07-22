@@ -29,7 +29,6 @@
       let filterQuery = {
         year: { any_in_array: selectYear },
         startDate: {gt_date: afterDate, lt_date: beforeDate},
-        is_currentSpeaker: {is: blok?.is_currentSpeaker},
       };
       if (blok?.is_periGuest == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
@@ -61,7 +60,7 @@
         starts_with: blok?.starts_with || 'events', // Use default if 'blok' is undefined
         with_tag: blok?.tags || selectTag, // Handle potential undefined 'blok',
         is_startpage: false,
-        sort_by: blok?.sort_by || 'content.startDate:desc', // Use default if 'blok' is undefined
+        sort_by: 'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
         filter_query: filterQuery,

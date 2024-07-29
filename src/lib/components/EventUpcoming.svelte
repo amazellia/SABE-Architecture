@@ -1,6 +1,7 @@
 <script>
 	import ListCard from './ListCard.svelte';
     import { onMount } from 'svelte';
+    import { useStoryblokApi } from '@storyblok/svelte';
     import Subheadline from './micro/Subheadline.svelte';
 
     // Pagination
@@ -8,16 +9,17 @@
     let hasMorePages = true; // Flag to check if there are more pages
     const perPage = 3; 
 
-    // Current Date Formatting for Filtering Events 
-    let d = new Date();
-    let year = d.getFullYear();
-    let month = (d.getMonth() + 1) < 10 ? `0${d.getMonth() + 1}`: (d.getMonth() + 1);
-    let day = d.getDate() < 10 ? `0${d.getDate()}`: (d.getDate());
-
     let events = [];
 
-    const loadPage = async ( parent ) => {
-        const { storyblokApi } = await parent();
+    const loadPage = async () => {
+        const storyblokApi = useStoryblokApi();
+
+        // Current Date Formatting for Filtering Events 
+        let d = new Date();
+        let year = d.getFullYear();
+        let month = (d.getMonth() + 1) < 10 ? `0${d.getMonth() + 1}`: (d.getMonth() + 1);
+        let day = d.getDate() < 10 ? `0${d.getDate()}`: (d.getDate());
+        
         const resolveRelations = ['event.stream', 'event.guests']
         const { data } = await storyblokApi.get('cdn/stories', {
             version: 'published',

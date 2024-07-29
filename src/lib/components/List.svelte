@@ -43,6 +43,11 @@
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
+      if (blok?.is_currentSpeaker == false && blok?.is_periGuest == true) {
+        filterQuery.is_periGuest = {is: blok?.is_periGuest};
+        filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
+      }
+
       const { year } = storyblokApi.get('cdn/stories/config/', {})
       .then(response => {
         yearList = response.data.story.content.year;

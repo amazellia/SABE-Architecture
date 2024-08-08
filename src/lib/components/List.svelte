@@ -22,11 +22,10 @@
     let searchbar = "";
     let tagsList = "";
     let selectTag = "";
-    let currentItem = ""
   
     const loadPage = async () => {
       const storyblokApi = useStoryblokApi();
-      currentItem = uuid;
+       let currentItem = uuid;
 
       // Construct the filter_query object dynamically
       let filterQuery = {

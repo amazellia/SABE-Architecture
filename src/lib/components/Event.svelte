@@ -20,16 +20,28 @@
     let totalPages;
     let links = [];
     let searchbar = "";
-    let tutorialArray = [];
+    let currentItemArray = [];
 
     const loadPage = async () => {
-        const storyblokApi = useStoryblokApi();
-        tutorialArray = uuid;
-      const { year } = storyblokApi.get('cdn/stories/config/', {})
-      .then(response => {
-        yearList = response.data.story.content.year;
-        return yearList;
-      }) .catch(error => { console.log(error);  });
+    let filterQuery = {
+    year: { any_in_array: selectYear }
+    }
+
+    if (blok?.acad == true) {
+        filterQuery.acad = {any_in_array: currentItemArray}
+    }
+
+    if (blok?.tutorial == true) {
+        filterQuery.tutorial = {any_in_array: currentItemArray}
+    }
+
+    const storyblokApi = useStoryblokApi();
+    tutorialArray = uuid;
+    const { year } = storyblokApi.get('cdn/stories/config/', {})
+    .then(response => {
+    yearList = response.data.story.content.year;
+    return yearList;
+    }) .catch(error => { console.log(error);  });
 
 
       const { data } = await storyblokApi.get('cdn/stories', {
@@ -39,9 +51,7 @@
         sort_by:  'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
-        filter_query: {
-          tutorial: {any_in_array: tutorialArray}
-        },
+        filter_query: filterQuery,
         resolve_relations: [ 'event.stream', 'event.guests', 'project.tutorial', 'project.acad' ], 
         search_term: searchbar,
       });
@@ -51,10 +61,7 @@
       const { length } = await storyblokApi.getAll('cdn/stories', {
         version: 'published',
         starts_with:  'events', // Use default if 'blok' is undefined
-        filter_query: {       
-          tutorial: {any_in_array: tutorialArray}
-
-        },
+        filter_query: filterQuery,
         search_term: searchbar,
       });
 
@@ -100,9 +107,6 @@
       currentPage = 1
     }
 
-
-
-
 </script>
 <div use:storyblokEditable={blok}>
     <img
@@ -130,7 +134,7 @@
         {/each}
         <div class="w-2/3 prose">{@html resolvedRichText}</div>
 
-        {#if blok.add_list == true}
+        {#if blok.add_list === true}
         <div class="container mx-auto grid @apply md:grid-cols-3 gap-12 ">
             {#each items as item}
               <div class:md:col-start-2={items.length === 1} class="container mx-auto my-5 place-items-center place-content-center ">

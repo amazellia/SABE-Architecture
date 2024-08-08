@@ -30,7 +30,6 @@
       let filterQuery = {
         year: { any_in_array: selectYear },
         startDate: {gt_date: afterDate, lt_date: beforeDate},
-        tutorial: {any_in_array: choose_tutorial}
       };
       if (blok?.is_periGuest == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
@@ -48,10 +47,6 @@
       if (blok?.is_currentSpeaker == false && blok?.is_periGuest == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
-      }
-
-      if (blok?.choose_tutorial != "") {
-        filterQuery.tutorial = {any_in_array: choose_tutorial};
       }
 
       const { year } = storyblokApi.get('cdn/stories/config/', {})

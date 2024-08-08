@@ -22,11 +22,11 @@
   let totalPages;
   let links = [];
   let searchbar = "";
-  let streamArray = [];
+  let currentArray = [];
 
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
-        streamArray = uuid;
+        currentArray = uuid;
       const { year } = storyblokApi.get('cdn/stories/config/', {})
       .then(response => {
         yearList = response.data.story.content.year;
@@ -38,12 +38,12 @@
         version: 'published',
         starts_with:  blok?.starts_with, // Use default if 'blok' is undefined
         is_startpage: false,
-        //sort_by:  'content.startDate:desc', // Use default if 'blok' is undefined
+        sort_by:  blok?.sort_by || 'position:desc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
         filter_query: {
           year: { any_in_array: selectYear },
-          tutorial: {any_in_array: streamArray}
+          tutorial: {any_in_array: currentArray}
         },
         resolve_relations: [ 'event.stream', 'event.guests', 'project.tutorial', 'project.acad'], 
         search_term: searchbar,
@@ -53,10 +53,10 @@
   
       const { length } = await storyblokApi.getAll('cdn/stories', {
         version: 'published',
-        starts_with:  'events', // Use default if 'blok' is undefined
+        starts_with: blok?.starts_with, // Use default if 'blok' is undefined
         filter_query: {
           year: { any_in_array: selectYear },          
-          tutorial: {any_in_array: streamArray}
+          tutorial: {any_in_array: currentArray}
 
         },
         search_term: searchbar,

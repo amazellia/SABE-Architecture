@@ -42,7 +42,7 @@
         per_page: perPage,
         page: currentPage,
         filter_query: {
-          tutorial: {any_in_array: currentArray}
+            project_tutorial: {any_in_array: currentArray}
         },
         resolve_relations: [ 'event.stream', 'event.guests', 'project.tutorial', 'project.acad'], 
         search_term: searchbar,
@@ -54,7 +54,7 @@
         version: 'published',
         starts_with: blok?.starts_with, // Use default if 'blok' is undefined
         filter_query: {      
-          tutorial: {any_in_array: currentArray}
+            project_tutorial: {any_in_array: currentArray}
         },
         search_term: searchbar,
       });

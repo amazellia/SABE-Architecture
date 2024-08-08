@@ -27,11 +27,11 @@
     year: { any_in_array: selectYear }
     }
 
-    if (blok?.acad == true) {
+    if (blok?.acad === true) {
         filterQuery.acad = {any_in_array: currentItemArray}
     }
 
-    if (blok?.tutorial == true) {
+    if (blok?.tutorial === true) {
         filterQuery.tutorial = {any_in_array: currentItemArray}
     }
 
@@ -48,7 +48,7 @@
         version: 'published',
         starts_with:  blok?.starts_with || 'events', 
         is_startpage: false,
-        sort_by:  'content.startDate:desc', // Use default if 'blok' is undefined
+        sort_by:  blok?.sort_by || 'position:asc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
         filter_query: filterQuery,
@@ -134,8 +134,9 @@
         {/each}
         <div class="w-2/3 prose">{@html resolvedRichText}</div>
     </div>
-    
+
         {#if blok.add_list === true}
+        <div class="py-24 justify-center mx-2">
         <div class="container mx-auto grid @apply md:grid-cols-3 gap-12 ">
             {#each items as item}
               <div class:md:col-start-2={items.length === 1} class="container mx-auto my-5 place-items-center place-content-center ">
@@ -184,8 +185,8 @@
             </div>
           </div>
         </div>
-        
           </div>
+        </div>
         {/if}
     
 </div>

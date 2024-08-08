@@ -43,7 +43,7 @@
         page: currentPage,
         filter_query: {
           year: { any_in_array: selectYear },
-          tutorial: {any_in_array: currentArray}
+          tutorial: {in_array: currentArray}
         },
         resolve_relations: [ 'event.stream', 'event.guests', 'project.tutorial', 'project.acad'], 
         search_term: searchbar,
@@ -56,8 +56,7 @@
         starts_with: blok?.starts_with, // Use default if 'blok' is undefined
         filter_query: {
           year: { any_in_array: selectYear },          
-          tutorial: {any_in_array: currentArray}
-
+          tutorial: {n_array: currentArray}
         },
         search_term: searchbar,
       });

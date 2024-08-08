@@ -36,7 +36,7 @@
 
       const { data } = await storyblokApi.get('cdn/stories', {
         version: 'published',
-        starts_with:  'events', // Use default if 'blok' is undefined
+        starts_with:  blok?.starts_with, // Use default if 'blok' is undefined
         is_startpage: false,
         //sort_by:  'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
@@ -131,7 +131,7 @@
         <div class="w-2/3 prose">{@html resolvedRichText}</div>
     </div>
 
-    
+    {#if blok?.add_listing == true}
     <!-- Filter Component -->
     <div class="py-24 justify-center mx-2">
         <div class=" flex md:flex-row flex-col w-10/12 container mx-auto place-items-center place-content-center ">
@@ -204,5 +204,8 @@
           </nav>
         </div>
     </div>
-</div></div></div>
+</div>
+</div>
+</div>
+    {/if}
 </div>

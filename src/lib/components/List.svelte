@@ -31,7 +31,7 @@
       // Construct the filter_query object dynamically
       let filterQuery = {
         year: { any_in_array: selectYear },
-        //startDate: {gt_date: afterDate, lt_date: beforeDate},
+        startDate: {gt_date: afterDate, lt_date: beforeDate},
       };
       if (blok?.is_periGuest == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
@@ -49,14 +49,6 @@
       if (blok?.is_currentSpeaker == false && blok?.is_periGuest == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
-      }
-
-      if (blok?.is_tutorial == true) {
-        filterQuery.tutorial = {any_in_array: currentItem};
-      }
-
-      if (blok?.is_acad == true) {
-        filterQuery.acad = {any_in_array: currentItem};
       }
 
       const { year } = storyblokApi.get('cdn/stories/config/', {})
@@ -78,6 +70,7 @@
         is_startpage: false,
         sort_by: blok?.sort_by || 'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
+        excluding_slugs: blok?.excluding_slugs || '',
         page: currentPage,
         filter_query: filterQuery,
         resolve_relations: ['event.stream', 'event.guests', 'project.tutorial', 'project.acad'], 
@@ -89,6 +82,7 @@
         version: 'published',
         starts_with: blok?.starts_with || 'events', // Use default if 'blok' is undefined
         with_tag: blok?.tags || selectTag, // Handle potential undefined 'blok',
+        excluding_slugs: blok?.excluding_slugs || '',
         filter_query: {
           year: { any_in_array: selectYear },
           startDate: { gt_date:afterDate, lt_date: beforeDate},

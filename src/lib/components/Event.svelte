@@ -133,7 +133,8 @@
         </a>
         {/each}
         <div class="w-2/3 prose">{@html resolvedRichText}</div>
-
+    </div>
+    
         {#if blok.add_list === true}
         <div class="container mx-auto grid @apply md:grid-cols-3 gap-12 ">
             {#each items as item}
@@ -186,5 +187,5 @@
         
           </div>
         {/if}
-    </div>
+    
 </div>

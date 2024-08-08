@@ -21,10 +21,11 @@
     let searchbar = "";
     let tagsList = "";
     let selectTag = "";
+    let choose_tutorial = []
   
     const loadPage = async () => {
       const storyblokApi = useStoryblokApi();
-
+      choose_tutorial = blok?.choose_tutorial
       // Construct the filter_query object dynamically
       let filterQuery = {
         year: { any_in_array: selectYear },
@@ -48,8 +49,8 @@
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
-      if (blok?.choose_tutorial) {
-        filterQuery.tutorial = {any_in_array: [blok?.choose_tutorial]};
+      if (blok?.choose_tutorial != "") {
+        filterQuery.tutorial = {any_in_array: choose_tutorial};
       }
 
       const { year } = storyblokApi.get('cdn/stories/config/', {})
@@ -142,7 +143,6 @@
   <div class="py-24 justify-center mx-2">
     <div class="text-center mx-0.5">
     <HeadlineColorful headline={blok?.listName}/>
-    {console.log(currentItem)}
     </div>
     {#if ifFilter}
     <div class=" flex md:flex-row flex-col w-10/12 container mx-auto place-items-center place-content-center ">

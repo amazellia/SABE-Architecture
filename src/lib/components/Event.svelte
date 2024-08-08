@@ -1,6 +1,6 @@
  
 <script>
-    import { storyblokEditable, renderRichText } from '@storyblok/svelte';
+    import { storyblokEditable, renderRichText, StoryblokComponent } from '@storyblok/svelte';
     export let blok;
     $: resolvedRichText = renderRichText(blok.description);
 
@@ -135,6 +135,10 @@
         {/each}
         <div class="w-2/3 prose">{@html resolvedRichText}</div>
     </div>
+
+    {#each blok.body as blok}
+			<StoryblokComponent {blok} />
+	{/each}
 
         {#if blok.add_list === true}
         <div class="py-24 justify-center mx-2">

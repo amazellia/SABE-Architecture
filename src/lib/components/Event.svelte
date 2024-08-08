@@ -23,6 +23,8 @@
     let currentItemArray = [];
 
     const loadPage = async () => {
+    const storyblokApi = useStoryblokApi();
+    currentItemArray = uuid;
     let filterQuery = {
     year: { any_in_array: selectYear }
     }
@@ -35,8 +37,7 @@
         filterQuery.tutorial = {any_in_array: currentItemArray}
     }
 
-    const storyblokApi = useStoryblokApi();
-    tutorialArray = uuid;
+    
     const { year } = storyblokApi.get('cdn/stories/config/', {})
     .then(response => {
     yearList = response.data.story.content.year;

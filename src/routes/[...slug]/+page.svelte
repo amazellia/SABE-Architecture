@@ -7,7 +7,7 @@
 
 	onMount(() => {
 		if (data.story) {    
-			const resolveRelations = ['event.stream', 'event.guests', 'guests.year']
+			const resolveRelations = ['event.stream', 'event.guests', 'guests.year', 'project.tutorial', 'project.acad' ]
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory), {
 	 			resolveRelations: resolveRelations
 			});

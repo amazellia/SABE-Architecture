@@ -37,6 +37,12 @@
             </a>
             {/each}
         {/if}
+        {#if blok.tutorial}
+                {blok.tutorial.name}
+        {/if}
+        {#if blok.acad}
+                {blok.acad.name}
+        {/if}
         <div class="m-3 prose">{@html resolvedRichText}</div>
         </div>
     </div>

@@ -49,7 +49,7 @@
       }
 
       if (blok?.choose_tutorial) {
-        filterQuery.tutorial = {any_in_array: blok?.choose_tutorial};
+        filterQuery.tutorial = {any_in_array: [blok?.choose_tutorial]};
       }
 
       const { year } = storyblokApi.get('cdn/stories/config/', {})

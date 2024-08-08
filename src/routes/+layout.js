@@ -1,3 +1,10 @@
+/* 
+layout.js
+- Sets up the Storyblok API. 
+- Update here if there are new components to be added. 
+- Also includes the rich text scheme to be edited here. 
+*/
+
 // 001 Import the environment variables
 import { PUBLIC_ACCESS_TOKEN } from '$env/static/public';
 import { PUBLIC_REGION } from '$env/static/public';
@@ -27,7 +34,6 @@ import cloneDeep from "clone-deep";
 const mySchema = cloneDeep(RichTextSchema); // you can make a copy of the default RichTextSchema
 // ... and edit the nodes and marks, or add your own.
 // Check the base RichTextSchema source here https://github.com/storyblok/storyblok-js-client/blob/master/source/schema.js
-
 
 // 003 listing the needed components
 let callbackComponents = () => {

@@ -40,7 +40,6 @@
         per_page: perPage,
         page: currentPage,
         filter_query: {
-          year: { any_in_array: selectYear },
           tutorial: {any_in_array: tutorialArray}
         },
         resolve_relations: [ 'event.stream', 'event.guests', 'project.tutorial', 'project.acad' ], 
@@ -52,8 +51,7 @@
       const { length } = await storyblokApi.getAll('cdn/stories', {
         version: 'published',
         starts_with:  'events', // Use default if 'blok' is undefined
-        filter_query: {
-          year: { any_in_array: selectYear },          
+        filter_query: {       
           tutorial: {any_in_array: tutorialArray}
 
         },

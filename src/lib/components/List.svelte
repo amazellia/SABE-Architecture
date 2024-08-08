@@ -141,6 +141,7 @@
   <div class="py-24 justify-center mx-2">
     <div class="text-center mx-0.5">
     <HeadlineColorful headline={blok?.listName}/>
+    {console.log(uuid)}
     </div>
     {#if ifFilter}
     <div class=" flex md:flex-row flex-col w-10/12 container mx-auto place-items-center place-content-center ">

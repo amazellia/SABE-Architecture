@@ -80,7 +80,7 @@
         per_page: perPage,
         page: currentPage,
         filter_query: filterQuery,
-        resolve_relations: ['event.stream', 'event.guests'], 
+        resolve_relations: ['event.stream', 'event.guests', 'project.tutorial', 'project.acad'], 
         search_term: searchbar,
       });
       items = data.stories;

@@ -51,11 +51,11 @@
       }
 
       if (blok?.is_tutorial == true) {
-        filterQuery.is_tutorial = {any_in_array: currentItem};
+        filterQuery.tutorial = {any_in_array: currentItem};
       }
 
       if (blok?.is_acad == true) {
-        filterQuery.is_acad = {any_in_array: currentItem};
+        filterQuery.acad = {any_in_array: currentItem};
       }
 
       const { year } = storyblokApi.get('cdn/stories/config/', {})

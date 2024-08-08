@@ -26,12 +26,12 @@
   
     const loadPage = async () => {
       const storyblokApi = useStoryblokApi();
-       currentItem = uuid;
+      currentItem = uuid;
 
       // Construct the filter_query object dynamically
       let filterQuery = {
         year: { any_in_array: selectYear },
-        startDate: {gt_date: afterDate, lt_date: beforeDate},
+        //startDate: {gt_date: afterDate, lt_date: beforeDate},
       };
       if (blok?.is_periGuest == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};

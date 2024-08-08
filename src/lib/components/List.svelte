@@ -5,6 +5,7 @@
     import { useStoryblokApi } from '@storyblok/svelte';
 
     export let blok;
+    export let uuid;
   
     const perPage = blok?.perPage;
     let currentPage = 1;
@@ -21,9 +22,11 @@
     let searchbar = "";
     let tagsList = "";
     let selectTag = "";
+    let currentItem = ""
   
     const loadPage = async () => {
       const storyblokApi = useStoryblokApi();
+      currentItem = uuid;
 
       // Construct the filter_query object dynamically
       let filterQuery = {
@@ -46,6 +49,14 @@
       if (blok?.is_currentSpeaker == false && blok?.is_periGuest == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
+      }
+
+      if (blok?.is_tutorial == true) {
+        filterQuery.is_tutorial = {like: currentItem};
+      }
+
+      if (blok?.is_acad == true) {
+        filterQuery.is_acad = {like: currentItem};
       }
 
       const { year } = storyblokApi.get('cdn/stories/config/', {})

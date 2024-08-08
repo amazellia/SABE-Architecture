@@ -33,7 +33,6 @@
         return yearList;
       }) .catch(error => { console.log(error);  });
 
-
       const { data } = await storyblokApi.get('cdn/stories', {
         version: 'published',
         starts_with:  blok?.starts_with, // Use default if 'blok' is undefined
@@ -127,6 +126,9 @@
         {/each}
         <div class="w-2/3 prose">{@html resolvedRichText}</div>
     </div>
+
+    
+    {console.log(items)}
 
     {#if blok?.add_listing == true}
     <!-- Filter Component -->

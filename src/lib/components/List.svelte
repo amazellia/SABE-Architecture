@@ -21,10 +21,11 @@
     let searchbar = "";
     let tagsList = "";
     let selectTag = "";
+    let choose_tutorial = []
   
     const loadPage = async () => {
       const storyblokApi = useStoryblokApi();
-
+      choose_tutorial = blok?.choose_tutorial
       // Construct the filter_query object dynamically
       let filterQuery = {
         year: { any_in_array: selectYear },
@@ -67,9 +68,10 @@
         is_startpage: false,
         sort_by: blok?.sort_by || 'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,
+        excluding_slugs: blok?.excluding_slugs || '',
         page: currentPage,
         filter_query: filterQuery,
-        resolve_relations: ['event.stream', 'event.guests'], 
+        resolve_relations: ['event.stream', 'event.guests', 'project.tutorial', 'project.acad'], 
         search_term: searchbar,
       });
       items = data.stories;
@@ -78,6 +80,7 @@
         version: 'published',
         starts_with: blok?.starts_with || 'events', // Use default if 'blok' is undefined
         with_tag: blok?.tags || selectTag, // Handle potential undefined 'blok',
+        excluding_slugs: blok?.excluding_slugs || '',
         filter_query: {
           year: { any_in_array: selectYear },
           startDate: { gt_date:afterDate, lt_date: beforeDate},
@@ -164,7 +167,7 @@
       <b>No records found.</b></div>
     {/if}
 
-    {#if !blok}
+    {#if !items}
     <div class="text-center mx-auto">
       <b>Loading...</b></div>
     {/if}

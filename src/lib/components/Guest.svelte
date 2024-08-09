@@ -15,8 +15,6 @@
     let items = []; // these are all the stories/content
     let yearList = [];
     let selectYear = [];
-    let afterDate = [];
-    let beforeDate = [];
     let totalPages;
     let links = [];
     let searchbar = "";
@@ -128,13 +126,16 @@
     <h2 class="text-2xl mb-4 text-center">{y}</h2>
   {/each}
   <div class="w-full prose">{@html resolvedRichText}</div>
+</div>
 
   {#if blok?.assets}
     <Gallery blok={blok}/>
   {/if}
-
-  
     <!-- Filter Component -->
+    <div class=" flex md:flex-row flex-col w-10/12 container mx-auto place-items-center place-content-center ">
+      <input type="search" class="m-2 p-2 border rounded w-full" placeholder="Search.." on:change={handleSearchTerm}>
+      <input type="submit" value="🔎" class="p-2 border rounded hover:bg-violet-600 w-fit " on:click={loadPage}>
+    </div>
     <div class="py-24 justify-center mx-2">
       <div class=" flex md:flex-row flex-col w-10/12 container mx-auto place-items-center place-content-center ">
         <select id="yearSelector" class="m-2 p-2 border rounded w-full " on:change={handleYearSelection} >
@@ -154,7 +155,7 @@
         <b>No records found.</b></div>
       {/if}
   
-      {#if !blok}
+      {#if !items}
       <div class="text-center mx-auto">
         <b>Loading...</b></div>
       {/if}
@@ -166,8 +167,6 @@
         </div>
       {/each}       
     </div>  
-  
-      <div class="py-24 justify-center">
       <div class="flex items-center justify-between border-t border-gray-200 px-4 py-3 sm:px-6">
         <div class="flex flex-1 justify-between sm:hidden">
           <button on:click={prevPage} disabled={currentPage === 1} class="hover:bg-white disabled:opacity-75 relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</button>
@@ -205,9 +204,6 @@
         </button>
         </nav>
       </div>
-    </div>
-  </div>
-  
     </div>
     </div>
 </div>

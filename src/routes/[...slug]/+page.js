@@ -12,7 +12,7 @@ export async function load({ params, parent }) {
     path += 'home';
   }
 
-    const resolveRelations = ['event-highlights.events','event.stream', 'event.guests', 'guests.year']
+    const resolveRelations = ['event-highlights.events','event.stream', 'event.guests', 'guests.year','project.tutorial', 'project.acad' ]
     const dataStory = await storyblokApi.get(path, {
       version: 'draft',
       resolve_relations: resolveRelations,

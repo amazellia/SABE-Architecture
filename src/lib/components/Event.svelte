@@ -26,19 +26,19 @@
         currentArray = uuid;
 
         let filterQuery = {
-          project_tutorial: {is: currentArray},
-          parent_event: {is: currentArray}
+          project_tutorial: {in: currentArray},
+          parent_event: {in: currentArray}
       };
 
       const { data } = await storyblokApi.get('cdn/stories', {
         version: 'published',
-        starts_with:  blok?.starts_with, // Use default if 'blok' is undefined
+        starts_with:  blok?.starts_with || 'events', // Use default if 'blok' is undefined
         is_startpage: false,
-        sort_by:  blok?.sort_by || 'position:desc', // Use default if 'blok' is undefined
+        sort_by:  blok?.sort_by || 'position:asc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
         filter_query: filterQuery,
-        resolve_relations: [ 'event.stream', 'event.guests', 'event.parent_event', 'project.project_tutorial', 'project.acad'], 
+        resolve_relations: [ 'event.stream', 'event.guests', 'event.parent_event', 'project.project_tutorial', 'project.project_tutor'], 
         search_term: searchbar,
       });
       items = data.stories;

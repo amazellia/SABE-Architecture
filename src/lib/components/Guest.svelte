@@ -126,6 +126,7 @@
     <h2 class="text-2xl mb-4 text-center">{y}</h2>
   {/each}
   <div class="w-full prose">{@html resolvedRichText}</div>
+</div>
 
   {#if blok?.assets}
     <Gallery blok={blok}/>
@@ -205,8 +206,6 @@
       </div>
     </div>
   </div>
-  
-    </div>
     </div>
 </div>
 </div>

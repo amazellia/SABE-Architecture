@@ -43,7 +43,7 @@
       };
 
       if (blok?.find_tutor == true) {
-          filterQuery.project_tutor = {in: currentArray}
+          filterQuery.project_tutor = {any_in_array: currentArray}
       }
 
       const { data } = await storyblokApi.get('cdn/stories', {

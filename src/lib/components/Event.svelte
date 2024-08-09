@@ -20,14 +20,18 @@
   let links = [];
   let searchbar = "";
   let currentArray = [];
+  let filterQuery = {};
 
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
         currentArray = uuid;
 
-        let filterQuery = {
-          project_tutorial: {in: currentArray},
-          parent_event: {in: currentArray}
+        if (blok?.find_tutorials == true) {
+          filterQuery.project_tutorial = {in: currentArray}
+      };
+
+      if (blok?.find_related_events == true) {
+        filterQuery.parent_event = {in: currentArray}
       };
 
       const { data } = await storyblokApi.get('cdn/stories', {

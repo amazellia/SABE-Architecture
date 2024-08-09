@@ -167,7 +167,7 @@
       <b>No records found.</b></div>
     {/if}
 
-    {#if !blok}
+    {#if !items}
     <div class="text-center mx-auto">
       <b>Loading...</b></div>
     {/if}

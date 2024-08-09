@@ -26,7 +26,7 @@
         currentArray = uuid;
 
         let filterQuery = {
-          project_tutorial: {any_in_array: currentArray}
+          project_tutorial: {is: currentArray}
       };
 
       const { data } = await storyblokApi.get('cdn/stories', {
@@ -126,7 +126,7 @@
           <b>No records found.</b></div>
         {/if}
     
-        {#if !blok}
+        {#if !items}
         <div class="text-center mx-auto">
           <b>Loading...</b></div>
         {/if}

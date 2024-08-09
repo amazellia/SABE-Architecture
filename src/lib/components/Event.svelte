@@ -26,7 +26,8 @@
         currentArray = uuid;
 
         let filterQuery = {
-          project_tutorial: {is: currentArray}
+          project_tutorial: {is: currentArray},
+          parent_event: {is: currentArray}
       };
 
       const { data } = await storyblokApi.get('cdn/stories', {

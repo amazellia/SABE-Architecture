@@ -13,7 +13,8 @@
         <h1 class="text-sm"><HeadlineColorful headline={blok.projectName}/></h1>
         <h2 class="text-xl lg:text-3xl  font-bold mt-12 mb-4 text-center">by {blok.CreatorsName}</h2>
         <a href="/{blok?.project_tutorial.full_slug}"> {blok?.project_tutorial.full_slug.name}</a>
-        <a href="/{blok?.acad.full_slug}"> {blok?.acad.full_slug.name}</a>
+        <a href="/{blok?.course_event.full_slug}"> {blok?.course_event.full_slug.name}</a>
+        <a href="/{blok?.exhibit_event.full_slug}"> {blok?.exhibit_event.full_slug.name}</a>
         <hr>
     </div>
     
@@ -32,6 +33,13 @@
                 {blok.date}
             </h2>
         {/if}
+
+        {#if blok?.project_tutor}
+            {#each blok?.project_tutor as tutor}
+            <a href="/{tutor.full_slug}"> {tutor.full_slug.name}</a> 
+            {/each}
+        {/if}
+        
         {#if blok.guests}
             {#each blok.guests as guest}
             <a href="/{guest.full_slug}">

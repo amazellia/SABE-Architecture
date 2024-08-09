@@ -137,19 +137,6 @@
       <input type="submit" value="🔎" class="p-2 border rounded hover:bg-violet-600 w-fit " on:click={loadPage}>
     </div>
     <div class="py-24 justify-center mx-2">
-      <div class=" flex md:flex-row flex-col w-10/12 container mx-auto place-items-center place-content-center ">
-        <select id="yearSelector" class="m-2 p-2 border rounded w-full " on:change={handleYearSelection} >
-          <option value="">Year</option>
-          {#each yearList as year}
-            <option value={year}>{year}</option>
-          {/each}
-        </select>
-        
-          <input type="search" class="m-2 p-2 border rounded w-full" placeholder="Search.." on:change={handleSearchTerm}>
-  
-      <input type="submit" value="🔎" class="p-2 border rounded hover:bg-violet-600 w-fit " on:click={loadPage}>
-      </div>
-      
       {#if items.length === 0}
       <div class="text-center mx-auto">
         <b>No records found.</b></div>

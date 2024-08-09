@@ -27,7 +27,7 @@
         currentArray = uuid;
 
       if (blok?.find_tutorials == true) {
-          filterQuery.project_tutorial = {in: currentArray}
+          filterQuery.tutorial_event = {in: currentArray}
       };
 
       if (blok?.find_related_events == true) {
@@ -54,7 +54,7 @@
         per_page: perPage,
         page: currentPage,
         filter_query: filterQuery,
-        resolve_relations: [ 'event.stream', 'event.guests', 'event.parent_event', 'project.course_event', 'project.project_tutorial', 'project.project_tutor', 'project.exhibit_event'], 
+        resolve_relations: [ 'event.stream', 'event.guests', 'event.parent_event', 'project.course_event', 'project.tutorial_event', 'project.project_tutor', 'project.exhibit_event'], 
         search_term: searchbar,
       });
       items = data.stories;

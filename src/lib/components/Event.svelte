@@ -38,7 +38,7 @@
         per_page: perPage,
         page: currentPage,
         filter_query: filterQuery,
-        resolve_relations: [ 'event.stream', 'event.guests', 'project.project_tutorial', 'project.acad'], 
+        resolve_relations: [ 'event.stream', 'event.guests', 'event.parent_event', 'project.project_tutorial', 'project.acad'], 
         search_term: searchbar,
       });
       items = data.stories;

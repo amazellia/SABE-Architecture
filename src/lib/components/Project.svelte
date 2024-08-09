@@ -12,6 +12,8 @@
     <div class="p-2 w-full text-center grid col-span-1">
         <h1 class="text-sm"><HeadlineColorful headline={blok.projectName}/></h1>
         <h2 class="text-xl lg:text-3xl  font-bold mt-12 mb-4 text-center">by {blok.CreatorsName}</h2>
+        <a href="/{blok?.project_tutorial.full_slug}"> {blok?.project_tutorial.full_slug.name}</a>
+        <a href="/{blok?.acad.full_slug}"> {blok?.acad.full_slug.name}</a>
         <hr>
     </div>
     

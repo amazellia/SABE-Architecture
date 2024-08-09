@@ -15,10 +15,7 @@
   let itemNo = 1;
   let hasMorePages = true; // Flag to check if there are more pages
   let items = []; // these are all the stories/content
-  let yearList = [];
-  let selectYear = [];
-  let afterDate = [];
-  let beforeDate = [];
+
   let totalPages;
   let links = [];
   let searchbar = "";
@@ -27,11 +24,10 @@
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
         currentArray = uuid;
-      const { year } = storyblokApi.get('cdn/stories/config/', {})
-      .then(response => {
-        yearList = response.data.story.content.year;
-        return yearList;
-      }) .catch(error => { console.log(error);  });
+
+        let filterQuery = {
+          project_tutorial: {any_in_array: currentArray}
+      };
 
       const { data } = await storyblokApi.get('cdn/stories', {
         version: 'published',
@@ -40,10 +36,8 @@
         sort_by:  blok?.sort_by || 'position:desc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
-        filter_query: {
-            project_tutorial: {any_in_array: currentArray}
-        },
-        resolve_relations: [ 'event.stream', 'event.guests', 'project.tutorial', 'project.acad'], 
+        filter_query: filterQuery,
+        resolve_relations: [ 'event.stream', 'event.guests', 'project.project_tutorial', 'project.acad'], 
         search_term: searchbar,
       });
       items = data.stories;
@@ -52,9 +46,7 @@
       const { length } = await storyblokApi.getAll('cdn/stories', {
         version: 'published',
         starts_with: blok?.starts_with, // Use default if 'blok' is undefined
-        filter_query: {      
-            project_tutorial: {any_in_array: currentArray}
-        },
+        filter_query: filterQuery,
         search_term: searchbar,
       });
 
@@ -100,6 +92,7 @@
       currentPage = 1
     }
 </script>
+
 <div use:storyblokEditable={blok}>
     <img
         src="{blok.mainImage.filename}/m/1600x0"
@@ -127,25 +120,7 @@
         <div class="w-2/3 prose">{@html resolvedRichText}</div>
     </div>
 
-    
-    {console.log(items)}
-
     {#if blok?.add_listing == true}
-    <!-- Filter Component -->
-    <div class="py-24 justify-center mx-2">
-        <div class=" flex md:flex-row flex-col w-10/12 container mx-auto place-items-center place-content-center ">
-          <select id="yearSelector" class="m-2 p-2 border rounded w-full " on:change={handleYearSelection} >
-            <option value="">Year</option>
-            {#each yearList as year}
-              <option value={year}>{year}</option>
-            {/each}
-          </select>
-          
-            <input type="search" class="m-2 p-2 border rounded w-full" placeholder="Search.." on:change={handleSearchTerm}>
-    
-        <input type="submit" value="🔎" class="p-2 border rounded hover:bg-violet-600 w-fit " on:click={loadPage}>
-        </div>
-        
         {#if items.length === 0}
         <div class="text-center mx-auto">
           <b>No records found.</b></div>
@@ -203,7 +178,6 @@
           </nav>
         </div>
     </div>
-</div>
 </div>
 </div>
     {/if}

@@ -15,8 +15,6 @@
     let items = []; // these are all the stories/content
     let yearList = [];
     let selectYear = [];
-    let afterDate = [];
-    let beforeDate = [];
     let totalPages;
     let links = [];
     let searchbar = "";

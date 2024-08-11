@@ -12,7 +12,7 @@ import Event from "$lib/components/Event.svelte";
 import EventFeatured from "$lib/components/EventFeatured.svelte";
 import EventUpcoming from "$lib/components/EventUpcoming.svelte";
 import Guest from "$lib/components/Guest.svelte";
-import GuestFeatured from "$lib/components/GuestFeatured.svelte";
+//import GuestFeatured from "$lib/components/GuestFeatured.svelte";
 import Stream from "$lib/components/Stream.svelte";
 import RichText from "$lib/components/RichText.svelte";
 import GridItemReport from "$lib/components/GridReportItem.svelte";
@@ -41,7 +41,7 @@ let callbackComponents = () => {
 		eventFeatured: EventFeatured,
 		eventUpcoming: EventUpcoming,
 		guest: Guest,
-		guestFeatured: GuestFeatured,
+		//guestFeatured: GuestFeatured,
 		stream: Stream,
 		"rich-text": RichText,
 		grid_item_report: GridItemReport,

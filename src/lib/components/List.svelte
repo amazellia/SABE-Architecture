@@ -21,11 +21,8 @@
     let searchbar = "";
     let tagsList = "";
     let selectTag = "";
-  
-    const loadPage = async () => {
-      const storyblokApi = useStoryblokApi();
-      // Construct the filter_query object dynamically
-      let filterQuery = {
+
+    let filterQuery = {
         year: { any_in_array: selectYear },
         startDate: {gt_date: afterDate, lt_date: beforeDate},
       };
@@ -97,7 +94,11 @@
       if (blok?.find_type.includes("phd") ) {
           filterQuery.degreeLevel = {in: "phd"}
       }
-
+  
+    const loadPage = async () => {
+      const storyblokApi = useStoryblokApi();
+      // Construct the filter_query object dynamically
+      
       const { year } = storyblokApi.get('cdn/stories/config/', {})
       .then(response => {
         yearList = response.data.story.content.year;

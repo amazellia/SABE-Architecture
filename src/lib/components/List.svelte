@@ -28,36 +28,19 @@
         year: { any_in_array: selectYear },
         startDate: {gt_date: afterDate, lt_date: beforeDate},
       };
-      if (blok?.is_periGuest == true) {
-        filterQuery.is_periGuest = {is: blok?.is_periGuest};
-      }
 
       if (blok?.find_type.includes("is_periGuest")) {
         filterQuery.is_periGuest = {is: true};
         filterQuery.is_currentSpeaker = {is: true};
       }
 
-      if (blok?.is_currentSpeaker == true) {
-        filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
-      }
-
       if (blok?.find_type.includes("is_currentSpeaker")) {
         filterQuery.is_currentSpeaker = {is: true};
-      }
-      
-      if (blok?.is_currentSpeaker == true && blok?.is_periGuest == true) {
-        filterQuery.is_periGuest = {is: blok?.is_periGuest};
-        filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
       if (blok?.find_type.includes("is_currentSpeaker") && blok?.find_type.includes("is_periGuest")) {
         filterQuery.is_periGuest = {is: true};
         filterQuery.is_currentSpeaker = {is: true};
-      }
-
-      if (blok?.is_currentSpeaker == false && blok?.is_periGuest == true) {
-        filterQuery.is_periGuest = {is: blok?.is_periGuest};
-        filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
       if (!blok?.find_type.includes("is_currentSpeaker") && blok?.find_type.includes("is_periGuest")) {
@@ -66,23 +49,23 @@
       }
 
       if (blok?.find_type.includes("tutorials")) {
-          filterQuery.tutorial_event = {is: empty}
+          filterQuery.tutorial_event = {is: not_null}
       };
 
       if (blok?.find_type.includes("relatedEvents")) {
-        filterQuery.parent_event = {is: empty}
+        filterQuery.parent_event = {is: not_null}
       };
 
       if (blok?.find_type.includes("courseWorks")) {
-          filterQuery.course_event = {is: empty}
+          filterQuery.course_event = {is: not_null}
       };
 
       if (blok?.find_type.includes("exhibitWorks") ) {
-          filterQuery.exhibit_event = {is: empty}
+          filterQuery.exhibit_event = {is: not_null}
       };
 
       if (blok?.find_type.includes("tutors")) {
-          filterQuery.project_tutor = {is: empty_array}
+          filterQuery.project_tutor = {is: not_null}
       }
 
       if (blok?.find_type.includes("undergrad")) {

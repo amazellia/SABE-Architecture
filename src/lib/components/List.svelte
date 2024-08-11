@@ -61,6 +61,11 @@
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
+      if (!blok?.find_type.includes("is_currentSpeaker") && blok?.find_type.includes("is_periGuest")) {
+        filterQuery.is_periGuest = {is: blok?.is_periGuest};
+        filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
+      }
+
       if (blok?.find_type.includes("tutorials")) {
           filterQuery.tutorial_event = {is: not_null}
       };

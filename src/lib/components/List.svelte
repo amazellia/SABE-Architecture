@@ -33,7 +33,7 @@
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
       }
 
-      if (blok?.find_type.includes("is_periGuest") == true) {
+      if (blok?.find_type.includes("is_periGuest")) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
@@ -42,7 +42,7 @@
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
-      if (blok?.find_type.includes("is_currentSpeaker") == true) {
+      if (blok?.find_type.includes("is_currentSpeaker")) {
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
       
@@ -51,7 +51,7 @@
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
-      if (blok?.find_type.includes("is_currentSpeaker") == true && blok?.find_type.includes("is_periGuest") == true) {
+      if (blok?.find_type.includes("is_currentSpeaker") && blok?.find_type.includes("is_periGuest")) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
@@ -61,35 +61,35 @@
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
-      if (blok?.find_type.includes("tutorials") == true) {
+      if (blok?.find_type.includes("tutorials")) {
           filterQuery.tutorial_event = {is: not_empty}
       };
 
-      if (blok?.find_type.includes("relatedEvents") == true) {
+      if (blok?.find_type.includes("relatedEvents")) {
         filterQuery.parent_event = {is: not_empty}
       };
 
-      if (blok?.find_type.includes( "courseWorks") == true) {
+      if (blok?.find_type.includes( "courseWorks")) {
           filterQuery.course_event = {is: not_empty}
       };
 
-      if (blok?.find_type.includes("exhibitWorks") == true) {
+      if (blok?.find_type.includes("exhibitWorks") ) {
           filterQuery.exhibit_event = {is: not_empty}
       };
 
-      if (blok?.find_type.includes("tutors")== true) {
+      if (blok?.find_type.includes("tutors")) {
           filterQuery.project_tutor = {is: not_empty_array}
       }
 
-      if (blok?.find_type.includes("undergrad") == true) {
+      if (blok?.find_type.includes("undergrad")) {
           filterQuery.degreeLevel = {in: "undergrad"}
       }
 
-      if (blok?.find_type.includes("postgrad") == true) {
+      if (blok?.find_type.includes("postgrad") ) {
           filterQuery.degreeLevel = {in: "postgrad"}
       }
 
-      if (blok?.find_type.includes("phd") == true) {
+      if (blok?.find_type.includes("phd") ) {
           filterQuery.degreeLevel = {in: "phd"}
       }
 

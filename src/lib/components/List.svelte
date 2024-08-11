@@ -66,23 +66,23 @@
       }
 
       if (blok?.find_type.includes("tutorials")) {
-          filterQuery.tutorial_event = {is: not_empty}
+          filterQuery.tutorial_event = {is: empty}
       };
 
       if (blok?.find_type.includes("relatedEvents")) {
-        filterQuery.parent_event = {is: not_empty}
+        filterQuery.parent_event = {is: empty}
       };
 
       if (blok?.find_type.includes("courseWorks")) {
-          filterQuery.course_event = {is: not_empty}
+          filterQuery.course_event = {is: empty}
       };
 
       if (blok?.find_type.includes("exhibitWorks") ) {
-          filterQuery.exhibit_event = {is: not_empty}
+          filterQuery.exhibit_event = {is: empty}
       };
 
       if (blok?.find_type.includes("tutors")) {
-          filterQuery.project_tutor = {is: not_empty_array}
+          filterQuery.project_tutor = {is: empty_array}
       }
 
       if (blok?.find_type.includes("undergrad")) {

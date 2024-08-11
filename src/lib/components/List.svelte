@@ -21,11 +21,9 @@
     let searchbar = "";
     let tagsList = "";
     let selectTag = "";
-    let choose_tutorial = []
   
     const loadPage = async () => {
       const storyblokApi = useStoryblokApi();
-      choose_tutorial = blok?.choose_tutorial
       // Construct the filter_query object dynamically
       let filterQuery = {
         year: { any_in_array: selectYear },
@@ -35,7 +33,16 @@
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
       }
 
+      if (blok?.find_type.find("is_periGuest")) {
+        filterQuery.is_periGuest = {is: blok?.is_periGuest};
+        filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
+      }
+
       if (blok?.is_currentSpeaker == true) {
+        filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
+      }
+
+      if (blok?.find_type.find("is_currentSpeaker")) {
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
       
@@ -44,9 +51,46 @@
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
+      if (blok?.find_type.find("is_currentSpeaker") && blok?.find_type.find("is_periGuest")) {
+        filterQuery.is_periGuest = {is: blok?.is_periGuest};
+        filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
+      }
+
       if (blok?.is_currentSpeaker == false && blok?.is_periGuest == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
+      }
+
+      if (blok?.find_type.find("tutorials")) {
+          filterQuery.tutorial_event = {in: currentArray}
+      };
+
+      if (blok?.find_type.find("relatedEvents")) {
+        filterQuery.parent_event = {in: currentArray}
+      };
+
+      if (blok?.find_type.find( "courseWorks")) {
+          filterQuery.course_event = {in: currentArray}
+      };
+
+      if (blok?.find_type.find("exhibitWorks")) {
+          filterQuery.exhibit_event = {in: currentArray}
+      };
+
+      if (blok?.find_type.find("tutors")) {
+          filterQuery.project_tutor = {any_in_array: currentArray}
+      }
+
+      if (blok?.find_type.find("undergrad")) {
+          filterQuery.degreeLevel = {in: "undergrad"}
+      }
+
+      if (blok?.find_type.find("postgrad")) {
+          filterQuery.degreeLevel = {in: "postgrad"}
+      }
+
+      if (blok?.find_type.find("phd")) {
+          filterQuery.degreeLevel = {in: "phd"}
       }
 
       const { year } = storyblokApi.get('cdn/stories/config/', {})
@@ -71,7 +115,7 @@
         excluding_slugs: blok?.excluding_slugs || '',
         page: currentPage,
         filter_query: filterQuery,
-        resolve_relations: ['event.stream', 'event.guests', 'project.tutorial', 'project.acad'], 
+        resolve_relations:  ['event.stream', 'event.guests', 'event.parent_event', 'project.course_event', 'project.tutorial_event', 'project.project_tutor', 'project.exhibit_event'], 
         search_term: searchbar,
       });
       items = data.stories;

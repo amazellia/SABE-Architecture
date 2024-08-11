@@ -26,23 +26,23 @@
         const storyblokApi = useStoryblokApi();
         currentArray = uuid;
 
-      if (blok?.find_tutorials == true) {
+      if (blok?.find_type == "tutorials") {
           filterQuery.tutorial_event = {in: currentArray}
       };
 
-      if (blok?.find_related_events == true) {
+      if (blok?.find_type == "relatedEvents") {
         filterQuery.parent_event = {in: currentArray}
       };
 
-      if (blok?.find_courseworks == true) {
+      if (blok?.find_type == "courseWorks") {
           filterQuery.course_event = {in: currentArray}
       };
 
-      if (blok?.find_exhibitworks == true) {
+      if (blok?.find_type == "exhibitWorks") {
           filterQuery.exhibit_event = {in: currentArray}
       };
 
-      if (blok?.find_tutor == true) {
+      if (blok?.find_type == "tutors") {
           filterQuery.project_tutor = {any_in_array: currentArray}
       }
 

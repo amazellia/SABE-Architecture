@@ -22,15 +22,20 @@
             alt={blok?.mainImage.alt}
             class="w-full h-3/4 object-contain"
             />
-            {#if blok?.tutorial_event}
-            <a href="/{blok?.tutorial_event.full_slug}"> {blok?.tutorial_event.name}</a>
-            {/if}
-            {#if blok?.course_event}
-            <a href="/{blok?.course_event.full_slug}"> {blok?.course_event.name}</a>
-            {/if}
-            {#if blok?.exhibit_event}
-            <a href="/{blok?.exhibit_event.full_slug}"> {blok?.exhibit_event.name}</a>
-            {/if}
+            <div class="text-center">
+                {#if blok?.tutorial_event}
+                <p>Tutorial: <a href="/{blok?.tutorial_event.full_slug}"> {blok?.tutorial_event.name}</a></p>
+                {/if}
+                {#if blok?.course_event}
+                <p>Course: <a href="/{blok?.course_event.full_slug}"> {blok?.course_event.name}</a></p>
+                {/if}
+                {#if blok?.exhibit_event}
+                <p>Exhibition: <a href="/{blok?.exhibit_event.full_slug}">{blok?.exhibit_event.name}</a></p>
+                {/if}
+                {#if blok?.degreeLevel}
+                <p>Degree Level: <b>{blok?.degreeLevel.name}</b></p>
+                {/if}
+            </div>
         </div>
 
         <div class="m-1">

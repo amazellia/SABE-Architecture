@@ -33,7 +33,7 @@
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
       }
 
-      if (blok?.find_type.find("is_periGuest")) {
+      if (blok?.find_type.includes("is_periGuest") == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
@@ -42,7 +42,7 @@
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
-      if (blok?.find_type.find("is_currentSpeaker")) {
+      if (blok?.find_type.includes("is_currentSpeaker") == true) {
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
       
@@ -51,7 +51,7 @@
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
-      if (blok?.find_type.find("is_currentSpeaker") && blok?.find_type.find("is_periGuest")) {
+      if (blok?.find_type.includes("is_currentSpeaker") == true && blok?.find_type.includes("is_periGuest") == true) {
         filterQuery.is_periGuest = {is: blok?.is_periGuest};
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
@@ -61,35 +61,35 @@
         filterQuery.is_currentSpeaker = {is: blok?.is_currentSpeaker};
       }
 
-      if (blok?.find_type.find("tutorials")) {
+      if (blok?.find_type.includes("tutorials") == true) {
           filterQuery.tutorial_event = {is: not_empty}
       };
 
-      if (blok?.find_type.find("relatedEvents")) {
+      if (blok?.find_type.includes("relatedEvents") == true) {
         filterQuery.parent_event = {is: not_empty}
       };
 
-      if (blok?.find_type.find( "courseWorks")) {
+      if (blok?.find_type.includes( "courseWorks") == true) {
           filterQuery.course_event = {is: not_empty}
       };
 
-      if (blok?.find_type.find("exhibitWorks")) {
+      if (blok?.find_type.includes("exhibitWorks") == true) {
           filterQuery.exhibit_event = {is: not_empty}
       };
 
-      if (blok?.find_type.find("tutors")) {
+      if (blok?.find_type.includes("tutors")== true) {
           filterQuery.project_tutor = {is: not_empty_array}
       }
 
-      if (blok?.find_type.find("undergrad")) {
+      if (blok?.find_type.includes("undergrad") == true) {
           filterQuery.degreeLevel = {in: "undergrad"}
       }
 
-      if (blok?.find_type.find("postgrad")) {
+      if (blok?.find_type.includes("postgrad") == true) {
           filterQuery.degreeLevel = {in: "postgrad"}
       }
 
-      if (blok?.find_type.find("phd")) {
+      if (blok?.find_type.includes("phd") == true) {
           filterQuery.degreeLevel = {in: "phd"}
       }
 
@@ -110,7 +110,7 @@
         starts_with: blok?.starts_with || 'events', // Use default if 'blok' is undefined
         with_tag: blok?.tags || selectTag, // Handle potential undefined 'blok',
         is_startpage: false,
-        sort_by: blok?.sort_by || 'content.startDate:desc', // Use default if 'blok' is undefined
+        sort_by: blok?.sort_by || 'position:asc', // Use default if 'blok' is undefined
         per_page: perPage,
         excluding_slugs: blok?.excluding_slugs || '',
         page: currentPage,

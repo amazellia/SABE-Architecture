@@ -24,6 +24,7 @@
   
     const loadPage = async () => {
       // Construct the filter_query object dynamically
+      const storyblokApi = useStoryblokApi();
       let filterQuery = {
         year: { any_in_array: selectYear },
         startDate: {gt_date: afterDate, lt_date: beforeDate},
@@ -49,38 +50,36 @@
       }
 
       if (blok?.find_type.includes("tutorials")) {
-          filterQuery.tutorial_event = {is: not_null}
+          filterQuery.tutorial_event = {is:not_empty}
       };
 
       if (blok?.find_type.includes("relatedEvents")) {
-        filterQuery.parent_event = {is: not_null}
+        filterQuery.parent_event = {is:not_empty}
       };
 
       if (blok?.find_type.includes("courseWorks")) {
-          filterQuery.course_event = {is: not_null}
+          filterQuery.course_event = {is:not_empty}
       };
 
       if (blok?.find_type.includes("exhibitWorks") ) {
-          filterQuery.exhibit_event = {is: not_null}
+          filterQuery.exhibit_event = {is:not_empty}
       };
 
       if (blok?.find_type.includes("tutors")) {
-          filterQuery.project_tutor = {is: not_null}
+          filterQuery.project_tutor = {is:not_empty_array}
       }
 
       if (blok?.find_type.includes("undergrad")) {
-          filterQuery.degreeLevel = {in: "undergrad"}
+          filterQuery.degreeLevel = {in:"undergrad"}
       }
 
       if (blok?.find_type.includes("postgrad") ) {
-          filterQuery.degreeLevel = {in: "postgrad"}
+          filterQuery.degreeLevel = {in:"postgrad"}
       }
 
       if (blok?.find_type.includes("phd") ) {
-          filterQuery.degreeLevel = {in: "phd"}
+          filterQuery.degreeLevel = {in:"phd"}
       }
-      
-      const storyblokApi = useStoryblokApi();
 
       const { year } = storyblokApi.get('cdn/stories/config/', {})
       .then(response => {

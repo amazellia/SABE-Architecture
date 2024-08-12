@@ -1,6 +1,7 @@
 // 001 Import the environment variables
-import { PUBLIC_ACCESS_TOKEN } from '$env/static/public';
-import { PUBLIC_REGION } from '$env/static/public';
+import {PUBLIC_ACCESS_TOKEN} from '$env/static/public';
+import {PUBLIC_REGION} from '$env/static/public';
+import {STORYBLOK_IS_PREVIEW} from '$env/static/private';
 
 // 002 Import all the components
 import Feature from "$lib/components/Feature.svelte";
@@ -23,11 +24,9 @@ import Gallery from "$lib/components/Gallery.svelte";
 import { apiPlugin, storyblokInit, RichTextSchema, useStoryblokApi } from '@storyblok/svelte';
 
 import cloneDeep from "clone-deep";
-
 const mySchema = cloneDeep(RichTextSchema); // you can make a copy of the default RichTextSchema
 // ... and edit the nodes and marks, or add your own.
 // Check the base RichTextSchema source here https://github.com/storyblok/storyblok-js-client/blob/master/source/schema.js
-
 
 // 003 listing the needed components
 let callbackComponents = () => {
@@ -41,7 +40,6 @@ let callbackComponents = () => {
 		eventFeatured: EventFeatured,
 		eventUpcoming: EventUpcoming,
 		guest: Guest,
-		//guestFeatured: GuestFeatured,
 		stream: Stream,
 		"rich-text": RichText,
 		grid_item_report: GridItemReport,
@@ -60,30 +58,30 @@ export async function load() {
 		components: callbackComponents,
 	
 		// 007 setting some api options like https, cache and region
+		https: true,
 		apiOptions: {
-			https: true,
-			cache: {
-				type: "memory",
-			},
+			cache: {type: "memory"},
 			region: PUBLIC_REGION 
 		},
+		bridge: STORYBLOK_IS_PREVIEW === 'true' ? true : false,
+		
 		richText: {
 			schema: mySchema,
 			resolver: (component, blok) => {
-			  switch (component) {
+				switch (component) {
 				case "gallery":
 					// https://www.storyblok.com/tp/build-your-own-showcase-gallery-with-storyblok-sveltekit-and-edgio
 					if (blok.type == "carousel" || blok.type == undefined) {
 						const images = blok.images.map((item, index) => {
 							return `
-								<div class="carousel-item place-content-center">
-									<img
-										id="${item.id}"
-										src=${item.filename}
-										alt=${item.alt}
-										class="w-auto h-auto" 
-									/>
-								</div>
+							<div class="carousel-item place-content-center">
+							<img
+							id="${item.id}"
+							src=${item.filename}
+							alt=${item.alt}
+							class="w-auto h-auto" 
+							/>
+							</div>
 							`;
 						});
 					
@@ -140,22 +138,26 @@ export async function load() {
 				case "video":
 					return null
 				default:
-				  return "Resolver not defined";
+					return "Resolver not defined";
 				}
 			},
 		}
 	});
 
 	let storyblokApi = useStoryblokApi();
-	const dataConfig = await storyblokApi.get('cdn/stories/config/', {
+    const dataConfig = await storyblokApi.get('cdn/stories/config/', {
 		version: 'draft',
 		resolve_links: 'url'
+	  }).then((res) => {
+		console.log(res) 
+	  }).catch((error) => {
+		console.log(error)
 	  });
 
 	return {
 		storyblokApi: storyblokApi,
 		header: dataConfig.data.story.content.header_menu,
-		logo: dataConfig.data.story.content.logo,
-		footer: dataConfig.data.story.content,
+        logo: dataConfig.data.story.content.logo,
+        footer: dataConfig.data.story.content,
 	};
 }

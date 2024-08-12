@@ -1,5 +1,6 @@
 /** @type {import('./$types').PageLoad} */
 
+import getVersion from '../../../utils/getSbVersion.js';
 //export const prerender = true;
 
 export async function load({ params, parent }) {
@@ -14,8 +15,12 @@ export async function load({ params, parent }) {
 
     const resolveRelations = ['event-highlights.events','event.stream', 'event.guests', 'guests.year',  'event.parent_event', 'project.course_event', 'project.tutorial_event', 'project.project_tutor', 'project.exhibit_event']
     const dataStory = await storyblokApi.get(path, {
-      version: 'draft',
+      version: getVersion(),
       resolve_relations: resolveRelations,
+    }).then((res) => {
+      console.log(res) 
+    }).catch((error) => {
+      console.log(error)
     });
 
     return {

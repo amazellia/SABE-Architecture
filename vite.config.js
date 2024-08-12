@@ -1,28 +1,28 @@
 import { sveltekit } from "@sveltejs/kit/vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import { imagetools } from 'vite-imagetools';
+import { defineConfig } from 'vite';
+import mkcert from 'vite-plugin-mkcert'
 
-// import path from "path";
-// import { fileURLToPath } from "url";
+import path from "path";
+import { fileURLToPath } from "url";
 
-// const __filename = fileURLToPath(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
 
-// const __dirname = path.dirname(__filename);
+const __dirname = path.dirname(__filename);
 
 /** @type {import('vite').UserConfig} */
- const config = {
-  plugins: [sveltekit(), basicSsl(), imagetools()],
+export default defineConfig({
+  plugins: [sveltekit(), basicSsl(), imagetools(), mkcert()],
   server: {
     https: true,
   },
-  // resolve: {
-  //   alias: {
-  //     "@storyblok/svelte": path.resolve(
-  //       __dirname,
-  //       "./node_modules/@storyblok/svelte"
-  //     ),
-  //   },
-  // },
-};
-
-export default config;
+  resolve: {
+    alias: {
+      "@storyblok/svelte": path.resolve(
+        __dirname,
+        "./node_modules/@storyblok/svelte"
+      ),
+    },
+  },
+});

@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config}*/
-export default {
+const config = {
   content: [
     "./src/**/*.{html,js,svelte,ts}",
     "./src/app.html",
@@ -15,3 +15,5 @@ export default {
     require("daisyui"),
   ], 
 }
+
+module.exports = config;

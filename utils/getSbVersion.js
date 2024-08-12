@@ -1,3 +1,4 @@
+import {PUBLIC_STORYBLOK_IS_PREVIEW} from '$env/static/public'
 export default function getVersion() {
-    return process.env.STORYBLOK_IS_PREVIEW === 'true' ? 'draft' : 'published'
+    return PUBLIC_STORYBLOK_IS_PREVIEW === 'true' ? 'draft' : 'published'
   }

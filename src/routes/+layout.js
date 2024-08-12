@@ -1,7 +1,7 @@
 // 001 Import the environment variables
 import {PUBLIC_ACCESS_TOKEN} from '$env/static/public';
 import {PUBLIC_REGION} from '$env/static/public';
-import {STORYBLOK_IS_PREVIEW} from '$env/static/private';
+import {PUBLIC_STORYBLOK_IS_PREVIEW} from '$env/static/public';
 
 // 002 Import all the components
 import Feature from "$lib/components/Feature.svelte";
@@ -63,7 +63,7 @@ export async function load() {
 			cache: {type: "memory"},
 			region: PUBLIC_REGION 
 		},
-		bridge: STORYBLOK_IS_PREVIEW === 'true' ? true : false,
+		bridge: PUBLIC_STORYBLOK_IS_PREVIEW === 'true' ? true : false,
 		
 		richText: {
 			schema: mySchema,

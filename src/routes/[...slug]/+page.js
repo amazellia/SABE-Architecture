@@ -1,7 +1,6 @@
 /** @type {import('./$types').PageLoad} */
-
+import 'isomorphic-fetch';
 import getVersion from '../../../utils/getSbVersion.js';
-//export const prerender = true;
 
 export async function load({ params, parent }) {
   const { storyblokApi } = await parent();
@@ -13,15 +12,12 @@ export async function load({ params, parent }) {
     path += 'home';
   }
 
-    const resolveRelations = ['event-highlights.events','event.stream', 'event.guests', 'guests.year',  'event.parent_event', 'project.course_event', 'project.tutorial_event', 'project.project_tutor', 'project.exhibit_event']
-    const dataStory = await storyblokApi.get(path, {
+    const resolveRelations = ['event.stream', 'event.guests', 'guests.year',  'event.parent_event', 'project.course_event', 'project.tutorial_event', 'project.project_tutor', 'project.exhibit_event']
+    const dataStory = await fetch(storyblokApi.get(path, {
       version: getVersion(),
       resolve_relations: resolveRelations,
-    }).then((res) => {
-      console.log(res) 
-    }).catch((error) => {
-      console.log(error)
-    });
+    })).then((response) => console.log(response.json()))
+		.catch((error) => console.log(error.json()));
 
     return {
       story: dataStory.data.story,

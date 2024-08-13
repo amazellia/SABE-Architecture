@@ -5,7 +5,7 @@ import {onMount} from 'svelte';
 import { storyblokEditable } from '@storyblok/svelte';
 
 // import style
-import "bigger-picture/css";
+//import "bigger-picture/css";
 //import "./style.css";
 
 export let blok;

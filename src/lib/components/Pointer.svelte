@@ -51,16 +51,16 @@
     console.log("clicked")
   }
 
-  function updateCursorIcon() {
+  //function updateCursorIcon() {
     // Your logic to update the cursor icon based on the hovered link
     // For demonstration purposes, let's assume a simple mapping
-    const iconPath = hoveredLink === 'https://example.com' ? 'path1' : 'path2';
+    //const iconPath = hoveredLink === 'https://example.com' ? 'path1' : 'path2';
     // Update the cursor SVG path or icon based on the mapping
     // Replace this with your logic for updating the cursor icon
     // You might need to load different SVGs or change the icon dynamically
     // based on the hovered link
     // Example: cursorSvgPath.set(iconPath);
-  }
+  //}
 </script>
 
 <svelte:window

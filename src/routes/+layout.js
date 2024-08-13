@@ -13,7 +13,6 @@ import Event from "$lib/components/Event.svelte";
 import EventFeatured from "$lib/components/EventFeatured.svelte";
 import EventUpcoming from "$lib/components/EventUpcoming.svelte";
 import Guest from "$lib/components/Guest.svelte";
-//import GuestFeatured from "$lib/components/GuestFeatured.svelte";
 import Stream from "$lib/components/Stream.svelte";
 import RichText from "$lib/components/RichText.svelte";
 import GridItemReport from "$lib/components/GridReportItem.svelte";
@@ -23,6 +22,9 @@ import Gallery from "$lib/components/Gallery.svelte";
 
 import { apiPlugin, storyblokInit, RichTextSchema, useStoryblokApi } from '@storyblok/svelte';
 
+import 'isomorphic-fetch';
+
+//import commons_scheme from ''
 import cloneDeep from "clone-deep";
 const mySchema = cloneDeep(RichTextSchema); // you can make a copy of the default RichTextSchema
 // ... and edit the nodes and marks, or add your own.
@@ -58,14 +60,15 @@ export async function load() {
 		components: callbackComponents,
 	
 		// 007 setting some api options like https, cache and region
-		https: true,
 		apiOptions: {
+			https: true,
 			cache: {type: "memory"},
-			region: PUBLIC_REGION 
+			region: PUBLIC_REGION,
 		},
+		
 		bridge: PUBLIC_STORYBLOK_IS_PREVIEW === 'true' ? true : false,
 		
-		richText: {
+		RichText: {
 			schema: mySchema,
 			resolver: (component, blok) => {
 				switch (component) {
@@ -144,15 +147,15 @@ export async function load() {
 		}
 	});
 
-	let storyblokApi = useStoryblokApi();
-    const dataConfig = await storyblokApi.get('cdn/stories/config/', {
+	let storyblokApi = useStoryblokApi
+	
+
+    const dataConfig = await fetch(storyblokApi.get('cdn/stories/config/', {
 		version: 'draft',
 		resolve_links: 'url'
-	  }).then((res) => {
-		console.log(res) 
-	  }).catch((error) => {
-		console.log(error)
-	  });
+	  }
+	)).then((response) => console.log(response.json()))
+		.catch((error) => console.log(error.json()));
 
 	return {
 		storyblokApi: storyblokApi,

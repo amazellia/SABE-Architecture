@@ -1,4 +1,5 @@
 <script>
+	import { PUBLIC_STORYBLOK_IS_PREVIEW } from '$env/static/public';
     import { onMount } from 'svelte';
     import ListCard from './ListCard.svelte';
     import HeadlineColorful from './micro/HeadlineColorful.svelte';
@@ -21,64 +22,65 @@
     let searchbar = "";
     let tagsList = "";
     let selectTag = "";
-  
-    const loadPage = async () => {
-      // Construct the filter_query object dynamically
-      const storyblokApi = useStoryblokApi();
-      let filterQuery = {
+    let filterQuery = {
         year: { any_in_array: selectYear },
         startDate: {gt_date: afterDate, lt_date: beforeDate},
       };
 
-      if (blok?.find_type.includes("is_periGuest")) {
+    const loadPage = async () => {
+      // Construct the filter_query object dynamically
+      const storyblokApi = useStoryblokApi();
+      
+
+      if (blok.find_type?.includes("is_periGuest")) {
         filterQuery.is_periGuest = {is: true};
         filterQuery.is_currentSpeaker = {is: true};
       }
 
-      if (blok?.find_type.includes("is_currentSpeaker")) {
+      if (blok.find_type?.includes("is_currentSpeaker")) {
         filterQuery.is_currentSpeaker = {is: true};
       }
 
-      if (blok?.find_type.includes("is_currentSpeaker") && blok?.find_type.includes("is_periGuest")) {
+      if (blok.find_type?.includes("is_currentSpeaker") && blok.find_type?.includes("is_periGuest")) {
         filterQuery.is_periGuest = {is: true};
         filterQuery.is_currentSpeaker = {is: true};
       }
 
-      if (!blok?.find_type.includes("is_currentSpeaker") && blok?.find_type.includes("is_periGuest")) {
+      if (!blok.find_type?.includes("is_currentSpeaker") && blok.find_type?.includes("is_periGuest")) {
         filterQuery.is_periGuest = {is: true};
         filterQuery.is_currentSpeaker = {is: false};
       }
 
-      if (blok?.find_type.includes("tutorials")) {
-          filterQuery.tutorial_event = {is:not_empty}
+      if (blok.find_type?.includes("tutorials")) {
+          filterQuery.tutorial_event = {is: 'not_empty'}
       };
 
-      if (blok?.find_type.includes("relatedEvents")) {
-        filterQuery.parent_event = {is:not_empty}
+      if (blok.find_type?.includes("relatedEvents")) {
+        filterQuery.parent_event = {is: 'not_empty'}
       };
 
-      if (blok?.find_type.includes("courseWorks")) {
-          filterQuery.course_event = {is:not_empty}
+      if (blok.find_type?.includes("courseWorks")) {
+          filterQuery.course_event = {is: 'not_empty'}
       };
 
-      if (blok?.find_type.includes("exhibitWorks") ) {
-          filterQuery.exhibit_event = {is:not_empty}
+      if (blok.find_type?.includes("exhibitWorks") ) {
+          filterQuery.exhibit_event = {is: 'not_empty'}
       };
 
-      if (blok?.find_type.includes("tutors")) {
-          filterQuery.project_tutor = {is:not_empty_array}
+      if (blok.find_type?.includes("tutors")) {
+          filterQuery.project_tutor = {is: 'not_empty_array'}
       }
 
-      if (blok?.find_type.includes("undergrad")) {
-          filterQuery.degreeLevel = {in:"undergrad"}
+      if (blok.find_type?.includes("undergrad")) {
+          filterQuery.degreeLevel = {in: "undergrad"}
       }
 
-      if (blok?.find_type.includes("postgrad") ) {
-          filterQuery.degreeLevel = {in:"postgrad"}
+      if (blok.find_type?.includes("postgrad") ) {
+          filterQuery.degreeLevel = {in: "postgrad"}
       }
 
-      if (blok?.find_type.includes("phd") ) {
-          filterQuery.degreeLevel = {in:"phd"}
+      if (blok.find_type?.includes("phd") ) {
+          filterQuery.degreeLevel = {in: "phd"}
       }
 
       const { year } = storyblokApi.get('cdn/stories/config/', {})
@@ -94,7 +96,7 @@
       }).catch(error => {console.log(error); });
 
       const { data } = await storyblokApi.get('cdn/stories', {
-        version: 'published',
+        version: PUBLIC_STORYBLOK_IS_PREVIEW,
         starts_with: blok?.starts_with || 'events', // Use default if 'blok' is undefined
         with_tag: blok?.tags || selectTag, // Handle potential undefined 'blok',
         is_startpage: false,
@@ -103,10 +105,19 @@
         excluding_slugs: blok?.excluding_slugs || '',
         page: currentPage,
         filter_query: filterQuery,
-        resolve_relations:  ['event.stream', 'event.guests', 'event.parent_event', 'project.course_event', 'project.tutorial_event', 'project.project_tutor', 'project.exhibit_event'], 
+        resolve_relations:[
+          'event.stream', 
+          'event.guests', 
+          'event.parent_event', 
+          'project.course_event', 
+          'project.tutorial_event', 
+          'project.project_tutor', 
+          'project.exhibit_event'
+        ], 
         search_term: searchbar,
       });
       items = data.stories;
+      console.log(items)
   
       const { length } = await storyblokApi.getAll('cdn/stories', {
         version: 'published',
@@ -126,6 +137,7 @@
 
     };
     onMount(loadPage);
+    
 
     // Function to navigate to the next page
     const nextPage = () => {
@@ -166,6 +178,7 @@
       selectTag = event.target.value;
       currentPage = 1
     }
+    
   </script>
 
   <div class="py-24 justify-center mx-2">

@@ -107,7 +107,7 @@
   <circle cx={$coords2.x} cy={$coords2.y} r={$size / 4} fill="darkgray" />
 </svg>
 
-<style>
+<style lang="postcss">
 	:global(body) {
 		cursor: none;
 	}

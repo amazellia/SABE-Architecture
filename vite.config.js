@@ -1,28 +1,14 @@
 import { sveltekit } from "@sveltejs/kit/vite";
-import basicSsl from "@vitejs/plugin-basic-ssl";
 import { imagetools } from 'vite-imagetools';
-import { defineConfig } from 'vite';
 import mkcert from 'vite-plugin-mkcert'
 
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-
-const __dirname = path.dirname(__filename);
-
 /** @type {import('vite').UserConfig} */
-export default defineConfig({
-  plugins: [sveltekit(), basicSsl(), imagetools(), mkcert()],
+const config = {
+  plugins: [sveltekit(), imagetools(), mkcert()],
   server: {
     https: true,
+    proxy: {}, //needed for mkcert to work properly
   },
-  resolve: {
-    alias: {
-      "@storyblok/svelte": path.resolve(
-        __dirname,
-        "./node_modules/@storyblok/svelte"
-      ),
-    },
-  },
-});
+};
+
+export default config

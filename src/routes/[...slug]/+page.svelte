@@ -7,7 +7,15 @@
 
 	onMount(() => {
 		if (data.story) {    
-			const resolveRelations = ['event.stream', 'event.guests', 'guests.year',  'event.parent_event', 'project.course_event', 'project.tutorial_event', 'project.project_tutor', 'project.exhibit_event']
+			const resolveRelations = [
+				'event.stream', 
+				'event.guests', 
+				'guests.year',  
+				'event.parent_event', 
+				'project.course_event', 
+				'project.tutorial_event', 
+				'project.project_tutor', 
+				'project.exhibit_event']
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory), {
 	 			resolveRelations: resolveRelations
 			});

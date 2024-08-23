@@ -1,28 +1,34 @@
+/* 
+layout.js
+- Sets up the Storyblok API. 
+- Update here if there are new components to be added. 
+- Also includes the rich text scheme to be edited here. 
+*/
+
+
 // 001 Import the environment variables
-import {PUBLIC_ACCESS_TOKEN} from '$env/static/public';
-import {PUBLIC_REGION} from '$env/static/public';
-import {PUBLIC_STORYBLOK_IS_PREVIEW} from '$env/static/public';
+import {PUBLIC_ACCESS_TOKEN} from '$env/static/public'
+import {PUBLIC_REGION} from '$env/static/public'
+import {PUBLIC_STORYBLOK_IS_PREVIEW} from '$env/static/public'
 
 // 002 Import all the components
-import Feature from "$lib/components/Feature.svelte";
-import Grid from "$lib/components/Grid.svelte";
-import Page from "$lib/components/Page.svelte";
-import Teaser from "$lib/components/Teaser.svelte";
-import Hero from "$lib/components/Hero.svelte";
-import Event from "$lib/components/Event.svelte";
-import EventFeatured from "$lib/components/EventFeatured.svelte";
-import EventUpcoming from "$lib/components/EventUpcoming.svelte";
-import Guest from "$lib/components/Guest.svelte";
-import Stream from "$lib/components/Stream.svelte";
-import RichText from "$lib/components/RichText.svelte";
-import GridItemReport from "$lib/components/GridReportItem.svelte";
-import Project from "$lib/components/Project.svelte";
-import List from "$lib/components/List.svelte";
-import Gallery from "$lib/components/Gallery.svelte";
+import Feature from "$lib/components/Feature.svelte"
+import Grid from "$lib/components/Grid.svelte"
+import Page from "$lib/components/Page.svelte"
+import Teaser from "$lib/components/Teaser.svelte"
+import Hero from "$lib/components/Hero.svelte"
+import Event from "$lib/components/Event.svelte"
+import EventFeatured from "$lib/components/EventFeatured.svelte"
+import EventUpcoming from "$lib/components/EventUpcoming.svelte"
+import Guest from "$lib/components/Guest.svelte"
+import Stream from "$lib/components/Stream.svelte"
+import RichText from "$lib/components/RichText.svelte"
+import GridItemReport from "$lib/components/GridReportItem.svelte"
+import Project from "$lib/components/Project.svelte"
+import List from "$lib/components/List.svelte"
+import Gallery from "$lib/components/Gallery.svelte"
 
-import { apiPlugin, storyblokInit, RichTextSchema, useStoryblokApi } from '@storyblok/svelte';
-
-import 'isomorphic-fetch';
+import { apiPlugin, storyblokInit, RichTextSchema, useStoryblokApi } from '@storyblok/svelte'
 
 //import commons_scheme from ''
 import cloneDeep from "clone-deep";
@@ -66,9 +72,9 @@ export async function load() {
 			region: PUBLIC_REGION,
 		},
 		
-		bridge: PUBLIC_STORYBLOK_IS_PREVIEW === 'true' ? true : false,
+		//bridge: PUBLIC_STORYBLOK_IS_PREVIEW === 'true' ? true : false,
 		
-		RichText: {
+		richText: {
 			schema: mySchema,
 			resolver: (component, blok) => {
 				switch (component) {
@@ -147,15 +153,11 @@ export async function load() {
 		}
 	});
 
-	let storyblokApi = useStoryblokApi
-	
-
-    const dataConfig = await fetch(storyblokApi.get('cdn/stories/config/', {
-		version: 'draft',
-		resolve_links: 'url'
-	  }
-	)).then((response) => console.log(response.json()))
-		.catch((error) => console.log(error.json()));
+	let storyblokApi = useStoryblokApi()
+    const dataConfig = await storyblokApi.get('cdn/stories/config/', {
+		version: PUBLIC_STORYBLOK_IS_PREVIEW,
+		resolve_links: 'url',
+	  })
 
 	return {
 		storyblokApi: storyblokApi,

@@ -226,7 +226,7 @@
   </div>  
 
   {#if ifFilter}
-    <div class="py-24 justify-center">
+  <div class="py-24 justify-center">
     <div class="flex items-center justify-between border-t border-gray-200 px-4 py-3 sm:px-6">
       <div class="flex flex-1 justify-between sm:hidden">
         <button on:click={prevPage} disabled={currentPage === 1} class="hover:bg-white disabled:opacity-75 relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</button>
@@ -243,7 +243,7 @@
           results
         </p>
       </div>
-    <div>
+      <div>
       <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
           <button on:click={prevPage} disabled={currentPage === 1} class="hover:bg-violet-600 disabled:opacity-75 relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
             <span class="sr-only">Previous</span>
@@ -263,10 +263,9 @@
           </svg>
       </button>
       </nav>
+      </div>
+      </div>
     </div>
   </div>
+{/if}
 </div>
-
-  </div>
-  {/if}
-    </div>

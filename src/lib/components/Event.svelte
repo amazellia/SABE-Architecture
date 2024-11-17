@@ -1,5 +1,6 @@
  
 <script>
+	import { PUBLIC_STORYBLOK_IS_PREVIEW } from '$env/static/public';
      import { storyblokEditable, renderRichText } from '@storyblok/svelte';
   import { useStoryblokApi } from '@storyblok/svelte';
   import { onMount } from 'svelte';
@@ -26,35 +27,43 @@
         const storyblokApi = useStoryblokApi();
         currentArray = uuid;
 
-      if (blok?.find_tutorials == true) {
-          filterQuery.project_tutorial = {in: currentArray}
+      if (blok.find_type?.includes("tutorials")) {
+          filterQuery.tutorial_event = {in:currentArray}
       };
 
-      if (blok?.find_related_events == true) {
-        filterQuery.parent_event = {in: currentArray}
+      if (blok.find_type?.includes("relatedEvents")) {
+        filterQuery.parent_event = {in:currentArray}
       };
 
-      if (blok?.find_courseworks == true) {
-          filterQuery.course_event = {in: currentArray}
+      if (blok.find_type?.includes("courseWorks")) {
+          filterQuery.course_event = {in:currentArray}
       };
 
-      if (blok?.find_exhibitworks == true) {
-          filterQuery.exhibit_event = {in: currentArray}
+      if (blok.find_type?.includes("exhibitWorks")) {
+          filterQuery.exhibit_event = {in:currentArray}
       };
 
-      if (blok?.find_tutor == true) {
+      if (blok.find_type?.includes("tutors")) {
           filterQuery.project_tutor = {any_in_array: currentArray}
       }
+      
 
       const { data } = await storyblokApi.get('cdn/stories', {
-        version: 'published',
+        version: PUBLIC_STORYBLOK_IS_PREVIEW,
         starts_with:  blok?.starts_with || 'events', // Use default if 'blok' is undefined
         is_startpage: false,
         sort_by:  blok?.sort_by || 'position:asc', // Use default if 'blok' is undefined
         per_page: perPage,
         page: currentPage,
         filter_query: filterQuery,
-        resolve_relations: [ 'event.stream', 'event.guests', 'event.parent_event', 'project.course_event', 'project.project_tutorial', 'project.project_tutor', 'project.exhibit_event'], 
+        resolve_relations: [ 
+          'event.stream', 
+          'event.guests', 
+          'event.parent_event', 
+          'project.course_event', 
+          'project.tutorial_event', 
+          'project.project_tutor', 
+          'project.exhibit_event'], 
         search_term: searchbar,
       });
       items = data.stories;

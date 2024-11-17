@@ -12,7 +12,7 @@
 </script>
 
 <head>
-    <style>
+    <style lang="postcss">
         .open { display: block; }
         .close { display: none; }
 

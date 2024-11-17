@@ -6,31 +6,31 @@ layout.js
 */
 
 // 001 Import the environment variables
-import { PUBLIC_ACCESS_TOKEN } from '$env/static/public';
-import { PUBLIC_REGION } from '$env/static/public';
+import {PUBLIC_ACCESS_TOKEN} from '$env/static/public'
+import {PUBLIC_REGION} from '$env/static/public'
+import {PUBLIC_STORYBLOK_IS_PREVIEW} from '$env/static/public'
 
 // 002 Import all the components
-import Feature from "$lib/components/Feature.svelte";
-import Grid from "$lib/components/Grid.svelte";
-import Page from "$lib/components/Page.svelte";
-import Teaser from "$lib/components/Teaser.svelte";
-import Hero from "$lib/components/Hero.svelte";
-import Event from "$lib/components/Event.svelte";
-import EventFeatured from "$lib/components/EventFeatured.svelte";
-import EventUpcoming from "$lib/components/EventUpcoming.svelte";
-import Guest from "$lib/components/Guest.svelte";
-import GuestFeatured from "$lib/components/GuestFeatured.svelte";
-import Stream from "$lib/components/Stream.svelte";
-import RichText from "$lib/components/RichText.svelte";
-import GridItemReport from "$lib/components/GridReportItem.svelte";
-import Project from "$lib/components/Project.svelte";
-import List from "$lib/components/List.svelte";
-import Gallery from "$lib/components/Gallery.svelte";
+import Feature from "$lib/components/Feature.svelte"
+import Grid from "$lib/components/Grid.svelte"
+import Page from "$lib/components/Page.svelte"
+import Teaser from "$lib/components/Teaser.svelte"
+import Hero from "$lib/components/Hero.svelte"
+import Event from "$lib/components/Event.svelte"
+import EventFeatured from "$lib/components/EventFeatured.svelte"
+import EventUpcoming from "$lib/components/EventUpcoming.svelte"
+import Guest from "$lib/components/Guest.svelte"
+import Stream from "$lib/components/Stream.svelte"
+import RichText from "$lib/components/RichText.svelte"
+import GridItemReport from "$lib/components/GridReportItem.svelte"
+import Project from "$lib/components/Project.svelte"
+import List from "$lib/components/List.svelte"
+import Gallery from "$lib/components/Gallery.svelte"
 
-import { apiPlugin, storyblokInit, RichTextSchema, useStoryblokApi } from '@storyblok/svelte';
+import { apiPlugin, storyblokInit, RichTextSchema, useStoryblokApi } from '@storyblok/svelte'
 
+//import commons_scheme from ''
 import cloneDeep from "clone-deep";
-
 const mySchema = cloneDeep(RichTextSchema); // you can make a copy of the default RichTextSchema
 // ... and edit the nodes and marks, or add your own.
 // Check the base RichTextSchema source here https://github.com/storyblok/storyblok-js-client/blob/master/source/schema.js
@@ -47,7 +47,6 @@ let callbackComponents = () => {
 		eventFeatured: EventFeatured,
 		eventUpcoming: EventUpcoming,
 		guest: Guest,
-		guestFeatured: GuestFeatured,
 		stream: Stream,
 		"rich-text": RichText,
 		grid_item_report: GridItemReport,
@@ -68,28 +67,29 @@ export async function load() {
 		// 007 setting some api options like https, cache and region
 		apiOptions: {
 			https: true,
-			cache: {
-				type: "memory",
-			},
-			region: PUBLIC_REGION 
+			cache: {type: "memory"},
+			region: PUBLIC_REGION,
 		},
+		
+		//bridge: PUBLIC_STORYBLOK_IS_PREVIEW === 'true' ? true : false,
+		
 		richText: {
 			schema: mySchema,
 			resolver: (component, blok) => {
-			  switch (component) {
+				switch (component) {
 				case "gallery":
 					// https://www.storyblok.com/tp/build-your-own-showcase-gallery-with-storyblok-sveltekit-and-edgio
 					if (blok.type == "carousel" || blok.type == undefined) {
 						const images = blok.images.map((item, index) => {
 							return `
-								<div class="carousel-item place-content-center">
-									<img
-										id="${item.id}"
-										src=${item.filename}
-										alt=${item.alt}
-										class="w-auto h-auto" 
-									/>
-								</div>
+							<div class="carousel-item place-content-center">
+							<img
+							id="${item.id}"
+							src=${item.filename}
+							alt=${item.alt}
+							class="w-auto h-auto" 
+							/>
+							</div>
 							`;
 						});
 					
@@ -146,22 +146,22 @@ export async function load() {
 				case "video":
 					return null
 				default:
-				  return "Resolver not defined";
+					return "Resolver not defined";
 				}
 			},
 		}
 	});
 
-	let storyblokApi = useStoryblokApi();
-	const dataConfig = await storyblokApi.get('cdn/stories/config/', {
-		version: 'draft',
-		resolve_links: 'url'
-	  });
+	let storyblokApi = useStoryblokApi()
+    const dataConfig = await storyblokApi.get('cdn/stories/config/', {
+		version: PUBLIC_STORYBLOK_IS_PREVIEW,
+		resolve_links: 'url',
+	  })
 
 	return {
 		storyblokApi: storyblokApi,
 		header: dataConfig.data.story.content.header_menu,
-		logo: dataConfig.data.story.content.logo,
-		footer: dataConfig.data.story.content,
+        logo: dataConfig.data.story.content.logo,
+        footer: dataConfig.data.story.content,
 	};
 }

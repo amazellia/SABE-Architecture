@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --s: 210, 50%, 50%;
+    --sf: 210, 50%, 60%;
+    --pf: 210, 50%, 70%;
+    --p: 210, 50%, 80%;
+    --a: 210, 50%, 90%;
+  }
+
+@supports (color: oklch(0 0 0)) {
+    .bg-custom-gradient {
+      background-image: linear-gradient(90deg, hsl(var(--s)) 4%, color-mix(in oklch, hsl(var(--sf)), hsl(var(--pf))) 22%, hsl(var(--p)) 45%, color-mix(in oklch, hsl(var(--p)), hsl(var(--a))) 67%, hsl(var(--a)) 100.2%);
+    }
+  }
+  

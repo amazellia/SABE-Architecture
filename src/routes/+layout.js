@@ -5,7 +5,6 @@ layout.js
 - Also includes the rich text scheme to be edited here. 
 */
 
-
 // 001 Import the environment variables
 import {PUBLIC_ACCESS_TOKEN} from '$env/static/public'
 import {PUBLIC_REGION} from '$env/static/public'

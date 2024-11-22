@@ -32,7 +32,7 @@
 
       const { data } = await storyblokApi.get('cdn/stories', {
         version: 'published',
-        starts_with:  'events', // Use default if 'blok' is undefined
+        starts_with:  blok?.starts_with || 'events', 
         is_startpage: false,
         sort_by:  'content.startDate:desc', // Use default if 'blok' is undefined
         per_page: perPage,

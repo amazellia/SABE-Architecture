@@ -21,6 +21,7 @@ export async function load({ params, parent }) {
        'project.tutorial_event', 
        'project.project_tutor', 
        'project.exhibit_event',
+       'project.degreeLevel',
       ]
     const dataStory = await storyblokApi.get(path, {
       version: PUBLIC_STORYBLOK_IS_PREVIEW,

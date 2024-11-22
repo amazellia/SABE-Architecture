@@ -62,26 +62,24 @@
     
 </script>
 
-
-<div class="justify-center flex mx-10">
-    <Subheadline Subheadline={"Upcoming Events"} />
-</div>
-
-
-<div class="w-full"> 
-
-    <div class="container mx-auto grid md:grid-cols-3 gap-12 my-12 place-items-start">
-        {#each events as event}
-            <ListCard item={event.content} slug={event.full_slug} />
-        {/each}
+<div class="py-16 px-4 md:px-8 lg:px-16">
+    <div class="justify-center flex mb-12">
+        <Subheadline Subheadline={"Upcoming Events"} />
     </div>
 
-    {#if events.length === 0}
-    <div class="justify-center flex mx-10 text-[clamp(2rem,5vw,1rem)]">
-       <p>no upcoming events</p>
-    </div>
-    {/if}
-        
-</div>
+    <div class="w-full max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-3 gap-8 lg:gap-12 my-12 place-items-start">
+            {#each events as event}
+                <div class="w-full p-4">
+                    <ListCard item={event.content} slug={event.full_slug} />
+                </div>
+            {/each}
+        </div>
 
-<!-- {/if} -->
+        {#if events.length === 0}
+            <div class="flex justify-center py-16 text-[clamp(2rem,5vw,1rem)]">
+                <p>no upcoming events</p>
+            </div>
+        {/if}
+    </div>
+</div>

@@ -103,30 +103,38 @@
 </script>
 
 <div use:storyblokEditable={blok}>
-  <div class="grid grid-col md:grid-row md:grid-cols-2 w-dvw">
-    <div class="w-full m-4">
-    <img
-      src="{blok.image.filename}/m/1600x0"
-      alt="{blok.image.alt}"
-      class="w-full h-[360px] lg:h-[450px] object-cover"
-    />
+  <!-- Image Section -->
+  <div class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 max-w-7xl mx-auto">
+      <!-- Main Image -->
+      <div class="w-full aspect-[4/3] overflow-hidden rounded-lg">
+        <img
+          src="{blok.image.filename}/m/1600x0"
+          alt="{blok.image.alt}"
+          class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+      
+      <!-- Profile Image -->
+      <div class="w-full aspect-[4/3] overflow-hidden rounded-lg">
+        <img
+          src="{blok.profile.filename}/m/1600x0"
+          alt="{blok.profile.alt}"
+          class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        />
+      </div>
     </div>
-    <div class="w-full m-4">
-      <img
-      src="{blok.profile.filename}/m/1600x0"
-      alt="{blok.profile.alt}"
-      class="w-full h-[360px] lg:h-[450px] object-cover"
-    />
-    </div>
-</div>
-<div class="flex-grow w-2/3 mx-auto mb-12">
-  <h1 class="text-2xl lg:text-6xl font-bold mt-12 mb-4 text-center">{blok.name}</h1>
-  <img src={blok.filename} alt="{blok.alt}" />
-  {#each blok.year as y}
-    <h2 class="text-2xl mb-4 text-center">{y}</h2>
-  {/each}
-  <div class="w-full prose">{@html resolvedRichText}</div>
-</div>
+  </div>
+
+  <!-- Rest of your content -->
+  <div class="flex-grow w-2/3 mx-auto mb-12">
+    <h1 class="text-2xl lg:text-6xl font-bold mt-12 mb-4 text-center">{blok.name}</h1>
+    <img src={blok.filename} alt="{blok.alt}" />
+    {#each blok.year as y}
+      <h2 class="text-2xl mb-4 text-center">{y}</h2>
+    {/each}
+    <div class="w-full prose">{@html resolvedRichText}</div>
+  </div>
 
   {#if blok?.assets}
     <Gallery blok={blok}/>

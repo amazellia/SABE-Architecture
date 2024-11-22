@@ -15,7 +15,9 @@
 				'project.course_event', 
 				'project.tutorial_event', 
 				'project.project_tutor', 
-				'project.exhibit_event']
+				'project.exhibit_event',
+				'project.degreeLevel',
+			]
 			useStoryblokBridge(data.story.id, (newStory) => (data.story = newStory), {
 	 			resolveRelations: resolveRelations
 			});

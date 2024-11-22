@@ -1,48 +1,37 @@
 <script>
   import BiggerPicture from 'bigger-picture/svelte';
+  import 'bigger-picture/css';
   import { onMount } from 'svelte';
   import { storyblokEditable } from '@storyblok/svelte';
   import VideoPlayer from './micro/VideoPlayer.svelte';
   import SketchfabViewer from './micro/SketchfabViewer.svelte';
 
   export let blok;
-  let imageLinks;
+  let links;
   let bp;
 
   onMount(async () => {
       if (typeof window !== 'undefined') {
-          bp = BiggerPicture({ target: document.body });
+          bp = BiggerPicture({
+              target: document.body,
+          });
       }
 
-      // Grab image links
-      imageLinks = document.querySelectorAll('#images a');
+      // Grab links
+      links = document.querySelectorAll('#asset > a');
       
       // Add click listener to open BiggerPicture for images
-      for (let link of imageLinks) {
-          link.addEventListener("click", openGallery);
+      for (let link of links) {
+           link.addEventListener("click", openGallery);
       }
+
   });
 
-  // Open BiggerPicture
   function openGallery(e) {
       e.preventDefault();
       bp.open({
-          items: imageLinks,
-          el: e.currentTarget
-      });
-  }
-
-  // Open BiggerPicture for YouTube and Sketchfab
-  function openIframe(e, src) {
-      e.preventDefault();
-      bp.open({
-          items: [
-              {
-                  src: src,
-                  type: 'iframe'
-              }
-          ],
-          el: e.currentTarget
+          items: links,
+          el: e.currentTarget,
       });
   }
 
@@ -74,25 +63,43 @@
         .filter(id => id !== null);
   };
 
-
   // Get video and model IDs
   const videoIds = blok.video ? getVideoIds(blok.video) : [];
   const modelIds = blok.sketchfab ? getModelIds(blok.sketchfab) : [];
+  
+  function getDimensions(url) {
+    let dimensions = {
+    width: url.split('/')[5].split('x')[0],
+    height: url.split('/')[5].split('x')[1]
+    }
+
+    return dimensions;
+  }
+
 </script>
 
 <div 
   use:storyblokEditable={blok}
-  class="grid grid-cols-1 md:grid-cols-3 w-full"
-  id="images">
+  class="columns-1 md:columns-2 lg:columns-3 gap-4 p-4 space-y-4"
+  id="asset"
+  >
 
   <!-- Images - Storyblok CMS Assets -->
   {#if blok?.assets}
       {#each blok?.assets as a}
-          <a href="{a.filename}" on:click={openGallery}>      
+          <a 
+              href="{a.filename}" 
+              data-img="{a.filename}"
+              data-thumb="{a.filename}/m/800x0"
+              data-width="{getDimensions(a.filename).width}"
+              data-height="{getDimensions(a.filename).height}"
+               class="block w-full h-full"
+          >      
               <img
-                  src="{a.filename}"
+                  src="{a.filename}/m/800x0"
                   alt="{a.alt}"
-              />
+                  class="w-full h-auto object-cover hover:opacity-90 transition-opacity"
+                  />
           </a>
       {/each}
   {/if}
@@ -100,26 +107,24 @@
   <!-- Video player - YouTube -->
   {#if videoIds.length > 0}
       {#each videoIds as videoId}
-          <button 
-              on:click={e => openIframe(e, `https://www.youtube.com/embed/${videoId}`)}
-              class="w-full"
-              aria-label="Open YouTube Video"
+          <a 
+              href= "{`https://www.youtube.com/embed/${videoId}`}"
+              data-iframe="{`https://www.youtube.com/embed/${videoId}`}"
           >
               <VideoPlayer videoId={videoId} />
-          </button>
+        </a>
       {/each}
   {/if}
 
   <!-- 3D object viewer - Sketchfab -->
   {#if modelIds.length > 0}
       {#each modelIds as modelId}
-          <button 
-              on:click={e => openIframe(e, `https://sketchfab.com/models/${modelId}/embed`)}
-              class="w-full"
-              aria-label="Open Sketchfab Model"
+        <a 
+          href= "{`https://sketchfab.com/models/${modelId}/embed`}"
+          data-iframe="{`https://sketchfab.com/models/${modelId}/embed`}"
           >
-              <SketchfabViewer modelId={modelId} />
-          </button>
+            <SketchfabViewer modelId={modelId} />
+        </a>
       {/each}
   {/if}
 </div>

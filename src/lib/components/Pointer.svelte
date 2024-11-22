@@ -3,6 +3,8 @@
   import Device from 'svelte-device-info'
   import { onMount } from 'svelte'; 
   let isMobile;
+  let hoveredGalleryControl = null;
+  let isVisible = true;
 
 	onMount(async () => {
 		isMobile = Device.isMobile;
@@ -51,6 +53,49 @@
     console.log("clicked")
   }
 
+  function handleMouseLeave() {
+    isVisible = false;
+  }
+
+  function handleMouseEnter() {
+    isVisible = true;
+  }
+
+  function handleGalleryHover(event) {
+    const bpWrap = event.target.closest('.bp-wrap');
+    const closeButton = event.target.closest('.bp-x');
+    const galleryLink = event.target.closest('.bp-html a');
+    const galleryImage = event.target.closest('.bp-html img');
+    const iframe = event.target.closest('.bp-if');
+    
+    // Hide cursor when hovering over iframes
+    if (iframe) {
+      isVisible = false;
+      return;
+    }
+    
+    isVisible = true;
+    
+    if (galleryLink || galleryImage) {
+      hoveredGalleryControl = 'link';
+      size.set(25);
+      return;
+    } 
+    
+    if (closeButton) {
+      hoveredGalleryControl = 'close';
+      size.set(25);
+    } else if (bpWrap) {
+      const rect = bpWrap.getBoundingClientRect();
+      const isLeftSide = event.clientX < (rect.left + rect.width / 2);
+      hoveredGalleryControl = isLeftSide ? 'prev' : 'next';
+      size.set(25);
+    } else {
+      hoveredGalleryControl = null;
+      size.set(15);
+    }
+  }
+
   //function updateCursorIcon() {
     // Your logic to update the cursor icon based on the hovered link
     // For demonstration purposes, let's assume a simple mapping
@@ -68,7 +113,10 @@
     X = e.clientX;
     Y = e.clientY;
     updateCursor();
-;  }}
+    handleGalleryHover(e);
+  }}
+  on:mouseenter={handleMouseEnter}
+  on:mouseleave={handleMouseLeave}
   on:mousedown={(e) => {
     size.set(30);
   }}
@@ -98,13 +146,48 @@
 
 <svg 
   role="none" 
-  style="pointer-events: {isMobile ? 'none' : 'none'};" 
-  class="w-full h-full"  
+  style="pointer-events: {isMobile ? 'none' : 'none'}; opacity: {isVisible ? 1 : 0};" 
+  class="w-full h-full transition-opacity duration-150"  
   on:mouseover={handleLinkHover} 
   on:focus={handleFocus}
   > 
   <circle cx={$coords1.x} cy={$coords1.y} r={$size} stroke="lightgray" stroke-width="1" fill-opacity="0" />
-  <circle cx={$coords2.x} cy={$coords2.y} r={$size / 4} fill="darkgray" />
+  {#if hoveredGalleryControl}
+    {#if hoveredGalleryControl === 'close'}
+      <text
+        x={$coords1.x}
+        y={$coords1.y}
+        text-anchor="middle"
+        dominant-baseline="middle"
+        fill="darkgray"
+        font-size="20"
+      >
+        ×
+      </text>
+    {:else if hoveredGalleryControl === 'link'}
+      <circle 
+        cx={$coords1.x} 
+        cy={$coords1.y} 
+        r={$size} 
+        stroke="lightgray" 
+        stroke-width="1" 
+        fill-opacity="0" 
+      />
+    {:else}
+      <text
+        x={$coords1.x}
+        y={$coords1.y}
+        text-anchor="middle"
+        dominant-baseline="middle"
+        fill="darkgray"
+        font-size="20"
+      >
+        {hoveredGalleryControl === 'prev' ? '←' : '→'}
+      </text>
+    {/if}
+  {:else}
+    <circle cx={$coords2.x} cy={$coords2.y} r={$size / 4} fill="darkgray" />
+  {/if}
 </svg>
 
 <style lang="postcss">
@@ -121,7 +204,23 @@
 	}
 	
 	svg {
-    z-index: 100;
+    z-index: 9999;
     position: fixed;
 	}
+  
+  :global(.bp-x) {
+    cursor: none !important;
+  }
+
+  :global(.bp-x:hover) {
+    cursor: none !important;
+  }
+
+  .transition-opacity {
+    transition: opacity 150ms ease-in-out;
+  }
+
+  :global(.bp-if) {
+    cursor: auto !important;
+  }
 </style>

@@ -1,7 +1,7 @@
 <script>
-	import { storyblokEditable, renderRichText } from '@storyblok/svelte';
+	import { storyblokEditable } from '@storyblok/svelte';
+	import RichText from './RichText.svelte';
 	export let blok;
-	$: resolvedRichText = renderRichText(blok.text);
 </script>
 
 <div use:storyblokEditable={blok} class="min-h-[200vh] w-full px-2 lg:px-10">
@@ -14,6 +14,6 @@
 		>
 			{blok.title}
 		</h2>
-		<div class="prose">{@html resolvedRichText}</div>
+		<RichText content={blok.text} />
 	</div>
 </div>

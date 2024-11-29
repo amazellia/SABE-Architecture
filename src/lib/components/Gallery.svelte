@@ -1,7 +1,7 @@
 <script>
   import BiggerPicture from 'bigger-picture/svelte';
   import 'bigger-picture/css';
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { storyblokEditable } from '@storyblok/svelte';
   import VideoPlayer from './micro/VideoPlayer.svelte';
   import SketchfabViewer from './micro/SketchfabViewer.svelte';
@@ -9,31 +9,44 @@
   export let blok;
   let links;
   let bp;
+  let cleanupListeners = [];
 
   onMount(async () => {
-      if (typeof window !== 'undefined') {
-          bp = BiggerPicture({
-              target: document.body,
-          });
-      }
+    if (typeof window !== 'undefined') {
+      bp = BiggerPicture({
+        target: document.body,
+      });
 
-      // Grab links
-      links = document.querySelectorAll('#asset > a');
+      // Grab links - use a more specific selector to only get direct children
+      links = document.querySelectorAll(`#asset > a`);
+      
+      // Create a single array of all items upfront
+      const allItems = Array.from(links);
       
       // Add click listener to open BiggerPicture for images
-      for (let link of links) {
-           link.addEventListener("click", openGallery);
-      }
-
+      links.forEach((link, index) => {
+        const listener = (e) => {
+          e.preventDefault();
+          if (bp) {
+            bp.open({
+              items: allItems,
+              el: e.currentTarget,
+              position: index
+            });
+          }
+        };
+        link.addEventListener("click", listener);
+        cleanupListeners.push({ element: link, listener });
+      });
+    }
   });
 
-  function openGallery(e) {
-      e.preventDefault();
-      bp.open({
-          items: links,
-          el: e.currentTarget,
-      });
-  }
+  onDestroy(() => {
+    // Clean up event listeners
+    cleanupListeners.forEach(({ element, listener }) => {
+      element.removeEventListener("click", listener);
+    });
+  });
 
   // Function to get video IDs from multiple URLs
   const getVideoIds = (urls) => {

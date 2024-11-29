@@ -33,16 +33,16 @@
 >
 	{#if viewerLoaded}
 		<spline-viewer 
-			url="https://prod.spline.design/fgNFjOSEKAHq4WHP/scene.splinecode"
+			url={blok.embeddedBG}
 			class="absolute inset-0 z-0"
 		></spline-viewer>
 	{/if}
 
 	<div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
-		<h2 class="text-4xl lg:text-7xl text-darkgrey font-bold mb-6">
+		<h2 class="text-4xl lg:text-7xl text-white font-bold mb-6">
 			<HeadlineColorful headline={blok.headline} />
 		</h2>
-		<h3 class="text-xl lg:text-4xl text-darkgrey font-light">
+		<h3 class="text-xl lg:text-4xl text-white font-light">
 			{blok.subheadline}
 		</h3>
 	</div>

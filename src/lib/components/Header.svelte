@@ -1,99 +1,177 @@
 <script>
 	export let header;
-    export let logo;
+    export let isHomePage = false;
+    import { onMount } from 'svelte';
+    import { goto, invalidate } from '$app/navigation';
+    import ThemeToggle from './ThemeToggle.svelte';
     
-	import Headline from './micro/Headline.svelte';
-
     let navIsOpen = false;
+    let isScrolled = false;
+    let lastScrollY = 0;
+    let headerVisible = true;
+
+    onMount(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            isScrolled = currentScrollY > 0;
+            
+            if (!isHomePage) {
+                if (currentScrollY > lastScrollY) {
+                    if (currentScrollY > 100) {
+                        headerVisible = false;
+                    }
+                } else {
+                    headerVisible = true;
+                }
+            }
+            
+            lastScrollY = currentScrollY;
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    });
+
+    async function handleNavigation(url) {
+        closeNav();
+        try {
+            await goto(url);
+            await invalidate('app:storyblok'); // Force Storyblok data refresh
+            await invalidate(); // Invalidate all data
+        } catch (error) {
+            console.error('Navigation error:', error);
+            window.location.href = url;
+        }
+    }
 
     function toggleNav() {
         navIsOpen = !navIsOpen;
+        if (navIsOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    function closeNav() {
+        navIsOpen = false;
+        document.body.style.overflow = 'auto';
     }
 </script>
 
-<head>
-    <style lang="postcss">
-        .open { display: block; }
-        .close { display: none; }
-
-        .mobile-nav {
-            display: none;
-        }
-        
-        .mobile-nav.open {
-            display: block;
-        }
-    </style>
-</head>
-
-<header class="w-full h-full sticky z-20 top-0 md:relative lg:relative flex justify-center">
-    <div class="navbar top-0 md:bg-base-100">
-        <div class=" mx-4 flex-1">
-            {#if logo}
-                <a href="/">
-                    <!-- <img
-                    src={logo.filename}
-                    alt={logo?.alt}
-                    class="w-auto h-20 lg:h-28 flex justify-center items-center text-center"
-                    class:close={navIsOpen}
-                    /> -->
-                    <Headline headline={"SABE"}/>
-                </a> 
-            {/if}
-        </div>
-
-        {#if header}
-        <div class="flex-none hidden lg:block" class:open={navIsOpen}>
-            <ul class="flex space-x-4 lg:space-x-8 text-lg font-bold">
-                {#each header as blok}
-                    <li class="hover:text-[#808080] p-3">
-                        <a href="/{blok.link.story.url}" data-sveltekit-preload-data="tap"> {blok.name}</a>
-                    </li> 
-                {/each}
-            </ul>
-        </div>
-        {/if}
-        <div class="mobile-nav fixed inset-0 bg-white z-50 transform transition-transform ease-in-out duration-300" class:open={navIsOpen}>
-            <div class="flex items-center justify-end p-4">
-                <button class="text-gray-500 btn btn-circle" on:click={toggleNav}>
-                    <svg
-                        class="w-6 h-6"
-                        fill="none"
+<header 
+    class="w-full z-50 transition-all duration-300 ease-in-out absolute bg-base-100 text-base-content
+    {isHomePage ? 'absolute' : 'fixed'}
+    {isScrolled ? 'bg-base-200/70 backdrop-blur-sm shadow-sm' : 'bg-transparent'} 
+    {!isHomePage && !headerVisible ? '-translate-y-full' : 'translate-y-0'}"
+>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16 md:h-20">
+            <!-- Logo as Home Icon -->
+            <div class="flex-shrink-0">
+                <a 
+                    href="/" 
+                    on:click|preventDefault={() => handleNavigation('/')}
+                    class="flex items-center"
+                >
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        class="h-8 w-8 {isHomePage ? 'text-white' : 'text-base-content'}" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
                         stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
                     >
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v12a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            {#if header}
+                <nav class="hidden lg:flex space-x-8">
+                    {#each header as blok}
+                        <a 
+                            href="/{blok.link.story.url}" 
+                            on:click|preventDefault={(e) => handleNavigation(`/${blok.link.story.url}`)}
+                            class="font-black hover:text-violet-600 px-3 py-2 text-sm font-medium transition-colors duration-200 {isHomePage ? 'text-white' : 'text-base-content'}"
+                        >
+                            {blok.name}
+                        </a>
+                    {/each}
+                </nav>
+            {/if}
+
+            <!-- Add theme toggle before the mobile menu button -->
+            <div class="flex items-center gap-4">
+                <ThemeToggle isHomePage={isHomePage} />
+                <button 
+                    class="lg:hidden inline-flex items-center justify-center p-2 rounded-md hover:bg-base-200 transition-colors duration-20"
+                    on:click={toggleNav}
+                    aria-expanded={navIsOpen}
+                >
+                    <span class="sr-only">Open main menu</span>
+                    <svg
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                    >
+                        {#if !navIsOpen}
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        {:else}
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        {/if}
                     </svg>
                 </button>
+            </div>
         </div>
-            <ul class="flex flex-col items-center justify-center space-y-4 text-lg font-bold">
-                {#each header as blok}
-                    <li class="hover:text-[#ff0085]" >
-                        <a href="/{blok.link.story.url}" on:click={toggleNav}> {blok.name}</a>
-                    </li>
-                {/each}
-            </ul>
-        </div>
-        <button class="lg:hidden btn" on:click={toggleNav}>
-            <svg
-                class="w-8 h-8"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-            <svg
-                class="w-6 h-6 hidden"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </button>
     </div>
+
+    <!-- Mobile Navigation -->
+    {#if navIsOpen}
+        <div 
+            class="lg:hidden fixed inset-0 w-full h-screen bg-white z-40"
+            style="top: {window?.innerWidth < 768 ? '64px' : '80px'};"
+        >
+            <nav class="h-full overflow-y-auto">
+                <div class="flex flex-col space-y-2 pt-4">
+                    {#each header as blok}
+                        <a 
+                            href="/{blok.link.story.url}"
+                            on:click|preventDefault={(e) => handleNavigation(`/${blok.link.story.url}`)}
+                            class="text-gray-900 hover:text-violet-600 px-6 py-6 text-2xl font-medium text-left border-b border-gray-100 transition-colors duration-200 bg-white"
+                        >
+                            {blok.name}
+                        </a>
+                    {/each}
+                </div>
+            </nav>
+        </div>
+    {/if}
 </header>
+
+<style>
+    :global(:root) {
+        --header-height: 4rem; /* 64px for mobile */
+    }
+    @media (min-width: 768px) {
+        :global(:root) {
+            --header-height: 5rem; /* 80px for desktop */
+        }
+    }
+
+    /* Smooth transitions */
+    .transition-all {
+        transition-property: all;
+        transition-duration: 300ms;
+        transition-timing-function: ease-in-out;
+    }
+
+    /* Prevent scrolling when mobile menu is open */
+    :global(body.menu-open) {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }
+</style>

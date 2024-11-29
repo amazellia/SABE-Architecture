@@ -1,10 +1,52 @@
 <script>
-    import { storyblokEditable, renderRichText } from '@storyblok/svelte';
+    import { storyblokEditable } from '@storyblok/svelte';
+    import { goto } from '$app/navigation';
+    import { onMount, onDestroy } from 'svelte';
+    import { invalidate } from '$app/navigation';
     export let blok;
+    export let uuid;
     import HeadlineColorful from './micro/HeadlineColorful.svelte';
     import Gallery from './Gallery.svelte';
+    import RichText from './RichText.svelte';
 
-    $: resolvedRichText = renderRichText(blok.description);
+
+    // Simplified handleLinkClick function
+    async function handleLinkClick(e, slug) {
+        e.preventDefault();
+        try {
+            // First invalidate the data
+            await invalidate('app:storyblok');
+            await invalidate('app:storyblokApi');
+            
+            // Then navigate
+            await goto(`/${slug}`, {
+                invalidateAll: true,
+                replaceState: false
+            });
+        } catch (error) {
+            console.error('Navigation error:', error);
+            window.location.href = `/${slug}`;
+        }
+    }
+
+    let bridge;
+    let galleries = [];
+
+    onMount(() => {
+        // Any mount logic if needed
+    });
+
+    onDestroy(() => {
+        // Clear any existing galleries
+        galleries.forEach(gallery => {
+            if (gallery) {
+                gallery = null;
+            }
+        });
+        if (bridge) {
+            bridge.destroy();
+        }
+    });
 </script>
 <div 
     use:storyblokEditable={blok}
@@ -30,13 +72,13 @@
                 </h1>
 
                 <!-- Creator Name -->
-                <h2 class="text-xl lg:text-3xl font-bold">
+                <h2 class="text-xl lg:text-3xl font-bold text-gray-900 dark:text-gray-100">
                     by {blok.CreatorsName}
                 </h2>
 
                 <!-- Date -->
                 {#if blok?.date}
-                    <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold">
+                    <h2 class="text-xl lg:text-2xl font-bold text-gray-900 dark:text-gray-100">
                         {blok.date}
                     </h2>
                 {/if}
@@ -46,7 +88,8 @@
                     <div class="flex flex-wrap justify-center gap-2">
                         {#each blok?.project_tutor as tutor}
                             <a href="/{tutor.full_slug}" 
-                               class="hover:underline text-[#1d243d]"> 
+                               on:click={(e) => handleLinkClick(e, tutor.full_slug)}
+                               class="hover:underline text-gray-900 dark:text-gray-100"> 
                                 {tutor.name}
                             </a> 
                         {/each}
@@ -56,63 +99,57 @@
                 <!-- Project Details -->
                 <div class="flex flex-col space-y-2 text-center">
                     {#if blok?.tutorial_event}
-                        <p>Tutorial: <a href="/{blok?.tutorial_event.full_slug}" 
-                                      class="hover:underline text-[#1d243d]"> 
-                            {blok?.tutorial_event.name}
-                        </a></p>
+                        <p class="text-gray-800 dark:text-gray-200">Tutorial: 
+                            <a href="/{blok?.tutorial_event.full_slug}" 
+                               class="hover:underline text-gray-900 dark:text-gray-100"> 
+                                {blok?.tutorial_event.name}
+                            </a>
+                        </p>
                     {/if}
                     
                     {#if blok?.course_event}
-                        <p>Course: <a href="/{blok?.course_event.full_slug}" 
-                                    class="hover:underline text-[#1d243d]"> 
-                            {blok?.course_event.name}
-                        </a></p>
+                        <p class="text-gray-800 dark:text-gray-200">Course: 
+                            <a href="/{blok?.course_event.full_slug}" 
+                               class="hover:underline text-gray-900 dark:text-gray-100"> 
+                                {blok?.course_event.name}
+                            </a>
+                        </p>
                     {/if}
                     
                     {#if blok?.exhibit_event}
-                        <p>Exhibition: <a href="/{blok?.exhibit_event.full_slug}" 
-                                        class="hover:underline text-[#1d243d]">
-                            {blok?.exhibit_event.name}
-                        </a></p>
+                        <p class="text-gray-800 dark:text-gray-200">Exhibition: 
+                            <a href="/{blok?.exhibit_event.full_slug}" 
+                               class="hover:underline text-gray-900 dark:text-gray-100">
+                                {blok?.exhibit_event.name}
+                            </a>
+                        </p>
                     {/if}
                     
                     {#if blok?.degreeLevel}
-                        <p>Degree Level: <b class="text-[#1d243d]">{blok?.degreeLevel.name}</b></p>
+                        <p class="text-gray-800 dark:text-gray-200">Degree Level: 
+                            <b class="text-gray-900 dark:text-gray-100">{blok?.degreeLevel.name}</b>
+                        </p>
                     {/if}
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="m-10 prose max-w-4xl mx-auto">
-        <div class="rich-text-content">
-            {@html resolvedRichText}
-        </div>
-    </div>
+    <RichText content={blok.description} />
 
     {#if blok?.gallery}
-        {#each blok?.gallery as gallery}
-            <Gallery blok={gallery}/>
-        {/each}
+        {#key uuid}
+            {#each blok?.gallery as gallery}
+                <Gallery 
+                    blok={gallery}
+                    bind:this={galleries[uuid]} 
+                />
+            {/each}
+        {/key}
     {/if}
 </div>
 
 <style>
-    .rich-text-content :global(p) {
-        margin-bottom: 2rem !important; /* Increased spacing between paragraphs */
-    }
-
-    .rich-text-content :global(br) {
-        content: "" !important;
-        display: block !important;
-        margin-bottom: 2rem !important; /* Increased spacing for line breaks */
-    }
-
-    /* Maintain spacing for the last element */
-    .rich-text-content :global(p:last-child) {
-        margin-bottom: 0 !important;
-    }
-
     /* Optional: Add smooth scrolling to the whole page */
     :global(html) {
         scroll-behavior: smooth;

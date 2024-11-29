@@ -1,15 +1,17 @@
- 
 <script>
 	import { PUBLIC_STORYBLOK_IS_PREVIEW } from '$env/static/public';
-     import { storyblokEditable, renderRichText } from '@storyblok/svelte';
+  import { storyblokEditable } from '@storyblok/svelte';
   import { useStoryblokApi } from '@storyblok/svelte';
   import { onMount } from 'svelte';
   import ListCard from './ListCard.svelte';
+  import { goto } from '$app/navigation';
+  import { invalidate } from '$app/navigation';
+  import RichText from './RichText.svelte';
+  import Pagination from './micro/Pagination.svelte';
 
   export let blok;
-  export let uuid
-  
-  $: resolvedRichText = renderRichText(blok.description);
+  export let uuid;
+
   
   const perPage = blok?.perPage;
   let currentPage = 1;
@@ -22,6 +24,8 @@
   let searchbar = "";
   let currentArray = [];
   let filterQuery = {};
+
+  let imageError = false;
 
     const loadPage = async () => {
         const storyblokApi = useStoryblokApi();
@@ -117,21 +121,72 @@
       searchbar = event.target.value;
       currentPage = 1
     }
+
+    async function handleNavigation(event, path) {
+        event.preventDefault();
+        try {
+            await goto(path);
+            await invalidate('app:storyblok');
+        } catch (error) {
+            console.error('Navigation error:', error);
+            window.location.href = path;
+        }
+    }
+
+    // Function to preload image and verify dimensions
+    const preloadImage = (src) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+                if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+                    resolve(true);
+                } else {
+                    reject(new Error('Invalid image dimensions'));
+                }
+            };
+            img.onerror = () => reject(new Error('Image failed to load'));
+            img.src = src;
+        });
+    };
 </script>
 
 <div use:storyblokEditable={blok}>
-    <img
-        src="{blok.mainImage.filename}/m/1600x0"
-        alt={blok.mainImage.alt}
-        class="w-3/5 h-full object-contain mx-auto"
-    />
+    {#if blok.mainImage?.filename}
+        {#if imageError}
+            <div class="w-3/5 h-64 mx-auto bg-gray-200 animate-pulse" />
+        {/if}
+        
+        {#if !imageError}
+            <img
+                src="{blok.mainImage.filename}/m/1600x0"
+                alt={blok.mainImage.alt}
+                class="w-3/5 h-full object-contain mx-auto"
+                on:load={async (e) => {
+                    try {
+                        await preloadImage(e.target.src);
+                        imageError = false;
+                    } catch (err) {
+                        console.error('Image loading error:', err);
+                        imageError = true;
+                        e.target.style.display = 'none';
+                    }
+                }}
+                on:error={() => {
+                    imageError = true;
+                }}
+            />
+        {/if}
+    {/if}
     <div class="grid justify-items-center mx-auto mb-12">
         <h1 class="text-2xl lg:text-6xl  font-bold mt-12 mb-4 text-center">{blok.name}</h1>
-        <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold mb-4">
+        <h2 class="text-xl lg:text-2xl font-bold mb-4">
             {blok.time}
         </h2>
         {#each blok.stream as stream}
-        <a href="/{stream.full_slug}">
+        <a 
+            href="/{stream.full_slug}"
+            on:click|preventDefault={(e) => handleNavigation(e, `/${stream.full_slug}`)}
+        >
             {stream.name}
         </a>
         {/each}
@@ -143,7 +198,7 @@
             {guest.name}
         </a>
         {/each}
-        <div class="w-2/3 prose">{@html resolvedRichText}</div>
+        <RichText content={blok.description} />
     </div>
 
     {#if blok?.add_listing == true}
@@ -160,51 +215,25 @@
       <div class="container mx-auto grid @apply md:grid-cols-3 gap-12 ">
         {#each items as item}
           <div class:md:col-start-2={items.length === 1} class="container mx-auto my-5 place-items-center place-content-center ">
-          <ListCard item={item.content} slug={item.full_slug}/>
+          <ListCard item={item.content} slug={item.full_slug} on:imageLoad={(e) => {
+                        if (!e.detail.success) {
+                            console.error('Failed to load image in ListCard');
+                        }
+                    }}/>
           </div>
         {/each}       
       </div>  
     
         <div class="py-24 justify-center">
-        <div class="flex items-center justify-between border-t border-gray-200 px-4 py-3 sm:px-6">
-          <div class="flex flex-1 justify-between sm:hidden">
-            <button on:click={prevPage} disabled={currentPage === 1} class="hover:bg-white disabled:opacity-75 relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</button>
-            <button on:click={nextPage} disabled={!hasMorePages} class="hover:bg-white disabled:opacity-75 relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</button>
-          </div>
-          <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-          <div>
-            <p class="text-sm text-gray-700">
-              Showing
-              <span class="font-medium">{currentPage}</span>
-              to
-              <span class="font-medium">{Math.min(items.length*currentPage, itemNo)}</span> of
-              <span class="font-medium">{itemNo}</span>
-              results
-            </p>
-          </div>
-        <div>
-          <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-              <button on:click={prevPage} disabled={currentPage === 1} class="hover:bg-violet-600 disabled:opacity-75 relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
-                <span class="sr-only">Previous</span>
-                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
-                </svg>
-              </button>
-            {#each links as link}
-              <svelte:component this={link.element} {...link.props}>
-                {link.text}
-              </svelte:component>
-            {/each}
-            <button on:click={nextPage} disabled={!hasMorePages} class="hover:bg-violet-600 disabled:opacity-75 relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
-              <span class="sr-only">Next</span>
-              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-              </svg>
-          </button>
-          </nav>
-        </div>
-    </div>
-</div>
-</div>
+          <Pagination
+              {currentPage}
+              {itemNo}
+              {items}
+              {hasMorePages}
+              {links}
+              onPrevPage={prevPage}
+              onNextPage={nextPage}
+          />
+      </div>
     {/if}
 </div>

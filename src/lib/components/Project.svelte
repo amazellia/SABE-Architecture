@@ -1,64 +1,157 @@
- 
 <script>
-    import { storyblokEditable, renderRichText } from '@storyblok/svelte';
+    import { storyblokEditable } from '@storyblok/svelte';
+    import { goto } from '$app/navigation';
+    import { onMount, onDestroy } from 'svelte';
+    import { invalidate } from '$app/navigation';
     export let blok;
+    export let uuid;
     import HeadlineColorful from './micro/HeadlineColorful.svelte';
     import Gallery from './Gallery.svelte';
+    import RichText from './RichText.svelte';
 
-    $: resolvedRichText = renderRichText(blok.description);
+
+    // Simplified handleLinkClick function
+    async function handleLinkClick(e, slug) {
+        e.preventDefault();
+        try {
+            // First invalidate the data
+            await invalidate('app:storyblok');
+            await invalidate('app:storyblokApi');
+            
+            // Then navigate
+            await goto(`/${slug}`, {
+                invalidateAll: true,
+                replaceState: false
+            });
+        } catch (error) {
+            console.error('Navigation error:', error);
+            window.location.href = `/${slug}`;
+        }
+    }
+
+    let bridge;
+    let galleries = [];
+
+    onMount(() => {
+        // Any mount logic if needed
+    });
+
+    onDestroy(() => {
+        // Clear any existing galleries
+        galleries.forEach(gallery => {
+            if (gallery) {
+                gallery = null;
+            }
+        });
+        if (bridge) {
+            bridge.destroy();
+        }
+    });
 </script>
-<div use:storyblokEditable={blok} >
-    
-    <div class="p-2 w-full text-center grid col-span-1">
-        <h1 class="text-sm"><HeadlineColorful headline={blok.projectName}/></h1>
-        <h2 class="text-xl lg:text-3xl  font-bold mt-12 mb-4 text-center">by {blok.CreatorsName}</h2>
-        <hr>
-    </div>
-    
-    <div class="grid grid-col md:grid-row md:grid-cols-2 w-dvw">
-        <div class="w-full m-4">
-            <img
-            src="{blok?.mainImage.filename}/m/1600x0"
-            alt={blok?.mainImage.alt}
-            class="w-full h-3/4 object-contain"
-            />
-            <div class="text-center">
-                {#if blok?.tutorial_event}
-                <p>Tutorial: <a href="/{blok?.tutorial_event.full_slug}"> {blok?.tutorial_event.name}</a></p>
+<div 
+    use:storyblokEditable={blok}
+>
+    <div 
+        class="relative min-h-screen w-full flex items-center justify-center"
+        style="background-image: url('{blok?.mainImage.filename}/m/1600x0'); 
+               background-attachment: fixed;
+               background-position: center;
+               background-repeat: no-repeat;
+               background-size: cover;"
+    >
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-white/80 backdrop-blur-sm"></div>
+
+        <!-- Content Container -->
+        <div class="relative w-full max-w-4xl mx-auto px-4 py-12">
+            <!-- Content Section -->
+            <div class="flex flex-col items-center space-y-8">
+                <!-- Project Name -->
+                <h1 class="text-sm">
+                    <HeadlineColorful headline={blok.projectName}/>
+                </h1>
+
+                <!-- Creator Name -->
+                <h2 class="text-xl lg:text-3xl font-bold text-gray-900 dark:text-gray-100">
+                    by {blok.CreatorsName}
+                </h2>
+
+                <!-- Date -->
+                {#if blok?.date}
+                    <h2 class="text-xl lg:text-2xl font-bold text-gray-900 dark:text-gray-100">
+                        {blok.date}
+                    </h2>
                 {/if}
-                {#if blok?.course_event}
-                <p>Course: <a href="/{blok?.course_event.full_slug}"> {blok?.course_event.name}</a></p>
+
+                <!-- Tutors -->
+                {#if blok?.project_tutor}
+                    <div class="flex flex-wrap justify-center gap-2">
+                        {#each blok?.project_tutor as tutor}
+                            <a href="/{tutor.full_slug}" 
+                               on:click={(e) => handleLinkClick(e, tutor.full_slug)}
+                               class="hover:underline text-gray-900 dark:text-gray-100"> 
+                                {tutor.name}
+                            </a> 
+                        {/each}
+                    </div>
                 {/if}
-                {#if blok?.exhibit_event}
-                <p>Exhibition: <a href="/{blok?.exhibit_event.full_slug}">{blok?.exhibit_event.name}</a></p>
-                {/if}
-                {#if blok?.degreeLevel}
-                <p>Degree Level: <b>{blok?.degreeLevel.name}</b></p>
-                {/if}
+
+                <!-- Project Details -->
+                <div class="flex flex-col space-y-2 text-center">
+                    {#if blok?.tutorial_event}
+                        <p class="text-gray-800 dark:text-gray-200">Tutorial: 
+                            <a href="/{blok?.tutorial_event.full_slug}" 
+                               class="hover:underline text-gray-900 dark:text-gray-100"> 
+                                {blok?.tutorial_event.name}
+                            </a>
+                        </p>
+                    {/if}
+                    
+                    {#if blok?.course_event}
+                        <p class="text-gray-800 dark:text-gray-200">Course: 
+                            <a href="/{blok?.course_event.full_slug}" 
+                               class="hover:underline text-gray-900 dark:text-gray-100"> 
+                                {blok?.course_event.name}
+                            </a>
+                        </p>
+                    {/if}
+                    
+                    {#if blok?.exhibit_event}
+                        <p class="text-gray-800 dark:text-gray-200">Exhibition: 
+                            <a href="/{blok?.exhibit_event.full_slug}" 
+                               class="hover:underline text-gray-900 dark:text-gray-100">
+                                {blok?.exhibit_event.name}
+                            </a>
+                        </p>
+                    {/if}
+                    
+                    {#if blok?.degreeLevel}
+                        <p class="text-gray-800 dark:text-gray-200">Degree Level: 
+                            <b class="text-gray-900 dark:text-gray-100">{blok?.degreeLevel.name}</b>
+                        </p>
+                    {/if}
+                </div>
             </div>
         </div>
-
-        <div class="m-1">
-        {#if blok?.date}
-            <h2 class="text-xl lg:text-2xl text-[#1d243d] font-bold mb-4">
-                {blok.date}
-            </h2>
-        {/if}
-
-        {#if blok?.project_tutor}
-            {#each blok?.project_tutor as tutor}
-            <a href="/{tutor.full_slug}"> {tutor.name}</a> 
-            {/each}
-        {/if}
-
-        <div class="m-3 prose">{@html resolvedRichText}</div>
-        </div>
     </div>
 
+    <RichText content={blok.description} />
+
     {#if blok?.gallery}
-        {#each blok?.gallery as gallery}
-            <Gallery blok={gallery}/>
-        {/each}
+        {#key uuid}
+            {#each blok?.gallery as gallery}
+                <Gallery 
+                    blok={gallery}
+                    bind:this={galleries[uuid]} 
+                />
+            {/each}
+        {/key}
     {/if}
-    
 </div>
+
+<style>
+    /* Optional: Add smooth scrolling to the whole page */
+    :global(html) {
+        scroll-behavior: smooth;
+    }
+</style>

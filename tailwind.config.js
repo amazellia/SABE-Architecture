@@ -8,34 +8,20 @@ export default {
   ],
 
   theme: {
-    extend: {  backgroundImage: {
-      'custom-gradient': 'linear-gradient(90deg, hsl(var(--s)) 0%, hsl(var(--sf)) 9%, hsl(var(--pf)) 42%, hsl(var(--p)) 47%, hsl(var(--a)) 100%)',
-      'custom-gradient-oks': 'linear-gradient(90deg, hsl(var(--s)) 4%, color-mix(in oklch, hsl(var(--sf)), hsl(var(--pf))) 22%, hsl(var(--p)) 45%, color-mix(in oklch, hsl(var(--p)), hsl(var(--a))) 67%, hsl(var(--a)) 100.2%)'
-    },
-    textColor: {
-      'base-content': 'currentColor'
-    }
-  }
-  },
-  plugins: [
-    function ({ addUtilities }) {
-      addUtilities({
-      '.bg-clip-text': {
-        'background-clip': 'text',
-        '-webkit-background-clip': 'text',
-        '-webkit-text-fill-color': 'transparent'
-      },
-      '.selection:bg-blue-700/20': {
-        '::selection': {
-          'background-color': 'rgba(37, 99, 235, 0.2)',
-          'color': 'currentColor'
-        }
+    extend: {
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(90deg, hsl(var(--s)) 0%, hsl(var(--sf)) 9%, hsl(var(--pf)) 42%, hsl(var(--p)) 47%, hsl(var(--a)) 100%)',
+        'custom-gradient-oks': 'linear-gradient(90deg, hsl(var(--s)) 4%, color-mix(in oklch, hsl(var(--sf)), hsl(var(--pf))) 22%, hsl(var(--p)) 45%, color-mix(in oklch, hsl(var(--p)), hsl(var(--a))) 67%, hsl(var(--a)) 100.2%)'
       }
-      });
     }
-  ],
-
-  plugins: [
-    require("daisyui"),
-  ], 
+  },
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["light", "dark"],
+    darkTheme: "dark",
+    base: true,
+    styled: true,
+    utils: true,
+  },
+  darkMode: 'class'
 }

@@ -140,4 +140,13 @@
         </a>
       {/each}
   {/if}
+        <!-- Adding HTML Other links 
+         https://iframetester.com/
+        <a 
+        href= "https://biggerpicture.henrygd.me/"
+        data-iframe="https://sites.google.com/view/a3-fabrication/project"
+        data-attr='{`"referrerpolicy":"no-referrer"`}'
+        >
+          <img src="https://images.unsplash.com/photo-1719937051157-d3d81cc28e86?q=80&w=3600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+      </a> -->
 </div>

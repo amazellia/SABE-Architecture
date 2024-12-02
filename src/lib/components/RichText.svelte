@@ -92,4 +92,10 @@
     :global(html[data-theme='dark']) .rich-text-content :global(a) {
         color: var(--text-blue-400);
     }
+    /* Mobile view margin */
+    @media (max-width: 640px) {
+        .rich-text-content {
+            margin: 1.5rem; /* Adjust the margin as needed */
+        }
+    }
 </style>

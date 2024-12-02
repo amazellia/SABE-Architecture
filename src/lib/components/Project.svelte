@@ -5,7 +5,6 @@
     import { invalidate } from '$app/navigation';
     export let blok;
     export let uuid;
-    import HeadlineColorful from './micro/HeadlineColorful.svelte';
     import Gallery from './Gallery.svelte';
     import RichText from './RichText.svelte';
 
@@ -60,15 +59,15 @@
                background-size: cover;"
     >
         <!-- Overlay -->
-        <div class="absolute inset-0 bg-white/80 backdrop-blur-sm"></div>
+        <div class="absolute inset-0 bg-white/80 dark:bg-white/50 backdrop-blur-sm"></div>
 
         <!-- Content Container -->
         <div class="relative w-full max-w-4xl mx-auto px-4 py-12">
             <!-- Content Section -->
             <div class="flex flex-col items-center space-y-8">
                 <!-- Project Name -->
-                <h1 class="text-sm">
-                    <HeadlineColorful headline={blok.projectName}/>
+                <h1 class="text-4xl lg:text-5xl  font-bold  text-gray-900 dark:text-gray-100">
+                    {blok.projectName}
                 </h1>
 
                 <!-- Creator Name -->
@@ -110,7 +109,7 @@
                     {#if blok?.course_event}
                         <p class="text-gray-800 dark:text-gray-200">Course: 
                             <a href="/{blok?.course_event.full_slug}" 
-                               class="hover:underline text-gray-900 dark:text-gray-100"> 
+                               class="hover:underline text-violet-500 dark:text-violet-500"> 
                                 {blok?.course_event.name}
                             </a>
                         </p>
@@ -119,15 +118,14 @@
                     {#if blok?.exhibit_event}
                         <p class="text-gray-800 dark:text-gray-200">Exhibition: 
                             <a href="/{blok?.exhibit_event.full_slug}" 
-                               class="hover:underline text-gray-900 dark:text-gray-100">
+                               class="hover:underline text-violet-500 dark:text-violet-500">
                                 {blok?.exhibit_event.name}
                             </a>
                         </p>
                     {/if}
                     
                     {#if blok?.degreeLevel}
-                        <p class="text-gray-800 dark:text-gray-200">Degree Level: 
-                            <b class="text-gray-900 dark:text-gray-100">{blok?.degreeLevel.name}</b>
+                        <p class="text-gray-800 dark:text-gray-200">Degree Level: {blok?.degreeLevel}
                         </p>
                     {/if}
                 </div>

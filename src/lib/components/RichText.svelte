@@ -52,12 +52,39 @@
     .rich-text-content :global(h6) {
         color: var(--text-gray-900);
     }
-
-    /* Lists */
+    
+    /* Lists - Enhanced */
     .rich-text-content :global(ul),
-    .rich-text-content :global(ol),
+    .rich-text-content :global(ol) {
+        color: var(--text-gray-800);
+        padding-left: 1.5rem;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .rich-text-content :global(ul) {
+        list-style-type: disc;
+    }
+
+    .rich-text-content :global(ol) {
+        list-style-type: decimal;
+    }
+
     .rich-text-content :global(li) {
         color: var(--text-gray-800);
+        margin-bottom: 0.5rem;
+        padding-left: 0.5rem;
+    }
+
+    .rich-text-content :global(li:last-child) {
+        margin-bottom: 0;
+    }
+
+    /* Nested lists */
+    .rich-text-content :global(li > ul),
+    .rich-text-content :global(li > ol) {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
     }
 
     /* Last paragraph spacing */

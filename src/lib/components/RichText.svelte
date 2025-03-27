@@ -18,6 +18,7 @@
     .rich-text-content :global(p) {
         color: var(--text-gray-800);
         margin-bottom: 2rem !important;
+        justify-items: center;
     }
 
     /* Line breaks */

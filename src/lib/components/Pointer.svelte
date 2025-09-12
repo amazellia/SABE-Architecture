@@ -36,16 +36,16 @@
 	let coords1 = spring(
 		{ x: 0, y: 0 },
 		{
-			stiffness: 0.05,
-			damping: 0.25
+			stiffness: 0.5,
+			damping: 1//0.25
 		}
 	);
 
 	let coords2 = spring(
 		{ x: 0, y: 0 },
 		{
-			stiffness: 0.1,
-			damping: 0.35
+			stiffness: 1, //0.1,
+			damping: 1//0.35
 		}
 	);
 
